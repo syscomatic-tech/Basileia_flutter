@@ -1,7 +1,8 @@
-import 'package:basileia/Screen/SignUpScreen_1.dart';
+import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../Style/colors.dart';
+import '../Style/controller.dart';
 import '../Style/images.dart';
 import '../Style/style.dart';
 
@@ -54,17 +55,17 @@ class SignInScreen extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        textField('Email address', null),
+        textField(272,48,'Email address', null,null),
         const SizedBox(
           height: 20,
         ),
         Obx(
-          ()=> textField(
+          ()=> textField(272,48,
             'Password',
             IconButton(onPressed: () { controller.isObscured.value = !controller.isObscured.value;
             }, icon:  Icon(
               controller.isObscured.value ? Icons.visibility : Icons.visibility_off,color: textFi,
-            ),),
+            ),),null
           ),
         ),
         Padding(
@@ -80,7 +81,7 @@ class SignInScreen extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        Primary_Button(onTap: () {}, text: 'Sign In', Width: 272),
+        Primary_Button(onTap: () {Get.to(()=>HomeFeedScreen());}, text: 'Sign In', Width: 272),
         const Padding(
           padding: EdgeInsets.only(left: 71, right: 71, top: 20),
           child: Row(
@@ -116,28 +117,25 @@ class SignInScreen extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 71, right: 71),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ic_Button(
-                          hight: 48,
-                          width: 124,
-                          onTap: () {},
-                          text: "Google",
-                          icon: Image.asset(google)),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ic_Button(
-                          hight: 48,
-                          width: 124,
-                          onTap: () {},
-                          text: "Facebook",
-                          icon: Image.asset(facebook))
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ic_Button(
+                        hight: 48,
+                        width: 124,
+                        onTap: () {},
+                        text: "Google",
+                        icon: Image.asset(google),),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    ic_Button(
+                        hight: 48,
+                        width: 124,
+                        onTap: () {},
+                        text: "Facebook",
+                        icon: Image.asset(facebook))
+                  ],
                 ),
                 const SizedBox(height: 30,),
                 Padding(

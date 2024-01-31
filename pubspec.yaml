@@ -37,6 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.6
   pinput: ^3.0.1
+  dotted_border: ^2.1.0
+  flutter_slidable: ^3.0.1
+  grouped_list: ^5.1.2
+  fluttertoast: ^8.2.4
 
 
 dev_dependencies:
@@ -78,18 +82,18 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  #  fonts:
-  #    - family: poppins-regular
-  #      fonts:
-  #        - asset: assets/fonts/Poppins-Regular.ttf
-  #
-  #    - family: poppins-bold
-  #      fonts:
-  #        - asset: assets/fonts/Poppins-Bold.ttf
-  #
-  #    - family: poppins-semiBold
-  #      fonts:
-  #        - asset: assets/fonts/Poppins-SemiBold.ttf
+  fonts:
+    - family: poppins-regular
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+
+    - family: poppins-bold
+      fonts:
+        - asset: assets/fonts/Poppins-Bold.ttf
+
+    - family: poppins-semiBold
+      fonts:
+        - asset: assets/fonts/Poppins-SemiBold.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

@@ -1,14 +1,16 @@
+
 import 'package:basileia/Screen/SignUpOtpScreen.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../Style/colors.dart';
+import '../Style/controller.dart';
 
 class SignUpScreen_1 extends StatelessWidget {
   final PasswordController controller = Get.put(PasswordController());
+  SignUpScreen_1({super.key});
   @override
   Widget build(BuildContext context) {
     final CheckboxController checkboxController = Get.put(CheckboxController());
@@ -61,25 +63,25 @@ class SignUpScreen_1 extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            textField('First name', null),
+            textField(272,48,'First name', null,null),
             const SizedBox(
               height: 20,
             ),
-            textField('Last name', null),
+            textField(272,48,'Last name', null,null),
             const SizedBox(
               height: 20,
             ),
-            textField('Email address', null),
+            textField(272,48,'Email address', null,null),
             const SizedBox(
               height: 20,
             ),
             Obx(
-              ()=>textField(
-                'Password',
+              ()=>textField(272,48,
+                "Password",
                 IconButton(onPressed: () { controller.isObscured.value = !controller.isObscured.value;
                 }, icon:  Icon(
                   controller.isObscured.value ? Icons.visibility : Icons.visibility_off,color: textFi,
-                ),),
+                ),),null,
               ),
             ),
             const SizedBox(
@@ -119,28 +121,25 @@ class SignUpScreen_1 extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 71, right: 71),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ic_Button(
-                      hight: 48,
-                      width: 124,
-                      onTap: () {},
-                      text: "Google",
-                      icon: Image.asset(google)),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  ic_Button(
-                      hight: 48,
-                      width: 124,
-                      onTap: () {},
-                      text: "Facebook",
-                      icon: Image.asset(facebook))
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ic_Button(
+                    hight: 48,
+                    width: 124,
+                    onTap: () {},
+                    text: "Google",
+                    icon: Image.asset(google)),
+                const SizedBox(
+                  width: 20,
+                ),
+                ic_Button(
+                    hight: 48,
+                    width: 124,
+                    onTap: () {},
+                    text: "Facebook",
+                    icon: Image.asset(facebook))
+              ],
             ),
             Stack(
               children: [
@@ -212,9 +211,3 @@ class SignUpScreen_1 extends StatelessWidget {
   }
 }
 
-class CheckboxController extends GetxController {
-  var isChecked = true.obs; // 'obs' makes it observable
-}
-class PasswordController extends GetxController {
-  var isObscured = true.obs;
-}

@@ -1,9 +1,16 @@
+import 'dart:ui';
+
+import 'package:basileia/Screen/commentScreen.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
-
 import 'colors.dart';
+import 'fonts.dart';
+import 'images.dart';
 
+int selected = 0;
 Widget Basic_Button({
   onTap,
   String? text,
@@ -44,11 +51,18 @@ Widget Primary_Button({onTap, String? text, double? Width}) {
   );
 }
 
-Widget textField(String? lebelText, suffixIcon) {
+Widget textField(
+  double? width,
+  double? hight,
+  String? lebelText,
+  suffixIcon,
+  Color? textfieldBg,
+) {
   return Container(
-    width: 272,
-    height: 48,
+    width: width,
+    height: hight,
     decoration: BoxDecoration(
+        color: textfieldBg,
         border: Border.all(
           color: bordar,
         ),
@@ -60,7 +74,8 @@ Widget textField(String? lebelText, suffixIcon) {
           border: InputBorder.none,
           suffixIcon: suffixIcon,
           hintText: lebelText,
-          hintStyle: const TextStyle(fontSize: 14, color: textFi,fontWeight: FontWeight.w600),
+          hintStyle: const TextStyle(
+              fontSize: 14, color: textFi, fontWeight: FontWeight.w600),
         ),
       ),
     ),
@@ -88,19 +103,2042 @@ Widget ic_Button(
     ),
   );
 }
- Widget OtpField (){
+
+Widget OtpField() {
   final defaultPinTheme = PinTheme(
-    width: 58,
-    height: 46,
-    decoration: BoxDecoration(
-      color: Colors.white,
-      border: Border.all(color: bordar),
-      borderRadius: BorderRadius.circular(10)
-    )
-  );
+      width: 58,
+      height: 46,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: bordar),
+          borderRadius: BorderRadius.circular(10)));
   return Pinput(
     length: 4,
     defaultPinTheme: defaultPinTheme,
     focusedPinTheme: defaultPinTheme,
   );
- }
+}
+
+Widget Profile(
+    {VoidCallback? onPressed,
+    double? OutSidehight,
+    double? OutSidewidth,
+    double? InSideHight,
+    double? InsideWidth,
+    double? InSideRadius,
+    double? OutSideRadius}) {
+  return InkWell(
+    onTap: onPressed,
+    child: Container(
+      height: OutSidehight,
+      width: OutSidewidth,
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(OutSideRadius ?? 30),
+          border: Border.all(color: profileBorder, width: 1.8)),
+      child: Center(
+        child: Container(
+          height: InSideHight,
+          width: InsideWidth,
+          decoration: BoxDecoration(
+            color: bordar,
+            borderRadius: BorderRadius.circular(InSideRadius ?? 30),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget searchBar() {
+  return Container(
+    height: 43.76,
+    width: 354.28,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: const Padding(
+      padding: EdgeInsets.only(left: 12, right: 12, top: 2),
+      child: TextField(
+        style: TextStyle(fontSize: 13.79),
+        decoration: InputDecoration(
+          suffixIcon: Icon(
+            Icons.search,
+            color: textFi,
+          ),
+          border: InputBorder.none,
+          hintText: 'Search friends',
+          hintStyle: TextStyle(
+            color: textFi,
+            fontSize: 13.79,
+            fontFamily: poppins_regular,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget AdvanceFilterButton({onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: const Text(
+      'Advance Filter',
+      style: TextStyle(
+        fontSize: 13.79,
+        color: Colors.white,
+        fontFamily: poppins_regular,
+        decoration: TextDecoration.underline,
+        decorationColor: Colors.white,
+      ),
+    ),
+  );
+}
+
+Widget FeedIcButton({onTap, ic, text}) {
+  return InkWell(
+    onTap: onTap,
+    child: Row(
+      children: [
+        Image.asset(ic),
+        const SizedBox(
+          width: 3,
+        ),
+        Text(
+          text,
+          style: const TextStyle(
+              fontSize: 11.7, color: Colors.black, fontWeight: FontWeight.w400),
+        )
+      ],
+    ),
+  );
+}
+
+Widget FeedFollowButton({onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      height: 30.8,
+      width: 86.05,
+      decoration: BoxDecoration(
+          color: primary, borderRadius: BorderRadius.circular(20)),
+      child: const Padding(
+        padding: EdgeInsets.only(right: 10, left: 7),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add,
+              color: Colors.white,
+              size: 15,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              'Follow',
+              style: TextStyle(color: Colors.white, fontSize: 13),
+            )
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget Feeds() {
+  return Padding(
+    padding: const EdgeInsets.only(right: 10, left: 10),
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Profile(
+                    onPressed: () {},
+                    OutSidehight: 47,
+                    OutSidewidth: 47,
+                    InSideHight: 38,
+                    InsideWidth: 38),
+                const SizedBox(
+                  width: 10,
+                ),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'William Grace',
+                      style: TextStyle(
+                          fontSize: 16.3,
+                          fontFamily: poppins_regular,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    Text(
+                      '1,5K Follwoers',
+                      style: TextStyle(
+                          fontSize: 10.87,
+                          color: textFi,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            FeedFollowButton(onTap: () {})
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Container(
+          height: 185,
+          decoration: BoxDecoration(
+              color: ContainerBG, borderRadius: BorderRadius.circular(10)),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FeedIcButton(onTap: () {}, ic: Like_ic, text: '120 Likes'),
+            FeedIcButton(
+                onTap: () {
+                  Get.to(() => CommentScreen());
+                },
+                ic: Comment_ic,
+                text: '6 Comments'),
+            FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Divider(
+          color: bordar,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+      ],
+    ),
+  );
+}
+
+Widget AudioFeeds() {
+  return Padding(
+    padding: const EdgeInsets.only(right: 10, left: 10),
+    child: SizedBox(
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Profile(
+                      onPressed: () {},
+                      OutSidewidth: 47,
+                      OutSidehight: 47,
+                      InsideWidth: 38,
+                      InSideHight: 38),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'William Grace',
+                        style: TextStyle(
+                            fontSize: 16.3,
+                            fontFamily: poppins_regular,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      Text(
+                        '1,5K Follwoers',
+                        style: TextStyle(
+                            fontSize: 10.87,
+                            color: textFi,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              FeedFollowButton(onTap: () {})
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 58,
+            decoration: BoxDecoration(
+                color: ContainerBG, borderRadius: BorderRadius.circular(10)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 28,
+                  width: 28,
+                  decoration: BoxDecoration(
+                      color: primary, borderRadius: BorderRadius.circular(30)),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    color: ContainerBG,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Image.asset(soundWave)
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120 Likes'),
+              FeedIcButton(onTap: () {}, ic: Comment_ic, text: '6 Comments'),
+              FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const Divider(
+            color: bordar,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget arrowButton() {
+  return InkWell(
+    onTap: () {
+      Get.back();
+    },
+    child: Container(
+      height: 45,
+      width: 45,
+      decoration: BoxDecoration(
+          color: primary, borderRadius: BorderRadius.circular(10)),
+      child: Image.asset(arrow_ic),
+    ),
+  );
+}
+
+Widget button({double? Width, double? Height, onTap, String? text}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      width: Width,
+      height: Height,
+      decoration: BoxDecoration(
+        color: primary,
+        borderRadius: BorderRadius.circular(7),
+      ),
+      child: Center(
+          child: Text(
+        text!,
+        style: const TextStyle(
+            color: Colors.white,
+            fontFamily: poppins_regular,
+            fontSize: 14,
+            fontWeight: FontWeight.w400),
+      )),
+    ),
+  );
+}
+
+Widget PostPhoto() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 380,
+          height: 211,
+          child: DottedBorder(
+              radius: const Radius.circular(15),
+              dashPattern: const [10, 10],
+              strokeWidth: 2,
+              borderType: BorderType.RRect,
+              color: bordar,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    button(
+                        Height: 45,
+                        Width: 151,
+                        onTap: () {},
+                        text: 'Select Files'),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      'Add Photos & Videos or Files',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: bordar),
+                    )
+                  ],
+                ),
+              )),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          'Or',
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w600, color: bordar),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            textField(290, 48, 'Paste Verse or Select Verse', null, TabBG),
+            const SizedBox(
+              width: 10,
+            ),
+            button(Height: 45, Width: 70, onTap: () {}, text: "Paste")
+          ],
+        )
+      ],
+    ),
+  );
+}
+
+Widget audioPost() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+            width: 380,
+            height: 211,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: bordar,
+                )),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(soundWave),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 25,
+                          width: 62,
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(6)),
+                          child: const Center(
+                              child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400),
+                          )),
+                        ),
+                      ),
+                      InkWell(
+                          onTap: () {},
+                          child: const Icon(
+                            Icons.play_arrow,
+                            color: Colors.white,
+                          )),
+                      Container(
+                        height: 28,
+                        width: 28,
+                        decoration: BoxDecoration(
+                            color: primary,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: const Icon(
+                          Icons.play_arrow,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 25,
+                          width: 62,
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(6)),
+                          child: const Center(
+                              child: Text(
+                            'Save',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400),
+                          )),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      height: 34,
+                      width: 33,
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(30)),
+                    ),
+                  )
+                ],
+              ),
+            )),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          'Or',
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w600, color: bordar),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            textField(290, 48, 'Paste Verse or Select Verse', null, TabBG),
+            const SizedBox(
+              width: 10,
+            ),
+            button(Height: 45, Width: 70, onTap: () {}, text: "Paste")
+          ],
+        )
+      ],
+    ),
+  );
+}
+
+Widget postPhoto_1() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 380,
+          height: 66,
+          child: DottedBorder(
+              radius: const Radius.circular(5),
+              dashPattern: const [15, 10],
+              strokeWidth: 2,
+              borderType: BorderType.RRect,
+              color: bordar,
+              child: Center(
+                child: InkWell(
+                  onTap: () {},
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 11),
+                        child: Container(
+                          width: 60,
+                          height: 46,
+                          decoration: BoxDecoration(
+                              color: ContainerBG,
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const SizedBox(
+                        width: 280,
+                        height: 46,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Text(
+                            'Photo1202460',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: textFi,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: poppins_regular),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Container(
+          height: 273,
+          width: 373,
+          decoration: BoxDecoration(
+              color: TabBG, borderRadius: BorderRadius.circular(19)),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: TextFormField(
+              maxLines: null,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'What’s On Your Mind',
+                  hintStyle: TextStyle(
+                    fontSize: 15,
+                    fontFamily: poppins_regular,
+                  )),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Post In :',
+              style: TextStyle(
+                  fontFamily: poppins_regular,
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            textField(
+                256,
+                48,
+                'My Profile',
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child:
+                      InkWell(onTap: () {}, child: Image.asset(Downarrow_ic)),
+                ),
+                TabBG),
+          ],
+        )
+      ],
+    ),
+  );
+}
+
+Widget profileAvatar() {
+  return Stack(
+    children: [
+      Container(
+        height: 50,
+        width: 50,
+        decoration: BoxDecoration(
+            color: bordar, borderRadius: BorderRadius.circular(30)),
+      ),
+      Positioned(
+        bottom: 2,
+        right: 0,
+        child: Container(
+          height: 14,
+          width: 14,
+          decoration: BoxDecoration(
+              color: Colors.green, borderRadius: BorderRadius.circular(30)),
+        ),
+      )
+    ],
+  );
+}
+
+Widget button_(
+    {onTap,
+    Color? backGroundColor,
+    Color? bordarColor,
+    double? height,
+    double? width,
+    String? text,
+    Color? textColor}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      height: height ?? 34,
+      width: width ?? 78,
+      decoration: BoxDecoration(
+          color: backGroundColor ?? Colors.transparent,
+          border: Border.all(color: bordarColor ?? primary),
+          borderRadius: BorderRadius.circular(30)),
+      child: Center(
+          child: Text(
+        text ?? 'Follow',
+        style: TextStyle(
+            fontSize: 12,
+            fontFamily: poppins_semibold,
+            color: textColor ?? primary),
+      )),
+    ),
+  );
+}
+
+Widget Comments() {
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    profileAvatar(),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Anne Southern',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: poppins_semibold,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          '03 Sept. At 04:21',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: poppins_regular,
+                              color: primaryTxt),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                button_(onTap: () {})
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+              style: TextStyle(
+                  fontFamily: poppins_regular, color: primaryTxt, fontSize: 12),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: double.maxFinite,
+              height: 271,
+              decoration: BoxDecoration(
+                  color: ContainerBG, borderRadius: BorderRadius.circular(10)),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    InkWell(
+                        onTap: () {},
+                        child: Image.asset(
+                          Share_ic_1,
+                        )),
+                    const SizedBox(
+                      width: 7,
+                    ),
+                    const Text(
+                      '36',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: poppins_regular,
+                          color: Colors.black),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        InkWell(onTap: () {}, child: Image.asset(Heart_ic)),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        const Text(
+                          '36',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: poppins_regular,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(onTap: () {}, child: Image.asset(Commen_ic_1)),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        const Text(
+                          '36',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: poppins_regular,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+      const Divider(
+        color: bordar,
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+    ],
+  );
+}
+
+Widget Comments_1() {
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    profileAvatar(),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Anne Southern',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: poppins_semibold,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          '03 Sept. At 04:21',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: poppins_regular,
+                              color: primaryTxt),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                button_(onTap: () {})
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+              style: TextStyle(
+                  fontFamily: poppins_regular, color: primaryTxt, fontSize: 12),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    InkWell(
+                        onTap: () {},
+                        child: Image.asset(
+                          Share_ic_1,
+                        )),
+                    const SizedBox(
+                      width: 7,
+                    ),
+                    const Text(
+                      '36',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: poppins_regular,
+                          color: Colors.black),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        InkWell(onTap: () {}, child: Image.asset(Heart_ic)),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        const Text(
+                          '36',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: poppins_regular,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(onTap: () {}, child: Image.asset(Commen_ic_1)),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        const Text(
+                          '36',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: poppins_regular,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+      const Divider(
+        color: bordar,
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+    ],
+  );
+}
+
+Widget listTielButton({onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      height: 36,
+      width: 36,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: bordar)),
+      child: const Center(
+          child: Icon(
+        Icons.navigate_next_rounded,
+        color: primaryTxt,
+      )),
+    ),
+  );
+}
+
+Widget statistic({Color? backGround}) {
+  return Container(
+    width: double.maxFinite,
+    height: 126,
+    color: backGround,
+    child: Padding(
+      padding: const EdgeInsets.only(left: 25, right: 25),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: 90,
+            height: 82,
+            decoration: BoxDecoration(
+                color: primary, borderRadius: BorderRadius.circular(10)),
+            child: Center(
+                child: Container(
+              height: 77.44,
+              width: 85,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.white)),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '6.3k',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: poppins_semibold,
+                      fontSize: 25,
+                    ),
+                  ),
+                  Text(
+                    'Followers',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: poppins_regular,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            )),
+          ),
+          Container(
+            width: 90,
+            height: 82,
+            decoration: BoxDecoration(
+                color: TabBG, borderRadius: BorderRadius.circular(10)),
+            child: Center(
+                child: Container(
+              height: 77.44,
+              width: 85,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '572',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: poppins_semibold,
+                      fontSize: 25,
+                    ),
+                  ),
+                  Text(
+                    'Post',
+                    style: TextStyle(
+                      color: primaryTxt,
+                      fontFamily: poppins_regular,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            )),
+          ),
+          Container(
+            width: 90,
+            height: 82,
+            decoration: BoxDecoration(
+                color: TabBG, borderRadius: BorderRadius.circular(10)),
+            child: Center(
+                child: Container(
+              height: 77.44,
+              width: 85,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '2.5k',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: poppins_semibold,
+                      fontSize: 25,
+                    ),
+                  ),
+                  Text(
+                    'Following',
+                    style: TextStyle(
+                      color: primaryTxt,
+                      fontFamily: poppins_regular,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            )),
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget menuItem({String? title, String? subtitle, count}) {
+  return Column(
+    children: [
+      SizedBox(
+        height: 50,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 20, left: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title!,
+                    style: const TextStyle(
+                        fontFamily: poppins_semibold,
+                        fontSize: 15,
+                        color: Colors.black),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    subtitle!,
+                    style: const TextStyle(
+                        fontFamily: poppins_regular,
+                        fontSize: 12,
+                        color: primaryTxt),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  if (count > 0)
+                    Container(
+                      height: 24,
+                      width: 24,
+                      decoration: BoxDecoration(
+                          color: primary_1,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Center(
+                          child: Text(
+                        count!.toString(),
+                        style: const TextStyle(
+                            color: primary,
+                            fontFamily: poppins_regular,
+                            fontSize: 12),
+                      )),
+                    ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  listTielButton(onTap: () {})
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      const SizedBox(
+        height: 15,
+      )
+    ],
+  );
+}
+
+Widget menuButton(
+    {VoidCallback? onTap, String? text, Color? txtColor, Color? bordarColor}) {
+  return SizedBox(
+    height: 58,
+    width: 370,
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: BorderSide(color: bordarColor ?? bordar))),
+      onPressed: onTap,
+      child: Text(
+        text!,
+        style: TextStyle(
+            fontSize: 14, color: txtColor, fontFamily: poppins_semibold),
+      ),
+    ),
+  );
+}
+
+Widget profileButton({onTap, String? text, ic}) {
+  return InkWell(
+    onTap: onTap,
+    child: Row(
+      children: [
+        Image.asset(ic),
+        const SizedBox(
+          width: 5,
+        ),
+        Text(
+          text!,
+          style: const TextStyle(
+              color: primary,
+              fontSize: 10,
+              decoration: TextDecoration.underline,
+              decorationColor: primary),
+        )
+      ],
+    ),
+  );
+}
+
+Widget profileMassageButton() {
+  return InkWell(
+    onTap: () {},
+    child: Container(
+      width: 90,
+      height: 28.55,
+      decoration: BoxDecoration(
+          border: Border.all(color: primary),
+          borderRadius: BorderRadius.circular(30)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 7,
+            width: 7,
+            decoration: BoxDecoration(
+                color: Colors.green, borderRadius: BorderRadius.circular(30)),
+          ),
+          const SizedBox(
+            width: 4,
+          ),
+          Image.asset(Commen_ic_1),
+          const SizedBox(
+            width: 4,
+          ),
+          const Text(
+            'Message',
+            style: TextStyle(
+                fontSize: 10, fontFamily: poppins_regular, color: primary),
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget profilePosts() {
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    profileAvatar(),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Anne Southern',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: poppins_semibold,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          '03 Sept. At 04:21',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: poppins_regular,
+                              color: primaryTxt),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+              style: TextStyle(
+                  fontFamily: poppins_regular, color: primaryTxt, fontSize: 12),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: double.maxFinite,
+              height: 271,
+              decoration: BoxDecoration(
+                  color: ContainerBG, borderRadius: BorderRadius.circular(10)),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    InkWell(
+                        onTap: () {},
+                        child: Image.asset(
+                          Share_ic_1,
+                        )),
+                    const SizedBox(
+                      width: 7,
+                    ),
+                    const Text(
+                      '36',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: poppins_regular,
+                          color: Colors.black),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        InkWell(onTap: () {}, child: Image.asset(Heart_ic)),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        const Text(
+                          '36',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: poppins_regular,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(onTap: () {}, child: Image.asset(Commen_ic_1)),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        const Text(
+                          '36',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: poppins_regular,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+      const Divider(
+        color: bordar,
+      ),
+      const SizedBox(
+        height: 20,
+      ),
+    ],
+  );
+}
+
+Widget profileAvatar_1({double?height,double?width}) {
+  return Stack(
+    children: [
+      Container(
+        height: height ??48,
+        width: width ??48,
+        decoration: BoxDecoration(
+            color: bordar, borderRadius: BorderRadius.circular(30)),
+      ),
+      Positioned(
+        bottom: 2,
+        right: 0,
+        child: Container(
+          height: 12,
+          width: 12,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(30)),
+          child: Center(
+              child: Container(
+                  height: 8,
+                  width: 8,
+                  decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(30)))),
+        ),
+      )
+    ],
+  );
+}
+
+Widget chatItem({String? title, String? subTitle, msgCount, onTap}) {
+  return Column(
+    children: [
+      InkWell(
+        onTap: onTap,
+        child: Container(
+          width: 375,
+          height: 88,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 0)),
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                profileAvatar_1(),
+                const SizedBox(
+                  width: 15,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title!,
+                      style: const TextStyle(
+                          fontFamily: poppins_semibold,
+                          fontSize: 14,
+                          color: Colors.black),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      subTitle!,
+                      style: const TextStyle(
+                          fontFamily: poppins_regular,
+                          fontSize: 12,
+                          color: primaryTxt),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '10.00 AM',
+                      style: TextStyle(
+                          fontFamily: poppins_regular,
+                          fontSize: 12,
+                          color: primaryTxt),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    msgCount > 0
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: Container(
+                              height: 24,
+                              width: 24,
+                              decoration: BoxDecoration(
+                                  color: primary,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Center(
+                                  child: Text(
+                                msgCount.toString(),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: poppins_regular,
+                                    fontSize: 12),
+                              )),
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: Center(child: Image.asset(read)),
+                            ),
+                          )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(
+        height: 20,
+      )
+    ],
+  );
+}
+
+Widget inboxTopItem() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Container(
+        width: 245,
+        height: 45,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 40,
+                  offset: const Offset(0, 16)),
+            ]),
+        child: TextField(
+          style: const TextStyle(
+              fontSize: 12, fontFamily: poppins_regular, color: Colors.black),
+          decoration: InputDecoration(
+              prefixIcon: Image.asset(search_ic),
+              border: InputBorder.none,
+              hintText: 'Search massage',
+              hintStyle: const TextStyle(
+                  color: primaryTxt,
+                  fontSize: 12,
+                  fontFamily: poppins_regular)),
+        ),
+      ),
+      Container(
+        width: 70,
+        height: 46,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 40,
+                  offset: const Offset(0, 16)),
+            ]),
+        child: Image.asset(addFriend_ic),
+      ),
+    ],
+  );
+}
+
+Widget chatScreenTextField({VoidCallback? micOnTap, VoidCallback? sentOnTap}) {
+  return Container(
+    height: 116,
+    decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 120,
+              offset: const Offset(0, 4)),
+        ]),
+    child: Center(
+      child: Container(
+        height: 52,
+        width: 375,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30), color: TabBG),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
+          child: TextField(
+            style: const TextStyle(fontSize: 14, fontFamily: poppins_regular),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: 'Type message here...',
+              hintStyle: const TextStyle(
+                  color: primaryTxt, fontSize: 14, fontFamily: poppins_regular),
+              prefixIcon: InkWell(
+                  onTap: micOnTap,
+                  child: const Icon(
+                    CupertinoIcons.mic_fill,
+                    color: primaryTxt,
+                  )),
+              suffixIcon: InkWell(
+                  onTap: sentOnTap,
+                  child: const Icon(
+                    Icons.send_rounded,
+                    color: primary,
+                  )),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+class Message {
+  final String text;
+  final DateTime date;
+  final bool isSentByMe;
+
+  const Message({
+    required this.text,
+    required this.date,
+    required this.isSentByMe,
+  });
+}
+
+Widget chatBottomSheet(){
+  return Stack(
+    children: [
+      // Blurred background with centered text
+      Positioned.fill(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: const Column(
+            children: [
+              Icon(
+                CupertinoIcons.mic_fill,
+                color: Colors.white,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Recording Voice Note',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    fontFamily: poppins_regular),
+              ),
+            ],
+          ),
+        ),
+      ),
+      Positioned(
+          top: 135,
+          left: 130,
+          right: 130,
+          child: Container(
+            height: 6,
+            width: 100,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10)),
+          )),
+      Positioned(
+        bottom: 10,
+        left: 10,
+        right: 10,
+        child: Container(
+          height: 312,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Image.asset(redDot),
+              const SizedBox(
+                height: 5,
+              ),
+              const Text(
+                '10:30',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontFamily: poppins_regular),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              Image.asset(soundWave_1),
+              const SizedBox(height: 30,),
+              Container(
+                height: 52,
+                width: 375,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: TabBG),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 14, right: 14, top: 5,bottom: 6),
+                  child: Row(
+                    mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(onTap: (){},
+                        child: const Icon(
+                          CupertinoIcons.mic_fill,
+                          color: primary,
+                        ),
+                      ),
+                      const Text(
+                        'Release to send',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: poppins_regular,
+                            color: Colors.black),
+                      ),
+                      InkWell(onTap: (){},
+                        child: const Icon(
+                          Icons.send,
+                          color: primary,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget AddgroupList({String?text,VoidCallback?onTab}){
+  return  InkWell(
+    onTap: onTab,
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          profileAvatar_1(height: 56,width: 56),
+          const SizedBox(height: 5,),
+          Text(text!,style: const TextStyle(fontSize: 16,color: Colors.white,fontFamily: poppins_regular),)
+        ],
+      ),
+    ),
+  );
+}
+
+Widget createGroupList({String?title,String?subTitle,String?alphabet,icIndex,VoidCallback?onTap}){
+  return  InkWell(
+    onTap: onTap,
+    child: Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                alphabet!,
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontFamily: poppins_regular,
+                    color: primaryTxt),
+              ),
+              if (icIndex == 0)
+                InkWell(
+                    onTap: () {},
+                    child: Image.asset(createGroup_ic))
+            ],
+          ),
+          const Divider(
+            color: bordar,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    profileAvatar_1(height: 56, width: 56),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                         title! ,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontFamily: poppins_semibold),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          subTitle!,
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: primaryTxt,
+                              fontFamily: poppins_regular),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                      color: chatContent,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Center(
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.circular(30)
+                      ),
+                      child: Center(
+                        child: Image.asset(vector),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10,),
+          const Divider(color: bordar,),
+          const SizedBox(height: 10,)
+        ],
+      ),
+    ),
+  );
+}
+
+Widget AddUserButton({onTap}){
+  return InkWell(onTap: onTap,
+    child: Container(
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30)
+      ),
+      child: Center(child: Image.asset(addUser)),
+    ),
+  );
+}
+
+Widget muteButton({onTap,Color?color,Color?icColor}){
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(30)
+      ),
+      child: Center(child: Image.asset(mute,color: icColor,),),
+    ),
+  );
+}
+
+Widget endCall({onTap}){
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      height: 80,
+      width: 80,
+      decoration: BoxDecoration(
+          color:lightRed,
+          borderRadius: BorderRadius.circular(45)
+      ),
+      child: Center(child: Container(
+        height: 60,
+        width: 60,
+        decoration: BoxDecoration(
+            color: red,
+            borderRadius: BorderRadius.circular(45)
+        ),
+        child: const Icon(Icons.call_end_rounded,color: Colors.white,size: 30,),
+      ),),
+    ),
+  );
+}
+
+Widget muteIC(){
+  return Container(
+    height: 32,
+    width: 32,
+    decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30)
+    ),
+    child: Center(child: Image.asset(mute,height: 18,width: 18,),),
+  );
+}
+Widget callContainer(){
+  return  Container(
+    height: 273,
+    width: 170,
+    decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16)
+    ),
+    child: Center(
+      child: Stack(
+        children: [
+          Positioned(top: 10,left: 10,child: muteIC()),
+          Container(
+            height: 267,
+            width: 165,
+            decoration: BoxDecoration(
+                color: callBg,
+                borderRadius: BorderRadius.circular(16)
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+Widget CallScreenBottomSheet(){
+  return Stack(
+    children: [
+      // Blurred background with centered text
+      Positioned.fill(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+              sigmaX: 5.0, sigmaY: 5.0),
+          child: const SizedBox(
+          ),
+        ),
+      ),
+      Positioned(
+          top: 30,
+          left: 353,
+          right: 20,
+          child: InkWell(
+            onTap: (){Get.back();},
+            child: Container(
+              height: 38,
+              width: 38,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                  BorderRadius.circular(30)),child: Center(child:Image.asset(close),),
+            ),
+          )),
+      Positioned(
+        right: 0,
+        left: 0,
+        bottom: 0,
+        child: Container(
+          height: 380,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24))),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Image.asset(CallBottomSheet_img),
+              const Text(
+                'Are You Sure?',
+                style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(
+                    left: 35, right: 35, top: 15),
+                child: Text(
+                  'Hang up on group video call? please make sure ',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: primaryTxt,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+              const Text(
+                'all goods before hanging up on video call.',
+                style: TextStyle(
+                    fontSize: 14,
+                    color: primaryTxt,
+                    fontWeight: FontWeight.w400),
+              ),
+              const SizedBox(height: 30,),
+              Container(
+                height: 50,
+                width: 367,
+                decoration: BoxDecoration(color: red,
+                    borderRadius: BorderRadius.circular(30)
+                ),
+                child: const Center(
+                  child: Text('Leave Group Video Call',style: TextStyle(color: Colors.white,fontSize: 16),),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
+}
