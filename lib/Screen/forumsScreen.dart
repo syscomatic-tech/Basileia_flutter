@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 class ForumsScreen extends StatelessWidget {  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(),
+      body: Column(
+        children: [
+          Text('Forums',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600),)
+        ],
+      ),
     );
   }
 }

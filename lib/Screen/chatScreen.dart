@@ -156,7 +156,7 @@ class ChatScreen extends StatelessWidget {
           )),
           chatScreenTextField(micOnTap: () {
             Get.bottomSheet(
-              chatBottomSheet()
+              chatBottomSheet(context: context)
             );
           }, sentOnTap: () {
             Get.to(() => GroupChatScreen());

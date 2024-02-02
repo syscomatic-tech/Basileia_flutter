@@ -1580,7 +1580,7 @@ Widget chatItem({String? title, String? subTitle, msgCount, onTap}) {
                   ],
                 ),
                 const SizedBox(
-                  width: 50,
+                  width: 30,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -1744,14 +1744,14 @@ class Message {
   });
 }
 
-Widget chatBottomSheet(){
+Widget chatBottomSheet({context}){
   return Stack(
     children: [
       // Blurred background with centered text
       Positioned.fill(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child: const Column(
+          child:  const Column(
             children: [
               Icon(
                 CupertinoIcons.mic_fill,
@@ -1773,84 +1773,88 @@ Widget chatBottomSheet(){
         ),
       ),
       Positioned(
-          top: 135,
-          left: 130,
-          right: 130,
-          child: Container(
-            height: 6,
-            width: 100,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10)),
-          )),
-      Positioned(
         bottom: 10,
         left: 10,
         right: 10,
-        child: Container(
-          height: 312,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20)),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Image.asset(redDot),
-              const SizedBox(
-                height: 5,
-              ),
-              const Text(
-                '10:30',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontFamily: poppins_regular),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Image.asset(soundWave_1),
-              const SizedBox(height: 30,),
-              Container(
-                height: 52,
-                width: 375,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(9.0),
+              child: Container(
+                height: 6,
+                width: 100,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: TabBG),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 14, right: 14, top: 5,bottom: 6),
-                  child: Row(
-                    mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(onTap: (){},
-                        child: const Icon(
-                          CupertinoIcons.mic_fill,
-                          color: primary,
-                        ),
-                      ),
-                      const Text(
-                        'Release to send',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: poppins_regular,
-                            color: Colors.black),
-                      ),
-                      InkWell(onTap: (){},
-                        child: const Icon(
-                          Icons.send,
-                          color: primary,
-                        ),
-                      )
-                    ],
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height*0.35,
+              width: MediaQuery.of(context).size.height*80,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                children: [
+                   SizedBox(
+                    height: MediaQuery.of(context).size.height*0.02,
                   ),
-                ),
-              )
-            ],
-          ),
+                  Image.asset(redDot),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const Text(
+                    '10:30',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: poppins_regular),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.02,
+                  ),
+                  Image.asset(soundWave_1,height: 100,width: 300,),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+                  Container(
+                    height: MediaQuery.of(context).size.height*0.06,
+                    width: MediaQuery.of(context).size.width*0.90,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: TabBG),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 14, right: 14, top: 5,bottom: 6),
+                      child: Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(onTap: (){},
+                            child: const Icon(
+                              CupertinoIcons.mic_fill,
+                              color: primary,
+                            ),
+                          ),
+                          const Text(
+                            'Release to send',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: poppins_regular,
+                                color: Colors.black),
+                          ),
+                          InkWell(onTap: (){},
+                            child: const Icon(
+                              Icons.send,
+                              color: primary,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     ],
@@ -2055,39 +2059,41 @@ Widget callContainer(){
     ),
   );
 }
-Widget CallScreenBottomSheet(){
+Widget CallScreenBottomSheet({context}){
   return Stack(
     children: [
-      // Blurred background with centered text
       Positioned.fill(
         child: BackdropFilter(
           filter: ImageFilter.blur(
               sigmaX: 5.0, sigmaY: 5.0),
-          child: const SizedBox(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20,right: 10),
+                child: Align(alignment: Alignment.topRight,
+                  child: InkWell(
+                    onTap: (){Get.back();},
+                    child: Container(
+                      height: 38,
+                      width: 38,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                          BorderRadius.circular(30)),child: Center(child:Image.asset(close),),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
-      Positioned(
-          top: 30,
-          left: 353,
-          right: 20,
-          child: InkWell(
-            onTap: (){Get.back();},
-            child: Container(
-              height: 38,
-              width: 38,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                  BorderRadius.circular(30)),child: Center(child:Image.asset(close),),
-            ),
-          )),
       Positioned(
         right: 0,
         left: 0,
         bottom: 0,
         child: Container(
-          height: 380,
+          height: MediaQuery.of(context).size.height*0.45,
           decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -2095,10 +2101,10 @@ Widget CallScreenBottomSheet(){
                   topRight: Radius.circular(24))),
           child: Column(
             children: [
-              const SizedBox(
-                height: 30,
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Image.asset(CallBottomSheet_img),
               ),
-              Image.asset(CallBottomSheet_img),
               const Text(
                 'Are You Sure?',
                 style: TextStyle(
@@ -2124,10 +2130,10 @@ Widget CallScreenBottomSheet(){
                     color: primaryTxt,
                     fontWeight: FontWeight.w400),
               ),
-              const SizedBox(height: 30,),
+              SizedBox(height: MediaQuery.of(context).size.height*0.03,),
               Container(
-                height: 50,
-                width: 367,
+                height: MediaQuery.of(context).size.height*0.06,
+                width: MediaQuery.of(context).size.width*0.80,
                 decoration: BoxDecoration(color: red,
                     borderRadius: BorderRadius.circular(30)
                 ),

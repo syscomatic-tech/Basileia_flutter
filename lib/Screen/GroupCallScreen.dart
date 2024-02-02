@@ -1,9 +1,8 @@
-
+import 'package:basileia/Screen/forumsScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../Style/controller.dart';
@@ -58,9 +57,29 @@ class GroupCallScreen extends StatelessWidget {
                   Expanded(
                     child: Column(
                       children: [
-                        Row(mainAxisAlignment: MainAxisAlignment.center,children: [callContainer(),const SizedBox(width: 10,),callContainer()],),
-                        const SizedBox(height: 10,),
-                        Row(mainAxisAlignment: MainAxisAlignment.center,children: [callContainer(),const SizedBox(width: 10,),callContainer()],),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            callContainer(),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            callContainer()
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            callContainer(),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            callContainer()
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -73,9 +92,10 @@ class GroupCallScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        AddUserButton(onTap: () {}),
+                        AddUserButton(onTap: () {Get.to(()=>ForumsScreen());}),
                         endCall(onTap: () {
-                          Get.bottomSheet(CallScreenBottomSheet());
+                          Get.bottomSheet(
+                              CallScreenBottomSheet(context: context));
                         }),
                         Obx(() => muteButton(
                             onTap: () {
@@ -83,12 +103,16 @@ class GroupCallScreen extends StatelessWidget {
                             },
                             color: colorController.isMute.value
                                 ? chatTxtColor
-                                : Colors.white,icColor: colorController.isMute.value?Colors.white:chatTxtColor))
+                                : Colors.white,
+                            icColor: colorController.isMute.value
+                                ? Colors.white
+                                : chatTxtColor))
                       ],
                     ),
                   )
                 ],
-              ))
+              ),
+          )
         ],
       ),
     );
