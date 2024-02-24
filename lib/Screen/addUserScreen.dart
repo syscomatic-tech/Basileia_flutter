@@ -89,90 +89,79 @@ class AddUserScreen extends StatelessWidget {
             left: 0,
             right: 0,
             bottom: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30))),
-              child: Expanded(
-                  child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Column(
+            child: Stack(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 8, bottom: 8),
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, top: 8, bottom: 8),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          profileAvatar_1(),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          const Text(
-                                            'Michael John',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16),
-                                          )
-                                        ],
-                                      ),
-                                      Image.asset(conform)
-                                    ],
-                                  ),
+                                Row(
+                                  children: [
+                                    profileAvatar_1(),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    const Text(
+                                      'Michael John',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16),
+                                    )
+                                  ],
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Divider(
-                                  color: bordar,
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                )
+                                Image.asset(conform)
                               ],
-                            );
-                          },
-                        ),
-                        Positioned(
-                          right: 35,
-                          left: 35,
-                          bottom: 20,
-                          child: InkWell(
-                            onTap: () {Get.to(()=>GroupCallScreen());},
-                            child: Container(
-                              height: 50,
-                              width: 327,
-                              decoration: BoxDecoration(
-                                  color: primary,
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: const Center(
-                                  child: Text(
-                                'Add to Video Call',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.white),
-                              )),
                             ),
                           ),
-                        )
-                      ],
-                    ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Divider(
+                            color: bordar,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          )
+                        ],
+                      );
+                    },
                   ),
-                ],
-              )),
+                ),
+                Positioned(
+                  bottom: 30,
+                    right: 40,
+                    left: 40,
+                    child: InkWell(
+                  onTap: () {Get.to(()=>GroupCallScreen());},
+                  child: Container(
+                    height: 50,
+                    width: 327,
+                    decoration: BoxDecoration(
+                        color: primary,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: const Center(
+                        child: Text(
+                          'Add to Video Call',
+                          style: TextStyle(
+                              fontSize: 16, color: Colors.white),
+                        )),
+                  ),
+                ))
+              ],
             ),
           )
         ],

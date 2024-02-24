@@ -78,7 +78,7 @@ class CreateGroupScreen extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: name.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return AddgroupList(text: name[index],onTab: (){Get.to(AddUserScreen());});
+                            return AddgroupList(text: name[index],onTab: (){Get.to(()=>AddUserScreen());});
                           },
                         ),
                       )
@@ -97,19 +97,17 @@ class CreateGroupScreen extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30))),
-              child: Expanded(
-                child: ListView.builder(
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    if (index == 0 || items[index][0] != items[index - 1][0]) {
-                      return createGroupList(onTap: (){},
-                          alphabet: items[index][0],
-                          title: items[index],
-                          subTitle: items[index],
-                      icIndex: index);
-                    }
-                  },
-                ),
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  if (index == 0 || items[index][0] != items[index - 1][0]) {
+                    return createGroupList(onTap: (){},
+                        alphabet: items[index][0],
+                        title: items[index],
+                        subTitle: items[index],
+                    icIndex: index);
+                  }
+                },
               ),
             ),
           ),

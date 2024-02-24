@@ -36,6 +36,20 @@ const  mute = "assets/icons/mute.png";
 const  cameraOff = "assets/icons/cameraOff.png";
 const  routeCamera = "assets/icons/Vector(2).png";
 const  close = "assets/icons/Vector(3).png";
-
-
-
+const  notification = "assets/icons/Notification.png";
+const  search = "assets/icons/Search_2.png";
+const  backArrow = "assets/icons/Back.png";
+const  like = "assets/icons/like.png";
+const  send = "assets/icons/send-plane-fill.png";
+const  comment = "assets/icons/Vector(4).png";
+const  location_1 = "assets/icons/location(1).png";
+const  news = "assets/icons/news.png";
+const  donation = "assets/icons/donation.png";
+const  classAptent = "assets/icons/360.png";
+const  more = "assets/icons/more.png";
+const  donate = "assets/icons/donate.png";
+const  call_icon = "assets/icons/callicon.png";
+const  vector_5 = "assets/icons/Vector(5).png";
+const  three_dot = "assets/icons/three_dot.png";
+const  viewIcon = "assets/icons/view_icon.png";
+const  reactIcon = "assets/icons/react_icon.png";

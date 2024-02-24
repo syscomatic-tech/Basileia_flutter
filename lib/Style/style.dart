@@ -6,11 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
+import 'package:readmore/readmore.dart';
 import 'colors.dart';
 import 'fonts.dart';
 import 'images.dart';
 
-int selected = 0;
 Widget Basic_Button({
   onTap,
   String? text,
@@ -32,13 +32,13 @@ Widget Basic_Button({
   );
 }
 
-Widget Primary_Button({onTap, String? text, double? Width}) {
+Widget Primary_Button({onTap, String? text, double? Width,Color?backgroundColor,Color?textColor}) {
   return SizedBox(
     height: 48,
     width: Width,
     child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: primary,
+            backgroundColor: backgroundColor??primary,
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -46,7 +46,7 @@ Widget Primary_Button({onTap, String? text, double? Width}) {
         onPressed: onTap,
         child: Text(
           text!,
-          style: const TextStyle(fontSize: 12.75, color: Colors.white),
+          style:  TextStyle(fontSize: 12.75, color: textColor??Colors.white),
         )),
   );
 }
@@ -126,7 +126,8 @@ Widget Profile(
     double? InSideHight,
     double? InsideWidth,
     double? InSideRadius,
-    double? OutSideRadius}) {
+    double? OutSideRadius,
+    Color?bordarColor}) {
   return InkWell(
     onTap: onPressed,
     child: Container(
@@ -135,7 +136,7 @@ Widget Profile(
       decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(OutSideRadius ?? 30),
-          border: Border.all(color: profileBorder, width: 1.8)),
+          border: Border.all(color: bordarColor??profileBorder, width: 1.8)),
       child: Center(
         child: Container(
           height: InSideHight,
@@ -1096,7 +1097,7 @@ Widget listTielButton({onTap}) {
   );
 }
 
-Widget statistic({Color? backGround}) {
+Widget statistic({Color? backGround,String?lastTitle,String?midTitle}) {
   return Container(
     width: double.maxFinite,
     height: 126,
@@ -2142,6 +2143,654 @@ Widget CallScreenBottomSheet({context}){
                 ),
               )
             ],
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget forumScreen_searchBar(){
+  return Container(
+    height: 43,
+    decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8)),
+    child: TextField(
+      style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400),
+      decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText:"Search question",
+          hintStyle: const TextStyle(fontSize: 14,color: fontColor_2,fontWeight: FontWeight.w400),
+          prefixIcon: Image.asset(search)
+      ),
+    ),
+  );
+}
+
+Widget categories({onTap,String?text}){
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 71,
+        width: 71,
+        decoration: BoxDecoration(
+            color: categoriesColor,
+            borderRadius: BorderRadius.circular(20)
+        ),
+        child:  Center(child: Text(text!,style: const TextStyle(fontSize: 10,color: Colors.white,fontWeight: FontWeight.w500),)),
+      ),
+    ),
+  );
+}
+
+Widget seeAllButton({onTap}){
+  return InkWell(
+      onTap: onTap,
+      child: const Text(
+        'See all',
+        style: TextStyle(
+            fontSize: 12, fontWeight: FontWeight.w400),
+      ));
+}
+
+Widget question(){
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 15),
+    child: Container(
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(26)),
+      child: Padding(
+        padding: const EdgeInsets.only(
+            top: 15, left: 15, right: 15, bottom: 10),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                          color: primaryTxt,
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'History',
+                          style: TextStyle(
+                              fontSize: 8,
+                              color: primary,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          'Kaiya Curtis',
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                const Text(
+                  '21 mins ago',
+                  style: TextStyle(
+                      fontSize: 8, fontWeight: FontWeight.w400,color: primary),
+                )
+              ],
+            ),
+            const SizedBox(height: 10,),
+            const ReadMoreText(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus felis sit amet nisi posuere tristique. Pellentesque vel tristique erat. Curabitur posuere porttitor lectus, in vehicula urna feugiat eget aa',
+              trimLength: 210,
+              style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.w500),
+              moreStyle: TextStyle(color: Colors.red,decoration: TextDecoration.underline,decorationColor: Colors.red,fontStyle: FontStyle.italic),
+              lessStyle:  TextStyle(color: bordar,decoration: TextDecoration.underline,decorationColor: bordar),
+            )
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget answer(){
+  return Padding(
+    padding: const EdgeInsets.only(
+        top: 15, left: 15, right: 15, bottom: 10),
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      color: primaryTxt,
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '70+ votes',
+                      style: TextStyle(
+                          fontSize: 8,
+                          color: red,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      'Kaiya Curtis',
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600),
+                    )
+                  ],
+                )
+              ],
+            ),
+            const Text(
+              '21 mins ago',
+              style: TextStyle(
+                  fontSize: 8, fontWeight: FontWeight.w400,color: primary),
+            )
+          ],
+        ),
+        const SizedBox(height: 10,),
+        const Text(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus felis sit amet nisi posuere tristique. Pellentesque vel tristique erat. Curabitur posuere porttitor lectus, in vehicula urna feugiat eget aa',
+          style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.w500),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            InkWell(onTap: (){},child: Image.asset(like,height: 10,)),
+            const SizedBox(width: 5,),
+            InkWell(onTap: (){},child: const Text('Reply',style: TextStyle(fontSize: 8,decoration: TextDecoration.underline),))
+          ],
+        ),
+        const SizedBox(height: 5,),
+        const Divider(color: bordar,)
+      ],
+    ),
+  );
+}
+
+Widget avatar({double?height,double?width}){
+  return Container(
+    height: height,
+    width: width,
+    decoration: BoxDecoration(
+        color: bordar,
+        borderRadius: BorderRadius.circular(30)
+    ),
+  );
+}
+Widget forumPost(){
+  return  Container(
+    height: 201,
+    decoration: BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 0)),
+      ],
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15)),
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              avatar(height: 33, width: 33),
+              const SizedBox(
+                width: 7,
+              ),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tiana Rosser',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    'Song Writer ',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              )
+            ],
+          ),
+          const SizedBox(height: 10,),
+          const Text(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo nisl ac eros euismod, a lobortis purus egestas. Sed facilisis laoreet tristique. Donec elementum auctor aliquam.',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 10,
+                fontWeight: FontWeight.w400),
+          ),
+          const SizedBox(height: 15,),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Container(
+                  height: 22,
+                  decoration: BoxDecoration(
+                      color: bordar,
+                      borderRadius: BorderRadius.circular(8)
+                  ),
+                  child: const  Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: Text('Music',style: TextStyle(fontSize: 8,color: primaryTxt),)),
+                  ),
+                ),
+              ),
+              Container(
+                height: 22,
+                decoration: BoxDecoration(
+                    color: bordar,
+                    borderRadius: BorderRadius.circular(8)
+                ),
+                child: const  Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 10),
+                  child: Center(child: Text('Entertainment',style: TextStyle(fontSize: 8,color: primaryTxt),)),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 5,),
+          const Divider(color: bordar,),
+          Row(
+            children: [
+              InkWell(
+                onTap: (){},
+                child: Row(
+                  children: [
+                    Image.asset(like,color: Colors.black,height: 10,),
+                    const SizedBox(width: 5,),
+                    const Text('120 Votes',style: TextStyle(fontSize: 10,color: Colors.black),)
+                  ],
+                ),
+              ),
+              const SizedBox(width: 15,),
+              InkWell(
+                onTap: (){},
+                child: Row(
+                  children: [
+                    Image.asset(comment,color: Colors.black,),
+                    const SizedBox(width: 5,),
+                    const Text('13 Replies',style: TextStyle(fontSize: 10,color: Colors.black),)
+                  ],
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget myGroups({context}){
+  return  Container(
+    height: 158.86,
+    width: MediaQuery.of(context).size.width*0.80,
+    decoration: BoxDecoration(
+      boxShadow:  [
+        BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 0)),
+      ],
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14)
+    ),
+    child: Column(
+      children: [
+        Container(
+          height: 118,
+          decoration: const BoxDecoration(
+              color: groupsBG,
+              borderRadius: BorderRadius.only(topRight: Radius.circular(14),topLeft: Radius.circular(14))
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top:15,left: 10,right: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(children: [
+                avatar(height: 29,width: 29),
+                const SizedBox(width: 10,),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Tiana Rosser',style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.w600),),
+                    Text('Song Writer',style: TextStyle(fontSize: 8.8,color: Colors.black,fontWeight: FontWeight.w400),),
+                  ],)
+              ],),
+              Column(
+                children: [
+                  const Text('Total Member: 18,929',style: TextStyle(fontSize: 7.44,color: primaryTxt,fontWeight: FontWeight.w400),),
+                  InkWell(onTap: (){},child: const Text('Explore Now',style: TextStyle(fontSize: 9.44,color: primary,fontWeight: FontWeight.w400,decoration: TextDecoration.underline,decorationColor: primary,decorationThickness: 2),)),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget Suggestions (){
+  return Container(
+    height: 202,
+    width: 145,
+    decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow:  [
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, 0)),
+        ],
+        borderRadius: BorderRadius.circular(9)
+    ),
+    child: Column(
+      children: [
+        Stack(
+          children: [
+            Positioned(top: 10,left: 10,
+              child: Container(height: 19,
+                width: 60,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: group
+                ),child: const Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 8),
+                  child: Center(child: Text('Recommend',style: TextStyle(color: Colors.black,fontSize: 7),)),
+                ),
+              ),
+            ),
+            Container(
+              height: 108,
+              decoration: const BoxDecoration(
+                  color: groupsBG,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(9),topRight: Radius.circular(9))
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Self & Others',style: TextStyle(fontSize: 10,fontFamily: poppins_semibold,color: Colors.black),),
+              const SizedBox(height: 5,),
+              const Text('Suspendisse finibus an turpis aliquam sodale…',style: TextStyle(fontSize: 7,fontFamily: poppins_semibold,color: primaryTxt),),
+              const SizedBox(height: 15,),
+              InkWell(onTap: (){},child: const Text('Join Now',style: TextStyle(fontSize: 12,fontFamily: poppins_regular,color: primary,decoration: TextDecoration.underline,decorationColor: primary,decorationThickness: 2),)),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget GroupsIManage({context}){
+  return  Container(
+    width: MediaQuery.of(context).size.width*0.90,
+    height: 93,
+    decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, 0)),
+        ],
+        borderRadius: BorderRadius.circular(10)
+    ),
+    child: Row(
+      children: [
+        Container(
+          height: 93,
+          width: 93,
+          decoration: const BoxDecoration(
+              color: groupsBG,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(10),bottomLeft: Radius.circular(10))
+          ),
+        ),
+        const Padding(
+          padding:  EdgeInsets.only(top: 10,left: 10,right: 10),
+          child: SizedBox(
+            width: 200,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start ,
+              children: [
+                Text('Groups Categories',style: TextStyle(fontSize: 9.82,fontFamily: poppins_regular,color: primaryTxt),),
+                SizedBox(height: 5,),
+                Text('Group Name Goes Here',style: TextStyle(fontSize: 11.46,fontFamily: poppins_semibold,color: Colors.black),),
+                SizedBox(height: 5,),
+                Text('Nunc ornare magna nunc, design to eleifend urna ultrices a.',
+                  style: TextStyle(fontSize: 9,fontFamily: poppins_semibold,color: primaryTxt,),),
+              ],),
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget donateContent({String?title,String?sudTitle,ic,Color?BGcolor,Color?textColor,Color?sudTitleColor}){
+  return  InkWell(
+    onTap: (){},
+    child: Container(
+      height: 106,
+      width: 151,
+      decoration: BoxDecoration(
+          color: BGcolor,
+          borderRadius: BorderRadius.circular(6),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                blurRadius: 10,
+                offset: const Offset(0, 0)),
+          ]),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(ic),
+          const SizedBox(height: 15,),
+          Text(
+            title!,
+            style: TextStyle(
+                fontSize: 11,
+                color: textColor,
+                fontFamily: poppins_regular,
+                fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 7,),
+          Text(
+            sudTitle!,
+            style:  TextStyle(
+                fontSize: 11,
+                color: sudTitleColor,
+                fontFamily: poppins_regular,
+                fontWeight: FontWeight.w400),
+          )
+        ],
+      ),
+    ),
+  );
+}
+Widget primaryButton_1({onTap}){
+  return  InkWell(
+    onTap: onTap,
+    child: Container(
+      height: 39,
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+          color: primary,
+          borderRadius: BorderRadius.circular(5)
+      ),
+      child: const Center(child: Text('Next',style: TextStyle(fontSize: 11,color: Colors.white,fontFamily: poppins_semibold),)),
+    ),
+  );
+}
+Widget pageButton({icon,Color?bordar,String?text,Color?textColor,Color?BGColor,Color?iconColor,onTap}){
+  return  InkWell(
+    onTap: onTap,
+    child: Container(
+      height: 26,
+      width: 83,
+      decoration: BoxDecoration(
+        color: BGColor,
+          border: Border.all(color: bordar??primaryTxt),
+          borderRadius: BorderRadius.circular(30)
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(icon,height: 12.65,color: iconColor,),
+          const SizedBox(width: 5,),
+          Text(text!,style: TextStyle(fontSize: 9.49,color: textColor),)
+        ],
+      ),
+    ),
+  );
+}
+
+Widget books(){
+  return Column(
+    children: [
+      Container(
+        height: 85,
+        decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors:[
+                lightPrimary_2,
+                readBookColorGradient,
+              ],
+            ),
+            borderRadius: BorderRadius.circular(5)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20,right: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Genesis',style: TextStyle(fontFamily: poppins_regular,fontSize: 17.73,fontWeight: FontWeight.w600),),
+                  SizedBox(height: 5,),
+                  Text('50 Chapters',style: TextStyle(fontSize: 12,fontFamily: poppins_regular,color: primaryTxt),),
+                ],
+              ),
+              InkWell(
+                onTap: (){},
+                child: Container(
+                  height: 34.09,
+                  width: 104.84,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: const Center(child: Text('Explore',style: TextStyle(fontSize: 11.93,color: TxtColor,fontFamily: poppins_bold),)),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+      const SizedBox(height: 15,),
+    ],
+  );
+}
+
+Widget donateOptions(){
+  return Container(
+    height: 170,
+    width: double.maxFinite,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.white, boxShadow: [
+      BoxShadow(
+          color: Colors.grey.withOpacity(0.2),
+          blurRadius: 10,
+          offset: const Offset(0, 0)),
+    ],
+    ),
+    child: Column(
+      children: [
+        const SizedBox(height: 10,),
+        const Text('Put a Candle',style: TextStyle(fontSize: 11.5,color: Colors.black,fontFamily: poppins_regular),),
+        const SizedBox(height: 5,),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(CupertinoIcons.money_dollar,color: primaryTxt,size: 17,),
+            Text('2',style: TextStyle(fontSize: 11.5,color: primaryTxt,fontFamily: poppins_regular),),
+          ],
+        ),
+        const SizedBox(height: 25,),
+        Image.asset(donation,color: primaryTxt,),
+        const SizedBox(height: 15,),
+        Primary_Button(text: 'Choose',Width: 340,onTap: (){})
+      ],
+    ),
+  );
+}
+
+Widget donateAmount({Color?backgroundColor,Color?textColor,onTab}){
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(right: 40),
+        child: InkWell(
+          onTap: onTab,
+          child: Container(
+            height: 34.6,
+            width: 95.68,
+            decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(5)
+            ),
+            child:  Center(child: Text('\$100',style: TextStyle(fontWeight: FontWeight.w400,fontFamily: poppins_regular,fontSize: 11.35,color: textColor),)),
           ),
         ),
       ),

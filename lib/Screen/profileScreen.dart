@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
     profilePosts(),
   ];
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       body: Column(
         children: [

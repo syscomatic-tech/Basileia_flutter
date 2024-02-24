@@ -101,7 +101,7 @@ class HomeFeedScreen extends StatelessWidget {
                     searchBar(),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, left: 250),
-                      child: AdvanceFilterButton(onTap:() {Get.to(InboxScreen());}),
+                      child: AdvanceFilterButton(onTap:() {Get.to(()=>InboxScreen());}),
                     )
                   ],
                 ),

@@ -28,6 +28,19 @@ class TabsController extends GetxController with GetSingleTickerProviderStateMix
     super.onClose();
   }
 }
+class religionsPageController extends GetxController with GetSingleTickerProviderStateMixin {
+  late TabController tabController;
+  @override
+  void onInit() {
+    tabController = TabController(length: 4, vsync: this);
+    super.onInit();
+  }
+  @override
+  void onClose() {
+    tabController.dispose();
+    super.onClose();
+  }
+}
 
 class CheckboxController extends GetxController {
   var isChecked = true.obs;
@@ -38,9 +51,23 @@ class PasswordController extends GetxController {
 }
 
 class ColorController extends GetxController {
-  RxBool isMute = true.obs;
+  RxBool isMute = false.obs;
 
   void toggleColor() {
     isMute.value = !isMute.value;
+  }
+}
+
+class LeadersController extends GetxController with GetSingleTickerProviderStateMixin {
+  late TabController tabController;
+  @override
+  void onInit() {
+    tabController = TabController(length: 4, vsync: this);
+    super.onInit();
+  }
+  @override
+  void onClose() {
+    tabController.dispose();
+    super.onClose();
   }
 }
