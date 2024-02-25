@@ -106,7 +106,7 @@ class SignInScreen extends StatelessWidget {
         Primary_Button(
             onTap: () async {
               final req_outp = await auth.LoginRequest(
-                  email.toString(), password.toString());
+                  email.text.toString(), password.text.toString());
               try {
                 SuccessToast(req_outp["accessToken"]);
                 Get.to(() => HomeFeedScreen());

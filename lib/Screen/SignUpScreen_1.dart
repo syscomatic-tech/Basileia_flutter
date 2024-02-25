@@ -120,11 +120,11 @@ class SignUpScreen_1 extends StatelessWidget {
             Primary_Button(
                 onTap: () {
                   final req_outp = signup.RegistrationRequest(
-                      firstname.toString(),
-                      lastname.toString(),
-                      email.toString(),
+                      firstname.text.toString(),
+                      lastname.text.toString(),
+                      email.text.toString(),
                       role,
-                      password.toString());
+                      password.text.toString());
                   if (req_outp == true) {
                     Get.to(() => SignUpOtpScreen(email: email.toString()));
                   } else {

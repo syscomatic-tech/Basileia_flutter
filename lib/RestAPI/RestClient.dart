@@ -29,18 +29,27 @@ class AuthClient {
 
   Future<bool> RegistrationRequest(String FirstName, String LastName,
       String Email, String Role, String pass) async {
+    var headers = {'Content-Type': 'application/json'};
     var request =
         http.Request('POST', Uri.parse('$BaseURL/auth/admin/register'));
-    request.body =
-        '''{\n    "firstName":"$FirstName",\n    "lastName":"$LastName",\n    "email":"$Email",\n    "role":"$Role",\n    "password":"$pass"\n}''';
 
+    request.body = jsonEncode({
+      "firstName": FirstName,
+      "lastName": LastName,
+      "email": Email,
+      "role": Role,
+      "password": pass
+    });
+    request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
       return true;
     } else {
-      print(response.reasonPhrase);
+      print(await response.stream.bytesToString());
+
+      print(await response.reasonPhrase);
       return false;
     }
   }
