@@ -11,6 +11,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,25 +88,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     Basic_Button(
                         onTap: () {
-                          Get.to(() => SignUpScreen_1());
+                          Get.to(() => SignUpScreen_1(role : "BU"));
                         },
                         text: 'Basic User'),
                     const SizedBox(
                       height: 20,
                     ),
-                    Basic_Button(onTap: () {}, text: 'Celebrities / VIPs'),
+                    Basic_Button(onTap: () {Get.to(() => SignUpScreen_1(role : "VIP"));}, text: 'Celebrities / VIPs'),
                     const SizedBox(
                       height: 20,
                     ),
-                    Basic_Button(onTap: () {}, text: 'Church Leader'),
+                    Basic_Button(onTap: () {Get.to(() => SignUpScreen_1(role : "CL"));}, text: 'Church Leader'),
                     const SizedBox(
                       height: 20,
                     ),
-                    Basic_Button(onTap: () {}, text: 'Church Page'),
+                    Basic_Button(onTap: () {Get.to(() => SignUpScreen_1(role : "CP"));}, text: 'Church Page'),
                     const SizedBox(
                       height: 20,
                     ),
-                    Primary_Button(onTap: () {}, text: 'Jump To Next', Width: 272),
                   ],
                 ),
               ),

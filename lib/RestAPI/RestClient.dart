@@ -1,7 +1,6 @@
 import 'dart:async';
 import "dart:convert";
 import 'package:http/http.dart' as http;
-import 'package:basileia/style/style.dart';
 
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";

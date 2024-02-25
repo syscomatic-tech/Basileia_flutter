@@ -5,13 +5,22 @@ import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../RestAPI/RestClient.dart';
 import '../Style/colors.dart';
 import '../Style/controller.dart';
 
 class SignUpScreen_1 extends StatelessWidget {
+  String role='';
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController firstname = TextEditingController();
+  final TextEditingController lastname = TextEditingController();
   final PasswordController controller = Get.put(PasswordController());
-  SignUpScreen_1({super.key});
-  @override
+
+  final AuthClient signup = AuthClient();
+
+  SignUpScreen_1({Key? key, required this.role})
+      : super(key: key);  @override
   Widget build(BuildContext context) {
     final CheckboxController checkboxController = Get.put(CheckboxController());
     return Scaffold(
@@ -63,25 +72,26 @@ class SignUpScreen_1 extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            textField(272,48,'First name', null,null),
+            textField(width:272,hight:48,lebelText:'First name',controller: firstname),
             const SizedBox(
               height: 20,
             ),
-            textField(272,48,'Last name', null,null),
+            textField(width:272,hight:48,lebelText:'Last name',controller: lastname),
             const SizedBox(
               height: 20,
             ),
-            textField(272,48,'Email address', null,null),
+            textField(width:272,hight:48,lebelText:'Email address',controller: email),
             const SizedBox(
               height: 20,
             ),
             Obx(
-              ()=>textField(272,48,
-                "Password",
-                IconButton(onPressed: () { controller.isObscured.value = !controller.isObscured.value;
+              ()=>textField(width:272,hight:48,
+                lebelText:"Password",
+                suffixIcon:IconButton(onPressed: () { controller.isObscured.value = !controller.isObscured.value;
                 }, icon:  Icon(
                   controller.isObscured.value ? Icons.visibility : Icons.visibility_off,color: textFi,
-                ),),null,
+                ),),
+                controller: password
               ),
             ),
             const SizedBox(
@@ -89,9 +99,10 @@ class SignUpScreen_1 extends StatelessWidget {
             ),
             Primary_Button(
                 onTap: () {
+                  signup.RegistrationRequest(firstname.toString(), lastname.toString(), email.toString(), role,password.toString());
                   Get.to(() => SignUpOtpScreen());
                 },
-                text: 'Sign In',
+                text: 'Sign Up',
                 Width: 272),
             const Padding(
               padding: EdgeInsets.only(left: 71, right: 71, top: 20),

@@ -67,12 +67,13 @@ Widget Primary_Button(
   );
 }
 
-Widget textField(
+Widget textField({
   double? width,
   double? hight,
   String? lebelText,
   suffixIcon,
   Color? textfieldBg,
+    controller}
 ) {
   return Container(
     width: width,
@@ -86,6 +87,7 @@ Widget textField(
     child: Padding(
       padding: const EdgeInsets.only(bottom: 3, left: 10),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,
           suffixIcon: suffixIcon,
@@ -532,7 +534,7 @@ Widget PostPhoto() {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            textField(290, 48, 'Paste Verse or Select Verse', null, TabBG),
+            textField(width:290, hight:48, lebelText:'Paste Verse or Select Verse', textfieldBg:TabBG),
             const SizedBox(
               width: 10,
             ),
@@ -657,7 +659,7 @@ Widget audioPost() {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            textField(290, 48, 'Paste Verse or Select Verse', null, TabBG),
+            textField(width:290, hight:48, lebelText:'Paste Verse or Select Verse',textfieldBg:TabBG),
             const SizedBox(
               width: 10,
             ),
@@ -762,15 +764,15 @@ Widget postPhoto_1() {
               width: 20,
             ),
             textField(
-                256,
-                48,
-                'My Profile',
-                Padding(
+                width:256,
+                hight:48,
+                lebelText:'My Profile',
+                suffixIcon:Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child:
                       InkWell(onTap: () {}, child: Image.asset(Downarrow_ic)),
                 ),
-                TabBG),
+                textfieldBg:TabBG),
           ],
         )
       ],

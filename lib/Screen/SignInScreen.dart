@@ -1,3 +1,5 @@
+import 'package:basileia/Screen/SignUpScreen.dart';
+import 'package:basileia/Screen/SignUpScreen_1.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,10 @@ import '../Style/images.dart';
 import '../Style/style.dart';
 
 class SignInScreen extends StatelessWidget {
+
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+
   final PasswordController controller = Get.put(PasswordController());
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class SignInScreen extends StatelessWidget {
               width: 3,
             ),
             InkWell(
-                onTap: () {},
+                onTap: () {Get.to(()=>SignUpScreen());},
                 child: const Text(
                   'Sign Up',
                   style: TextStyle(
@@ -55,17 +61,17 @@ class SignInScreen extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        textField(272,48,'Email address', null,null),
+        textField(width:272,hight:48,lebelText:'Email address',controller: email),
         const SizedBox(
           height: 20,
         ),
         Obx(
-          ()=> textField(272,48,
-            'Password',
-            IconButton(onPressed: () { controller.isObscured.value = !controller.isObscured.value;
+          ()=> textField(width:272,hight:48,
+            lebelText:'Password',
+            suffixIcon:IconButton(onPressed: () { controller.isObscured.value = !controller.isObscured.value;
             }, icon:  Icon(
               controller.isObscured.value ? Icons.visibility : Icons.visibility_off,color: textFi,
-            ),),null
+            ),),controller: password
           ),
         ),
         Padding(
