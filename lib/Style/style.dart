@@ -4,12 +4,23 @@ import 'package:basileia/Screen/commentScreen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:readmore/readmore.dart';
 import 'colors.dart';
 import 'fonts.dart';
 import 'images.dart';
+
+const colorRed = Color.fromRGBO(231, 28, 36, 1);
+const colorDark = Color.fromRGBO(136, 28, 32, 1);
+const colorGreen = Color.fromRGBO(33, 191, 115, 1);
+const colorBlue = Color.fromRGBO(52, 152, 219, 1.0);
+const colorOrange = Color.fromRGBO(230, 126, 34, 1.0);
+const colorWhite = Color.fromRGBO(255, 255, 255, 1.0);
+const colorDarkBlue = Color.fromRGBO(44, 62, 80, 1.0);
+const colorLightGray = Color.fromRGBO(135, 142, 150, 1.0);
+const colorLight = Color.fromRGBO(211, 211, 211, 1.0);
 
 Widget Basic_Button({
   onTap,
@@ -32,13 +43,18 @@ Widget Basic_Button({
   );
 }
 
-Widget Primary_Button({onTap, String? text, double? Width,Color?backgroundColor,Color?textColor}) {
+Widget Primary_Button(
+    {onTap,
+    String? text,
+    double? Width,
+    Color? backgroundColor,
+    Color? textColor}) {
   return SizedBox(
     height: 48,
     width: Width,
     child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: backgroundColor??primary,
+            backgroundColor: backgroundColor ?? primary,
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -46,7 +62,7 @@ Widget Primary_Button({onTap, String? text, double? Width,Color?backgroundColor,
         onPressed: onTap,
         child: Text(
           text!,
-          style:  TextStyle(fontSize: 12.75, color: textColor??Colors.white),
+          style: TextStyle(fontSize: 12.75, color: textColor ?? Colors.white),
         )),
   );
 }
@@ -127,7 +143,7 @@ Widget Profile(
     double? InsideWidth,
     double? InSideRadius,
     double? OutSideRadius,
-    Color?bordarColor}) {
+    Color? bordarColor}) {
   return InkWell(
     onTap: onPressed,
     child: Container(
@@ -136,7 +152,7 @@ Widget Profile(
       decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(OutSideRadius ?? 30),
-          border: Border.all(color: bordarColor??profileBorder, width: 1.8)),
+          border: Border.all(color: bordarColor ?? profileBorder, width: 1.8)),
       child: Center(
         child: Container(
           height: InSideHight,
@@ -1097,7 +1113,7 @@ Widget listTielButton({onTap}) {
   );
 }
 
-Widget statistic({Color? backGround,String?lastTitle,String?midTitle}) {
+Widget statistic({Color? backGround, String? lastTitle, String? midTitle}) {
   return Container(
     width: double.maxFinite,
     height: 126,
@@ -1501,12 +1517,12 @@ Widget profilePosts() {
   );
 }
 
-Widget profileAvatar_1({double?height,double?width}) {
+Widget profileAvatar_1({double? height, double? width}) {
   return Stack(
     children: [
       Container(
-        height: height ??48,
-        width: width ??48,
+        height: height ?? 48,
+        width: width ?? 48,
         decoration: BoxDecoration(
             color: bordar, borderRadius: BorderRadius.circular(30)),
       ),
@@ -1745,14 +1761,14 @@ class Message {
   });
 }
 
-Widget chatBottomSheet({context}){
+Widget chatBottomSheet({context}) {
   return Stack(
     children: [
       // Blurred background with centered text
       Positioned.fill(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-          child:  const Column(
+          child: const Column(
             children: [
               Icon(
                 CupertinoIcons.mic_fill,
@@ -1790,15 +1806,14 @@ Widget chatBottomSheet({context}){
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height*0.35,
-              width: MediaQuery.of(context).size.height*80,
+              height: MediaQuery.of(context).size.height * 0.35,
+              width: MediaQuery.of(context).size.height * 80,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20)),
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
               child: Column(
                 children: [
-                   SizedBox(
-                    height: MediaQuery.of(context).size.height*0.02,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
                   ),
                   Image.asset(redDot),
                   const SizedBox(
@@ -1812,24 +1827,29 @@ Widget chatBottomSheet({context}){
                         fontFamily: poppins_regular),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height*0.02,
+                    height: MediaQuery.of(context).size.height * 0.02,
                   ),
-                  Image.asset(soundWave_1,height: 100,width: 300,),
-                  SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+                  Image.asset(
+                    soundWave_1,
+                    height: 100,
+                    width: 300,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
                   Container(
-                    height: MediaQuery.of(context).size.height*0.06,
-                    width: MediaQuery.of(context).size.width*0.90,
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.90,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: TabBG),
+                        borderRadius: BorderRadius.circular(30), color: TabBG),
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: 14, right: 14, top: 5,bottom: 6),
+                          left: 14, right: 14, top: 5, bottom: 6),
                       child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          InkWell(onTap: (){},
+                          InkWell(
+                            onTap: () {},
                             child: const Icon(
                               CupertinoIcons.mic_fill,
                               color: primary,
@@ -1842,7 +1862,8 @@ Widget chatBottomSheet({context}){
                                 fontFamily: poppins_regular,
                                 color: Colors.black),
                           ),
-                          InkWell(onTap: (){},
+                          InkWell(
+                            onTap: () {},
                             child: const Icon(
                               Icons.send,
                               color: primary,
@@ -1862,24 +1883,35 @@ Widget chatBottomSheet({context}){
   );
 }
 
-Widget AddgroupList({String?text,VoidCallback?onTab}){
-  return  InkWell(
+Widget AddgroupList({String? text, VoidCallback? onTab}) {
+  return InkWell(
     onTap: onTab,
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          profileAvatar_1(height: 56,width: 56),
-          const SizedBox(height: 5,),
-          Text(text!,style: const TextStyle(fontSize: 16,color: Colors.white,fontFamily: poppins_regular),)
+          profileAvatar_1(height: 56, width: 56),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            text!,
+            style: const TextStyle(
+                fontSize: 16, color: Colors.white, fontFamily: poppins_regular),
+          )
         ],
       ),
     ),
   );
 }
 
-Widget createGroupList({String?title,String?subTitle,String?alphabet,icIndex,VoidCallback?onTap}){
-  return  InkWell(
+Widget createGroupList(
+    {String? title,
+    String? subTitle,
+    String? alphabet,
+    icIndex,
+    VoidCallback? onTap}) {
+  return InkWell(
     onTap: onTap,
     child: Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -1897,9 +1929,7 @@ Widget createGroupList({String?title,String?subTitle,String?alphabet,icIndex,Voi
                     color: primaryTxt),
               ),
               if (icIndex == 0)
-                InkWell(
-                    onTap: () {},
-                    child: Image.asset(createGroup_ic))
+                InkWell(onTap: () {}, child: Image.asset(createGroup_ic))
             ],
           ),
           const Divider(
@@ -1920,7 +1950,7 @@ Widget createGroupList({String?title,String?subTitle,String?alphabet,icIndex,Voi
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                         title! ,
+                          title!,
                           style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,
@@ -1952,8 +1982,7 @@ Widget createGroupList({String?title,String?subTitle,String?alphabet,icIndex,Voi
                       width: 20,
                       decoration: BoxDecoration(
                           color: primary,
-                          borderRadius: BorderRadius.circular(30)
-                      ),
+                          borderRadius: BorderRadius.circular(30)),
                       child: Center(
                         child: Image.asset(vector),
                       ),
@@ -1963,124 +1992,140 @@ Widget createGroupList({String?title,String?subTitle,String?alphabet,icIndex,Voi
               ],
             ),
           ),
-          const SizedBox(height: 10,),
-          const Divider(color: bordar,),
-          const SizedBox(height: 10,)
+          const SizedBox(
+            height: 10,
+          ),
+          const Divider(
+            color: bordar,
+          ),
+          const SizedBox(
+            height: 10,
+          )
         ],
       ),
     ),
   );
 }
 
-Widget AddUserButton({onTap}){
-  return InkWell(onTap: onTap,
-    child: Container(
-      height: 50,
-      width: 50,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(30)
-      ),
-      child: Center(child: Image.asset(addUser)),
-    ),
-  );
-}
-
-Widget muteButton({onTap,Color?color,Color?icColor}){
+Widget AddUserButton({onTap}) {
   return InkWell(
     onTap: onTap,
     child: Container(
       height: 50,
       width: 50,
       decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(30)
-      ),
-      child: Center(child: Image.asset(mute,color: icColor,),),
+          color: Colors.white, borderRadius: BorderRadius.circular(30)),
+      child: Center(child: Image.asset(addUser)),
     ),
   );
 }
 
-Widget endCall({onTap}){
+Widget muteButton({onTap, Color? color, Color? icColor}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      height: 50,
+      width: 50,
+      decoration:
+          BoxDecoration(color: color, borderRadius: BorderRadius.circular(30)),
+      child: Center(
+        child: Image.asset(
+          mute,
+          color: icColor,
+        ),
+      ),
+    ),
+  );
+}
+
+Widget endCall({onTap}) {
   return InkWell(
     onTap: onTap,
     child: Container(
       height: 80,
       width: 80,
       decoration: BoxDecoration(
-          color:lightRed,
-          borderRadius: BorderRadius.circular(45)
-      ),
-      child: Center(child: Container(
-        height: 60,
-        width: 60,
-        decoration: BoxDecoration(
-            color: red,
-            borderRadius: BorderRadius.circular(45)
+          color: lightRed, borderRadius: BorderRadius.circular(45)),
+      child: Center(
+        child: Container(
+          height: 60,
+          width: 60,
+          decoration: BoxDecoration(
+              color: red, borderRadius: BorderRadius.circular(45)),
+          child: const Icon(
+            Icons.call_end_rounded,
+            color: Colors.white,
+            size: 30,
+          ),
         ),
-        child: const Icon(Icons.call_end_rounded,color: Colors.white,size: 30,),
-      ),),
+      ),
     ),
   );
 }
 
-Widget muteIC(){
+Widget muteIC() {
   return Container(
     height: 32,
     width: 32,
     decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30)
+        color: Colors.white, borderRadius: BorderRadius.circular(30)),
+    child: Center(
+      child: Image.asset(
+        mute,
+        height: 18,
+        width: 18,
+      ),
     ),
-    child: Center(child: Image.asset(mute,height: 18,width: 18,),),
   );
 }
-Widget callContainer(){
-  return  Container(
+
+Widget callContainer() {
+  return Container(
     height: 273,
     width: 170,
     decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16)
-    ),
+        color: Colors.white, borderRadius: BorderRadius.circular(16)),
     child: Center(
       child: Stack(
         children: [
-          Positioned(top: 10,left: 10,child: muteIC()),
+          Positioned(top: 10, left: 10, child: muteIC()),
           Container(
             height: 267,
             width: 165,
             decoration: BoxDecoration(
-                color: callBg,
-                borderRadius: BorderRadius.circular(16)
-            ),
+                color: callBg, borderRadius: BorderRadius.circular(16)),
           ),
         ],
       ),
     ),
   );
 }
-Widget CallScreenBottomSheet({context}){
+
+Widget CallScreenBottomSheet({context}) {
   return Stack(
     children: [
       Positioned.fill(
         child: BackdropFilter(
-          filter: ImageFilter.blur(
-              sigmaX: 5.0, sigmaY: 5.0),
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20,right: 10),
-                child: Align(alignment: Alignment.topRight,
+                padding: const EdgeInsets.only(top: 20, right: 10),
+                child: Align(
+                  alignment: Alignment.topRight,
                   child: InkWell(
-                    onTap: (){Get.back();},
+                    onTap: () {
+                      Get.back();
+                    },
                     child: Container(
                       height: 38,
                       width: 38,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius:
-                          BorderRadius.circular(30)),child: Center(child:Image.asset(close),),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Center(
+                        child: Image.asset(close),
+                      ),
                     ),
                   ),
                 ),
@@ -2094,12 +2139,11 @@ Widget CallScreenBottomSheet({context}){
         left: 0,
         bottom: 0,
         child: Container(
-          height: MediaQuery.of(context).size.height*0.45,
+          height: MediaQuery.of(context).size.height * 0.45,
           decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24))),
+                  topLeft: Radius.circular(24), topRight: Radius.circular(24))),
           child: Column(
             children: [
               Padding(
@@ -2114,8 +2158,7 @@ Widget CallScreenBottomSheet({context}){
                     fontWeight: FontWeight.w600),
               ),
               const Padding(
-                padding: EdgeInsets.only(
-                    left: 35, right: 35, top: 15),
+                padding: EdgeInsets.only(left: 35, right: 35, top: 15),
                 child: Text(
                   'Hang up on group video call? please make sure ',
                   style: TextStyle(
@@ -2131,15 +2174,19 @@ Widget CallScreenBottomSheet({context}){
                     color: primaryTxt,
                     fontWeight: FontWeight.w400),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height*0.03,),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
               Container(
-                height: MediaQuery.of(context).size.height*0.06,
-                width: MediaQuery.of(context).size.width*0.80,
-                decoration: BoxDecoration(color: red,
-                    borderRadius: BorderRadius.circular(30)
-                ),
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width * 0.80,
+                decoration: BoxDecoration(
+                    color: red, borderRadius: BorderRadius.circular(30)),
                 child: const Center(
-                  child: Text('Leave Group Video Call',style: TextStyle(color: Colors.white,fontSize: 16),),
+                  child: Text(
+                    'Leave Group Video Call',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
                 ),
               )
             ],
@@ -2150,25 +2197,24 @@ Widget CallScreenBottomSheet({context}){
   );
 }
 
-Widget forumScreen_searchBar(){
+Widget forumScreen_searchBar() {
   return Container(
     height: 43,
     decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8)),
+        color: Colors.white, borderRadius: BorderRadius.circular(8)),
     child: TextField(
-      style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400),
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
       decoration: InputDecoration(
           border: InputBorder.none,
-          hintText:"Search question",
-          hintStyle: const TextStyle(fontSize: 14,color: fontColor_2,fontWeight: FontWeight.w400),
-          prefixIcon: Image.asset(search)
-      ),
+          hintText: "Search question",
+          hintStyle: const TextStyle(
+              fontSize: 14, color: fontColor_2, fontWeight: FontWeight.w400),
+          prefixIcon: Image.asset(search)),
     ),
   );
 }
 
-Widget categories({onTap,String?text}){
+Widget categories({onTap, String? text}) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: InkWell(
@@ -2177,36 +2223,37 @@ Widget categories({onTap,String?text}){
         height: 71,
         width: 71,
         decoration: BoxDecoration(
-            color: categoriesColor,
-            borderRadius: BorderRadius.circular(20)
-        ),
-        child:  Center(child: Text(text!,style: const TextStyle(fontSize: 10,color: Colors.white,fontWeight: FontWeight.w500),)),
+            color: categoriesColor, borderRadius: BorderRadius.circular(20)),
+        child: Center(
+            child: Text(
+          text!,
+          style: const TextStyle(
+              fontSize: 10, color: Colors.white, fontWeight: FontWeight.w500),
+        )),
       ),
     ),
   );
 }
 
-Widget seeAllButton({onTap}){
+Widget seeAllButton({onTap}) {
   return InkWell(
       onTap: onTap,
       child: const Text(
         'See all',
-        style: TextStyle(
-            fontSize: 12, fontWeight: FontWeight.w400),
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
       ));
 }
 
-Widget question(){
+Widget question() {
   return Padding(
     padding: const EdgeInsets.only(bottom: 15),
     child: Container(
       width: double.maxFinite,
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(26)),
+          color: Colors.white, borderRadius: BorderRadius.circular(26)),
       child: Padding(
-        padding: const EdgeInsets.only(
-            top: 15, left: 15, right: 15, bottom: 10),
+        padding:
+            const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
         child: Column(
           children: [
             Row(
@@ -2248,17 +2295,29 @@ Widget question(){
                 const Text(
                   '21 mins ago',
                   style: TextStyle(
-                      fontSize: 8, fontWeight: FontWeight.w400,color: primary),
+                      fontSize: 8, fontWeight: FontWeight.w400, color: primary),
                 )
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             const ReadMoreText(
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus felis sit amet nisi posuere tristique. Pellentesque vel tristique erat. Curabitur posuere porttitor lectus, in vehicula urna feugiat eget aa',
               trimLength: 210,
-              style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.w500),
-              moreStyle: TextStyle(color: Colors.red,decoration: TextDecoration.underline,decorationColor: Colors.red,fontStyle: FontStyle.italic),
-              lessStyle:  TextStyle(color: bordar,decoration: TextDecoration.underline,decorationColor: bordar),
+              style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500),
+              moreStyle: TextStyle(
+                  color: Colors.red,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Colors.red,
+                  fontStyle: FontStyle.italic),
+              lessStyle: TextStyle(
+                  color: bordar,
+                  decoration: TextDecoration.underline,
+                  decorationColor: bordar),
             )
           ],
         ),
@@ -2267,10 +2326,9 @@ Widget question(){
   );
 }
 
-Widget answer(){
+Widget answer() {
   return Padding(
-    padding: const EdgeInsets.only(
-        top: 15, left: 15, right: 15, bottom: 10),
+    padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
     child: Column(
       children: [
         Row(
@@ -2294,9 +2352,7 @@ Widget answer(){
                     Text(
                       '70+ votes',
                       style: TextStyle(
-                          fontSize: 8,
-                          color: red,
-                          fontWeight: FontWeight.w500),
+                          fontSize: 8, color: red, fontWeight: FontWeight.w500),
                     ),
                     Text(
                       'Kaiya Curtis',
@@ -2312,52 +2368,68 @@ Widget answer(){
             const Text(
               '21 mins ago',
               style: TextStyle(
-                  fontSize: 8, fontWeight: FontWeight.w400,color: primary),
+                  fontSize: 8, fontWeight: FontWeight.w400, color: primary),
             )
           ],
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         const Text(
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus felis sit amet nisi posuere tristique. Pellentesque vel tristique erat. Curabitur posuere porttitor lectus, in vehicula urna feugiat eget aa',
-          style: TextStyle(fontSize: 10,color: Colors.black,fontWeight: FontWeight.w500),
+          style: TextStyle(
+              fontSize: 10, color: Colors.black, fontWeight: FontWeight.w500),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            InkWell(onTap: (){},child: Image.asset(like,height: 10,)),
-            const SizedBox(width: 5,),
-            InkWell(onTap: (){},child: const Text('Reply',style: TextStyle(fontSize: 8,decoration: TextDecoration.underline),))
+            InkWell(
+                onTap: () {},
+                child: Image.asset(
+                  like,
+                  height: 10,
+                )),
+            const SizedBox(
+              width: 5,
+            ),
+            InkWell(
+                onTap: () {},
+                child: const Text(
+                  'Reply',
+                  style: TextStyle(
+                      fontSize: 8, decoration: TextDecoration.underline),
+                ))
           ],
         ),
-        const SizedBox(height: 5,),
-        const Divider(color: bordar,)
+        const SizedBox(
+          height: 5,
+        ),
+        const Divider(
+          color: bordar,
+        )
       ],
     ),
   );
 }
 
-Widget avatar({double?height,double?width}){
+Widget avatar({double? height, double? width}) {
   return Container(
     height: height,
     width: width,
-    decoration: BoxDecoration(
-        color: bordar,
-        borderRadius: BorderRadius.circular(30)
-    ),
+    decoration:
+        BoxDecoration(color: bordar, borderRadius: BorderRadius.circular(30)),
   );
 }
-Widget forumPost(){
-  return  Container(
+
+Widget forumPost() {
+  return Container(
     height: 201,
-    decoration: BoxDecoration(
-      boxShadow: [
-        BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 10,
-            offset: const Offset(0, 0)),
-      ],
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15)),
+    decoration: BoxDecoration(boxShadow: [
+      BoxShadow(
+          color: Colors.grey.withOpacity(0.2),
+          blurRadius: 10,
+          offset: const Offset(0, 0)),
+    ], color: Colors.white, borderRadius: BorderRadius.circular(15)),
     child: Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -2389,15 +2461,17 @@ Widget forumPost(){
               )
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           const Text(
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo nisl ac eros euismod, a lobortis purus egestas. Sed facilisis laoreet tristique. Donec elementum auctor aliquam.',
             style: TextStyle(
-                color: Colors.black,
-                fontSize: 10,
-                fontWeight: FontWeight.w400),
+                color: Colors.black, fontSize: 10, fontWeight: FontWeight.w400),
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(
+            height: 15,
+          ),
           Row(
             children: [
               Padding(
@@ -2405,50 +2479,77 @@ Widget forumPost(){
                 child: Container(
                   height: 22,
                   decoration: BoxDecoration(
-                      color: bordar,
-                      borderRadius: BorderRadius.circular(8)
-                  ),
-                  child: const  Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 10),
-                    child: Center(child: Text('Music',style: TextStyle(fontSize: 8,color: primaryTxt),)),
+                      color: bordar, borderRadius: BorderRadius.circular(8)),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(
+                        child: Text(
+                      'Music',
+                      style: TextStyle(fontSize: 8, color: primaryTxt),
+                    )),
                   ),
                 ),
               ),
               Container(
                 height: 22,
                 decoration: BoxDecoration(
-                    color: bordar,
-                    borderRadius: BorderRadius.circular(8)
-                ),
-                child: const  Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 10),
-                  child: Center(child: Text('Entertainment',style: TextStyle(fontSize: 8,color: primaryTxt),)),
+                    color: bordar, borderRadius: BorderRadius.circular(8)),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Center(
+                      child: Text(
+                    'Entertainment',
+                    style: TextStyle(fontSize: 8, color: primaryTxt),
+                  )),
                 ),
               )
             ],
           ),
-          const SizedBox(height: 5,),
-          const Divider(color: bordar,),
+          const SizedBox(
+            height: 5,
+          ),
+          const Divider(
+            color: bordar,
+          ),
           Row(
             children: [
               InkWell(
-                onTap: (){},
+                onTap: () {},
                 child: Row(
                   children: [
-                    Image.asset(like,color: Colors.black,height: 10,),
-                    const SizedBox(width: 5,),
-                    const Text('120 Votes',style: TextStyle(fontSize: 10,color: Colors.black),)
+                    Image.asset(
+                      like,
+                      color: Colors.black,
+                      height: 10,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Text(
+                      '120 Votes',
+                      style: TextStyle(fontSize: 10, color: Colors.black),
+                    )
                   ],
                 ),
               ),
-              const SizedBox(width: 15,),
+              const SizedBox(
+                width: 15,
+              ),
               InkWell(
-                onTap: (){},
+                onTap: () {},
                 child: Row(
                   children: [
-                    Image.asset(comment,color: Colors.black,),
-                    const SizedBox(width: 5,),
-                    const Text('13 Replies',style: TextStyle(fontSize: 10,color: Colors.black),)
+                    Image.asset(
+                      comment,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Text(
+                      '13 Replies',
+                      style: TextStyle(fontSize: 10, color: Colors.black),
+                    )
                   ],
                 ),
               ),
@@ -2460,48 +2561,78 @@ Widget forumPost(){
   );
 }
 
-Widget myGroups({context}){
-  return  Container(
+Widget myGroups({context}) {
+  return Container(
     height: 158.86,
-    width: MediaQuery.of(context).size.width*0.80,
-    decoration: BoxDecoration(
-      boxShadow:  [
-        BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 10,
-            offset: const Offset(0, 0)),
-      ],
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14)
-    ),
+    width: MediaQuery.of(context).size.width * 0.80,
+    decoration: BoxDecoration(boxShadow: [
+      BoxShadow(
+          color: Colors.grey.withOpacity(0.2),
+          blurRadius: 10,
+          offset: const Offset(0, 0)),
+    ], color: Colors.white, borderRadius: BorderRadius.circular(14)),
     child: Column(
       children: [
         Container(
           height: 118,
           decoration: const BoxDecoration(
               color: groupsBG,
-              borderRadius: BorderRadius.only(topRight: Radius.circular(14),topLeft: Radius.circular(14))
-          ),
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(14), topLeft: Radius.circular(14))),
         ),
         Padding(
-          padding: const EdgeInsets.only(top:15,left: 10,right: 10),
+          padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(children: [
-                avatar(height: 29,width: 29),
-                const SizedBox(width: 10,),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Tiana Rosser',style: TextStyle(fontSize: 12,color: Colors.black,fontWeight: FontWeight.w600),),
-                    Text('Song Writer',style: TextStyle(fontSize: 8.8,color: Colors.black,fontWeight: FontWeight.w400),),
-                  ],)
-              ],),
+              Row(
+                children: [
+                  avatar(height: 29, width: 29),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Tiana Rosser',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        'Song Writer',
+                        style: TextStyle(
+                            fontSize: 8.8,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  )
+                ],
+              ),
               Column(
                 children: [
-                  const Text('Total Member: 18,929',style: TextStyle(fontSize: 7.44,color: primaryTxt,fontWeight: FontWeight.w400),),
-                  InkWell(onTap: (){},child: const Text('Explore Now',style: TextStyle(fontSize: 9.44,color: primary,fontWeight: FontWeight.w400,decoration: TextDecoration.underline,decorationColor: primary,decorationThickness: 2),)),
+                  const Text(
+                    'Total Member: 18,929',
+                    style: TextStyle(
+                        fontSize: 7.44,
+                        color: primaryTxt,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  InkWell(
+                      onTap: () {},
+                      child: const Text(
+                        'Explore Now',
+                        style: TextStyle(
+                            fontSize: 9.44,
+                            color: primary,
+                            fontWeight: FontWeight.w400,
+                            decoration: TextDecoration.underline,
+                            decorationColor: primary,
+                            decorationThickness: 2),
+                      )),
                 ],
               )
             ],
@@ -2512,33 +2643,38 @@ Widget myGroups({context}){
   );
 }
 
-Widget Suggestions (){
+Widget Suggestions() {
   return Container(
     height: 202,
     width: 145,
     decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow:  [
+        boxShadow: [
           BoxShadow(
               color: Colors.grey.withOpacity(0.2),
               blurRadius: 10,
               offset: const Offset(0, 0)),
         ],
-        borderRadius: BorderRadius.circular(9)
-    ),
+        borderRadius: BorderRadius.circular(9)),
     child: Column(
       children: [
         Stack(
           children: [
-            Positioned(top: 10,left: 10,
-              child: Container(height: 19,
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Container(
+                height: 19,
                 width: 60,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: group
-                ),child: const Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 8),
-                  child: Center(child: Text('Recommend',style: TextStyle(color: Colors.black,fontSize: 7),)),
+                    borderRadius: BorderRadius.circular(20), color: group),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Center(
+                      child: Text(
+                    'Recommend',
+                    style: TextStyle(color: Colors.black, fontSize: 7),
+                  )),
                 ),
               ),
             ),
@@ -2546,8 +2682,9 @@ Widget Suggestions (){
               height: 108,
               decoration: const BoxDecoration(
                   color: groupsBG,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(9),topRight: Radius.circular(9))
-              ),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(9),
+                      topRight: Radius.circular(9))),
             ),
           ],
         ),
@@ -2556,11 +2693,38 @@ Widget Suggestions (){
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Self & Others',style: TextStyle(fontSize: 10,fontFamily: poppins_semibold,color: Colors.black),),
-              const SizedBox(height: 5,),
-              const Text('Suspendisse finibus an turpis aliquam sodale…',style: TextStyle(fontSize: 7,fontFamily: poppins_semibold,color: primaryTxt),),
-              const SizedBox(height: 15,),
-              InkWell(onTap: (){},child: const Text('Join Now',style: TextStyle(fontSize: 12,fontFamily: poppins_regular,color: primary,decoration: TextDecoration.underline,decorationColor: primary,decorationThickness: 2),)),
+              const Text(
+                'Self & Others',
+                style: TextStyle(
+                    fontSize: 10,
+                    fontFamily: poppins_semibold,
+                    color: Colors.black),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              const Text(
+                'Suspendisse finibus an turpis aliquam sodale…',
+                style: TextStyle(
+                    fontSize: 7,
+                    fontFamily: poppins_semibold,
+                    color: primaryTxt),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              InkWell(
+                  onTap: () {},
+                  child: const Text(
+                    'Join Now',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: poppins_regular,
+                        color: primary,
+                        decoration: TextDecoration.underline,
+                        decorationColor: primary,
+                        decorationThickness: 2),
+                  )),
             ],
           ),
         ),
@@ -2569,9 +2733,9 @@ Widget Suggestions (){
   );
 }
 
-Widget GroupsIManage({context}){
-  return  Container(
-    width: MediaQuery.of(context).size.width*0.90,
+Widget GroupsIManage({context}) {
+  return Container(
+    width: MediaQuery.of(context).size.width * 0.90,
     height: 93,
     decoration: BoxDecoration(
         color: Colors.white,
@@ -2581,8 +2745,7 @@ Widget GroupsIManage({context}){
               blurRadius: 10,
               offset: const Offset(0, 0)),
         ],
-        borderRadius: BorderRadius.circular(10)
-    ),
+        borderRadius: BorderRadius.circular(10)),
     child: Row(
       children: [
         Container(
@@ -2590,23 +2753,47 @@ Widget GroupsIManage({context}){
           width: 93,
           decoration: const BoxDecoration(
               color: groupsBG,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(10),bottomLeft: Radius.circular(10))
-          ),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10))),
         ),
         const Padding(
-          padding:  EdgeInsets.only(top: 10,left: 10,right: 10),
+          padding: EdgeInsets.only(top: 10, left: 10, right: 10),
           child: SizedBox(
             width: 200,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start ,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Groups Categories',style: TextStyle(fontSize: 9.82,fontFamily: poppins_regular,color: primaryTxt),),
-                SizedBox(height: 5,),
-                Text('Group Name Goes Here',style: TextStyle(fontSize: 11.46,fontFamily: poppins_semibold,color: Colors.black),),
-                SizedBox(height: 5,),
-                Text('Nunc ornare magna nunc, design to eleifend urna ultrices a.',
-                  style: TextStyle(fontSize: 9,fontFamily: poppins_semibold,color: primaryTxt,),),
-              ],),
+                Text(
+                  'Groups Categories',
+                  style: TextStyle(
+                      fontSize: 9.82,
+                      fontFamily: poppins_regular,
+                      color: primaryTxt),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Group Name Goes Here',
+                  style: TextStyle(
+                      fontSize: 11.46,
+                      fontFamily: poppins_semibold,
+                      color: Colors.black),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Nunc ornare magna nunc, design to eleifend urna ultrices a.',
+                  style: TextStyle(
+                    fontSize: 9,
+                    fontFamily: poppins_semibold,
+                    color: primaryTxt,
+                  ),
+                ),
+              ],
+            ),
           ),
         )
       ],
@@ -2614,9 +2801,15 @@ Widget GroupsIManage({context}){
   );
 }
 
-Widget donateContent({String?title,String?sudTitle,ic,Color?BGcolor,Color?textColor,Color?sudTitleColor}){
-  return  InkWell(
-    onTap: (){},
+Widget donateContent(
+    {String? title,
+    String? sudTitle,
+    ic,
+    Color? BGcolor,
+    Color? textColor,
+    Color? sudTitleColor}) {
+  return InkWell(
+    onTap: () {},
     child: Container(
       height: 106,
       width: 151,
@@ -2633,7 +2826,9 @@ Widget donateContent({String?title,String?sudTitle,ic,Color?BGcolor,Color?textCo
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(ic),
-          const SizedBox(height: 15,),
+          const SizedBox(
+            height: 15,
+          ),
           Text(
             title!,
             style: TextStyle(
@@ -2642,10 +2837,12 @@ Widget donateContent({String?title,String?sudTitle,ic,Color?BGcolor,Color?textCo
                 fontFamily: poppins_regular,
                 fontWeight: FontWeight.w500),
           ),
-          const SizedBox(height: 7,),
+          const SizedBox(
+            height: 7,
+          ),
           Text(
             sudTitle!,
-            style:  TextStyle(
+            style: TextStyle(
                 fontSize: 11,
                 color: sudTitleColor,
                 fontFamily: poppins_regular,
@@ -2656,59 +2853,78 @@ Widget donateContent({String?title,String?sudTitle,ic,Color?BGcolor,Color?textCo
     ),
   );
 }
-Widget primaryButton_1({onTap}){
-  return  InkWell(
+
+Widget primaryButton_1({onTap}) {
+  return InkWell(
     onTap: onTap,
     child: Container(
       height: 39,
       width: double.maxFinite,
-      decoration: BoxDecoration(
-          color: primary,
-          borderRadius: BorderRadius.circular(5)
-      ),
-      child: const Center(child: Text('Next',style: TextStyle(fontSize: 11,color: Colors.white,fontFamily: poppins_semibold),)),
+      decoration:
+          BoxDecoration(color: primary, borderRadius: BorderRadius.circular(5)),
+      child: const Center(
+          child: Text(
+        'Next',
+        style: TextStyle(
+            fontSize: 11, color: Colors.white, fontFamily: poppins_semibold),
+      )),
     ),
   );
 }
-Widget pageButton({icon,Color?bordar,String?text,Color?textColor,Color?BGColor,Color?iconColor,onTap}){
-  return  InkWell(
+
+Widget pageButton(
+    {icon,
+    Color? bordar,
+    String? text,
+    Color? textColor,
+    Color? BGColor,
+    Color? iconColor,
+    onTap}) {
+  return InkWell(
     onTap: onTap,
     child: Container(
       height: 26,
       width: 83,
       decoration: BoxDecoration(
-        color: BGColor,
-          border: Border.all(color: bordar??primaryTxt),
-          borderRadius: BorderRadius.circular(30)
-      ),
+          color: BGColor,
+          border: Border.all(color: bordar ?? primaryTxt),
+          borderRadius: BorderRadius.circular(30)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(icon,height: 12.65,color: iconColor,),
-          const SizedBox(width: 5,),
-          Text(text!,style: TextStyle(fontSize: 9.49,color: textColor),)
+          Image.asset(
+            icon,
+            height: 12.65,
+            color: iconColor,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            text!,
+            style: TextStyle(fontSize: 9.49, color: textColor),
+          )
         ],
       ),
     ),
   );
 }
 
-Widget books(){
+Widget books() {
   return Column(
     children: [
       Container(
         height: 85,
         decoration: BoxDecoration(
             gradient: const LinearGradient(
-              colors:[
+              colors: [
                 lightPrimary_2,
                 readBookColorGradient,
               ],
             ),
-            borderRadius: BorderRadius.circular(5)
-        ),
+            borderRadius: BorderRadius.circular(5)),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20,right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -2716,67 +2932,115 @@ Widget books(){
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Genesis',style: TextStyle(fontFamily: poppins_regular,fontSize: 17.73,fontWeight: FontWeight.w600),),
-                  SizedBox(height: 5,),
-                  Text('50 Chapters',style: TextStyle(fontSize: 12,fontFamily: poppins_regular,color: primaryTxt),),
+                  Text(
+                    'Genesis',
+                    style: TextStyle(
+                        fontFamily: poppins_regular,
+                        fontSize: 17.73,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    '50 Chapters',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: poppins_regular,
+                        color: primaryTxt),
+                  ),
                 ],
               ),
               InkWell(
-                onTap: (){},
+                onTap: () {},
                 child: Container(
                   height: 34.09,
                   width: 104.84,
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(5)
-                  ),
-                  child: const Center(child: Text('Explore',style: TextStyle(fontSize: 11.93,color: TxtColor,fontFamily: poppins_bold),)),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: const Center(
+                      child: Text(
+                    'Explore',
+                    style: TextStyle(
+                        fontSize: 11.93,
+                        color: TxtColor,
+                        fontFamily: poppins_bold),
+                  )),
                 ),
               )
             ],
           ),
         ),
       ),
-      const SizedBox(height: 15,),
+      const SizedBox(
+        height: 15,
+      ),
     ],
   );
 }
 
-Widget donateOptions(){
+Widget donateOptions() {
   return Container(
     height: 170,
     width: double.maxFinite,
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.white, boxShadow: [
-      BoxShadow(
-          color: Colors.grey.withOpacity(0.2),
-          blurRadius: 10,
-          offset: const Offset(0, 0)),
-    ],
+      borderRadius: BorderRadius.circular(5),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 0)),
+      ],
     ),
     child: Column(
       children: [
-        const SizedBox(height: 10,),
-        const Text('Put a Candle',style: TextStyle(fontSize: 11.5,color: Colors.black,fontFamily: poppins_regular),),
-        const SizedBox(height: 5,),
+        const SizedBox(
+          height: 10,
+        ),
+        const Text(
+          'Put a Candle',
+          style: TextStyle(
+              fontSize: 11.5, color: Colors.black, fontFamily: poppins_regular),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
         const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(CupertinoIcons.money_dollar,color: primaryTxt,size: 17,),
-            Text('2',style: TextStyle(fontSize: 11.5,color: primaryTxt,fontFamily: poppins_regular),),
+            Icon(
+              CupertinoIcons.money_dollar,
+              color: primaryTxt,
+              size: 17,
+            ),
+            Text(
+              '2',
+              style: TextStyle(
+                  fontSize: 11.5,
+                  color: primaryTxt,
+                  fontFamily: poppins_regular),
+            ),
           ],
         ),
-        const SizedBox(height: 25,),
-        Image.asset(donation,color: primaryTxt,),
-        const SizedBox(height: 15,),
-        Primary_Button(text: 'Choose',Width: 340,onTap: (){})
+        const SizedBox(
+          height: 25,
+        ),
+        Image.asset(
+          donation,
+          color: primaryTxt,
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        Primary_Button(text: 'Choose', Width: 340, onTap: () {})
       ],
     ),
   );
 }
 
-Widget donateAmount({Color?backgroundColor,Color?textColor,onTab}){
+Widget donateAmount({Color? backgroundColor, Color? textColor, onTab}) {
   return Column(
     children: [
       Padding(
@@ -2787,13 +3051,44 @@ Widget donateAmount({Color?backgroundColor,Color?textColor,onTab}){
             height: 34.6,
             width: 95.68,
             decoration: BoxDecoration(
-                color: backgroundColor,
-                borderRadius: BorderRadius.circular(5)
-            ),
-            child:  Center(child: Text('\$100',style: TextStyle(fontWeight: FontWeight.w400,fontFamily: poppins_regular,fontSize: 11.35,color: textColor),)),
+                color: backgroundColor, borderRadius: BorderRadius.circular(5)),
+            child: Center(
+                child: Text(
+              '\$100',
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontFamily: poppins_regular,
+                  fontSize: 11.35,
+                  color: textColor),
+            )),
           ),
         ),
       ),
     ],
   );
+}
+
+// Success Toast
+void SuccessToast(msg) {
+  Fluttertoast.showToast(
+      msg: msg,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      toastLength: Toast.LENGTH_SHORT,
+      backgroundColor: colorGreen,
+      textColor: colorWhite,
+      fontSize: 16.0);
+}
+
+// Error Toast
+
+void ErrorToast(msg) {
+  Fluttertoast.showToast(
+      msg: msg,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      toastLength: Toast.LENGTH_SHORT,
+      backgroundColor: colorRed,
+      textColor: colorWhite,
+      fontSize: 16.0);
 }
