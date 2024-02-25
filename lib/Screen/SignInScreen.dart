@@ -109,10 +109,10 @@ class SignInScreen extends StatelessWidget {
                   email.toString(), password.toString());
               try {
                 SuccessToast(req_outp["accessToken"]);
+                Get.to(() => HomeFeedScreen());
               } catch (Error) {
                 ErrorToast(req_outp["message"]);
               }
-              Get.to(() => HomeFeedScreen());
             },
             text: 'Sign In',
             Width: 272),
