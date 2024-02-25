@@ -8,7 +8,7 @@ class AuthClient {
   var jwt_token = "";
 //Login API calling
 
-  Future<Map> LoginRequest(String Email, String Password) async {
+  Future<String> LoginRequest(String Email, String Password) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST', Uri.parse('$BaseURL/auth/user/signin'));
     request.body = json.encode({"email": Email, "password": Password});
@@ -18,11 +18,12 @@ class AuthClient {
 
     if (response.statusCode < 300) {
       print(await response.stream.bytesToString());
-      final jsonResponse = jsonDecode(await response.stream.bytesToString());
-      return jsonResponse;
+
+      return await response.stream.bytesToString();
     } else {
       print(response.reasonPhrase);
-      return jsonDecode(await response.stream.bytesToString());
+      //final outp = jsonDecode(await response.stream.bytesToString());
+      return await response.stream.bytesToString();
     }
   }
 
@@ -74,9 +75,10 @@ class AuthClient {
   }
 
   Future<bool> OTPResend(String Email) async {
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST', Uri.parse('$BaseURL/auth/otp/resend'));
     request.body = '''{\n    "email":"$Email"\n}''';
-
+    request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode < 300) {

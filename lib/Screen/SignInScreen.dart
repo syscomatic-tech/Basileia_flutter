@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/SignUpScreen.dart';
 import 'package:basileia/Screen/SignUpScreen_1.dart';
@@ -105,8 +107,8 @@ class SignInScreen extends StatelessWidget {
         ),
         Primary_Button(
             onTap: () async {
-              final req_outp = await auth.LoginRequest(
-                  email.text.toString(), password.text.toString());
+              final req_outp = json.decode(await auth.LoginRequest(
+                  email.text.toString(), password.text.toString()));
               try {
                 SuccessToast(req_outp["accessToken"]);
                 Get.to(() => HomeFeedScreen());
