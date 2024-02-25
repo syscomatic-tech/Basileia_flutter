@@ -5,13 +5,14 @@ import 'package:http/http.dart' as http;
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
-
+  var jwt_token = "";
 //Login API calling
 
   Future<Map> LoginRequest(String Email, String Password) async {
+    var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST', Uri.parse('$BaseURL/auth/user/signin'));
-    request.body =
-        '''{\n    "email":"$Email",\n    "password":"$Password"\n}''';
+    request.body = json.encode({"email": Email, "password": Password});
+    request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
@@ -55,8 +56,11 @@ class AuthClient {
 
 // Verify OTP Request
   Future<bool> VerifyOTPRequest(String Email, String OTP) async {
-    var request = http.Request('POST', Uri.parse('$BaseURL/auth/otp/verify'));
-    request.body = '''{\n    "email":"$Email",\n    "otp":"$OTP"\n}''';
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST', Uri.parse('https://api.zahedhasan.com/api/v1/auth/otp/verify'));
+    request.body = json.encode({"email": Email, "otp": OTP});
+    request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
