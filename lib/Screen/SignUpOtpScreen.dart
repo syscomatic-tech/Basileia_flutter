@@ -64,6 +64,7 @@ class SignUpOtpScreen extends StatelessWidget {
                 onTap: () async {
                   final req_outp =
                       await cln.VerifyOTPRequest(email, contr.text.toString());
+                  print(req_outp);
                   if (req_outp == true) {
                     SuccessToast("Sucsexfully logged in");
                     Get.to(() => HomeFeedScreen());

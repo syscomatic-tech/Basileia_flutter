@@ -15,7 +15,7 @@ class AuthClient {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 300) {
       print(await response.stream.bytesToString());
       final jsonResponse = jsonDecode(await response.stream.bytesToString());
       return jsonResponse;
@@ -42,9 +42,8 @@ class AuthClient {
     });
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+    print(response.statusCode);
+    if (response.statusCode < 300) {
       return true;
     } else {
       print(await response.stream.bytesToString());
@@ -61,7 +60,7 @@ class AuthClient {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 300) {
       print(await response.stream.bytesToString());
       return true;
     } else {
@@ -76,7 +75,7 @@ class AuthClient {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 300) {
       print(await response.stream.bytesToString());
       return true;
     } else {
@@ -90,7 +89,7 @@ class AuthClient {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 300) {
       print(await response.stream.bytesToString());
       final jsonResponse = jsonDecode(await response.stream.bytesToString());
       return jsonResponse;
