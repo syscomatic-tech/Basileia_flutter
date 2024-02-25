@@ -8,7 +8,7 @@ class AuthClient {
 
 //Login API calling
 
-  Future<Object> LoginRequest(String Email, String Password) async {
+  Future<Map> LoginRequest(String Email, String Password) async {
     var request = http.Request('POST', Uri.parse('$BaseURL/auth/user/signin'));
     request.body =
         '''{\n    "email":"$Email",\n    "password":"$Password"\n}''';
@@ -76,7 +76,7 @@ class AuthClient {
     }
   }
 
-  Future<Object> Refresh() async {
+  Future<Map> Refresh() async {
     var request = http.Request('GET', Uri.parse('$BaseURL/auth/refresh'));
 
     http.StreamedResponse response = await request.send();

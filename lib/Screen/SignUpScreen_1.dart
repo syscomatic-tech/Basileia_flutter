@@ -1,4 +1,3 @@
-
 import 'package:basileia/Screen/SignUpOtpScreen.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
@@ -10,7 +9,7 @@ import '../Style/colors.dart';
 import '../Style/controller.dart';
 
 class SignUpScreen_1 extends StatelessWidget {
-  String role='';
+  String role = '';
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController firstname = TextEditingController();
@@ -19,8 +18,8 @@ class SignUpScreen_1 extends StatelessWidget {
 
   final AuthClient signup = AuthClient();
 
-  SignUpScreen_1({Key? key, required this.role})
-      : super(key: key);  @override
+  SignUpScreen_1({Key? key, required this.role}) : super(key: key);
+  @override
   Widget build(BuildContext context) {
     final CheckboxController checkboxController = Get.put(CheckboxController());
     return Scaffold(
@@ -72,35 +71,65 @@ class SignUpScreen_1 extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            textField(width:272,hight:48,lebelText:'First name',controller: firstname),
+            textField(
+                width: 272,
+                hight: 48,
+                lebelText: 'First name',
+                controller: firstname),
             const SizedBox(
               height: 20,
             ),
-            textField(width:272,hight:48,lebelText:'Last name',controller: lastname),
+            textField(
+                width: 272,
+                hight: 48,
+                lebelText: 'Last name',
+                controller: lastname),
             const SizedBox(
               height: 20,
             ),
-            textField(width:272,hight:48,lebelText:'Email address',controller: email),
+            textField(
+                width: 272,
+                hight: 48,
+                lebelText: 'Email address',
+                controller: email),
             const SizedBox(
               height: 20,
             ),
             Obx(
-              ()=>textField(width:272,hight:48,
-                lebelText:"Password",
-                suffixIcon:IconButton(onPressed: () { controller.isObscured.value = !controller.isObscured.value;
-                }, icon:  Icon(
-                  controller.isObscured.value ? Icons.visibility : Icons.visibility_off,color: textFi,
-                ),),
-                controller: password
-              ),
+              () => textField(
+                  width: 272,
+                  hight: 48,
+                  lebelText: "Password",
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      controller.isObscured.value =
+                          !controller.isObscured.value;
+                    },
+                    icon: Icon(
+                      controller.isObscured.value
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: textFi,
+                    ),
+                  ),
+                  controller: password),
             ),
             const SizedBox(
               height: 40,
             ),
             Primary_Button(
                 onTap: () {
-                  signup.RegistrationRequest(firstname.toString(), lastname.toString(), email.toString(), role,password.toString());
-                  Get.to(() => SignUpOtpScreen());
+                  final req_outp = signup.RegistrationRequest(
+                      firstname.toString(),
+                      lastname.toString(),
+                      email.toString(),
+                      role,
+                      password.toString());
+                  if (req_outp == true) {
+                    Get.to(() => SignUpOtpScreen(email: email.toString()));
+                  } else {
+                    ErrorToast("Error occured Check the logs");
+                  }
                 },
                 text: 'Sign Up',
                 Width: 272),
@@ -221,4 +250,3 @@ class SignUpScreen_1 extends StatelessWidget {
     );
   }
 }
-

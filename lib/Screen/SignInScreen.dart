@@ -1,3 +1,4 @@
+import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/SignUpScreen.dart';
 import 'package:basileia/Screen/SignUpScreen_1.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
@@ -9,7 +10,7 @@ import '../Style/images.dart';
 import '../Style/style.dart';
 
 class SignInScreen extends StatelessWidget {
-
+  final AuthClient auth = AuthClient();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
 
@@ -48,7 +49,9 @@ class SignInScreen extends StatelessWidget {
               width: 3,
             ),
             InkWell(
-                onTap: () {Get.to(()=>SignUpScreen());},
+                onTap: () {
+                  Get.to(() => SignUpScreen());
+                },
                 child: const Text(
                   'Sign Up',
                   style: TextStyle(
@@ -61,18 +64,31 @@ class SignInScreen extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        textField(width:272,hight:48,lebelText:'Email address',controller: email),
+        textField(
+            width: 272,
+            hight: 48,
+            lebelText: 'Email address',
+            controller: email),
         const SizedBox(
           height: 20,
         ),
         Obx(
-          ()=> textField(width:272,hight:48,
-            lebelText:'Password',
-            suffixIcon:IconButton(onPressed: () { controller.isObscured.value = !controller.isObscured.value;
-            }, icon:  Icon(
-              controller.isObscured.value ? Icons.visibility : Icons.visibility_off,color: textFi,
-            ),),controller: password
-          ),
+          () => textField(
+              width: 272,
+              hight: 48,
+              lebelText: 'Password',
+              suffixIcon: IconButton(
+                onPressed: () {
+                  controller.isObscured.value = !controller.isObscured.value;
+                },
+                icon: Icon(
+                  controller.isObscured.value
+                      ? Icons.visibility
+                      : Icons.visibility_off,
+                  color: textFi,
+                ),
+              ),
+              controller: password),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 20, right: 160),
@@ -87,7 +103,19 @@ class SignInScreen extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        Primary_Button(onTap: () {Get.to(()=>HomeFeedScreen());}, text: 'Sign In', Width: 272),
+        Primary_Button(
+            onTap: () async {
+              final req_outp = await auth.LoginRequest(
+                  email.toString(), password.toString());
+              try {
+                SuccessToast(req_outp["accessToken"]);
+              } catch (Error) {
+                ErrorToast(req_outp["message"]);
+              }
+              Get.to(() => HomeFeedScreen());
+            },
+            text: 'Sign In',
+            Width: 272),
         const Padding(
           padding: EdgeInsets.only(left: 71, right: 71, top: 20),
           child: Row(
@@ -116,7 +144,9 @@ class SignInScreen extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         Stack(
           children: [
             Image.asset(union),
@@ -127,11 +157,12 @@ class SignInScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ic_Button(
-                        hight: 48,
-                        width: 124,
-                        onTap: () {},
-                        text: "Google",
-                        icon: Image.asset(google),),
+                      hight: 48,
+                      width: 124,
+                      onTap: () {},
+                      text: "Google",
+                      icon: Image.asset(google),
+                    ),
                     const SizedBox(
                       width: 20,
                     ),
@@ -143,7 +174,9 @@ class SignInScreen extends StatelessWidget {
                         icon: Image.asset(facebook))
                   ],
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 70, right: 70, top: 15),
                   child: RichText(
@@ -171,4 +204,3 @@ class SignInScreen extends StatelessWidget {
     ));
   }
 }
-

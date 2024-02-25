@@ -67,14 +67,13 @@ Widget Primary_Button(
   );
 }
 
-Widget textField({
-  double? width,
-  double? hight,
-  String? lebelText,
-  suffixIcon,
-  Color? textfieldBg,
-    controller}
-) {
+Widget textField(
+    {double? width,
+    double? hight,
+    String? lebelText,
+    suffixIcon,
+    Color? textfieldBg,
+    controller}) {
   return Container(
     width: width,
     height: hight,
@@ -122,7 +121,7 @@ Widget ic_Button(
   );
 }
 
-Widget OtpField() {
+Widget OtpField({controller}) {
   final defaultPinTheme = PinTheme(
       width: 58,
       height: 46,
@@ -131,6 +130,7 @@ Widget OtpField() {
           border: Border.all(color: bordar),
           borderRadius: BorderRadius.circular(10)));
   return Pinput(
+    controller: controller,
     length: 4,
     defaultPinTheme: defaultPinTheme,
     focusedPinTheme: defaultPinTheme,
@@ -534,7 +534,11 @@ Widget PostPhoto() {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            textField(width:290, hight:48, lebelText:'Paste Verse or Select Verse', textfieldBg:TabBG),
+            textField(
+                width: 290,
+                hight: 48,
+                lebelText: 'Paste Verse or Select Verse',
+                textfieldBg: TabBG),
             const SizedBox(
               width: 10,
             ),
@@ -659,7 +663,11 @@ Widget audioPost() {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            textField(width:290, hight:48, lebelText:'Paste Verse or Select Verse',textfieldBg:TabBG),
+            textField(
+                width: 290,
+                hight: 48,
+                lebelText: 'Paste Verse or Select Verse',
+                textfieldBg: TabBG),
             const SizedBox(
               width: 10,
             ),
@@ -764,15 +772,15 @@ Widget postPhoto_1() {
               width: 20,
             ),
             textField(
-                width:256,
-                hight:48,
-                lebelText:'My Profile',
-                suffixIcon:Padding(
+                width: 256,
+                hight: 48,
+                lebelText: 'My Profile',
+                suffixIcon: Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child:
                       InkWell(onTap: () {}, child: Image.asset(Downarrow_ic)),
                 ),
-                textfieldBg:TabBG),
+                textfieldBg: TabBG),
           ],
         )
       ],

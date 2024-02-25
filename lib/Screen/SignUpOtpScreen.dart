@@ -1,13 +1,20 @@
 import 'package:basileia/Screen/SignInScreen.dart';
+import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../RestAPI/RestClient.dart';
 import '../Style/images.dart';
 
 class SignUpOtpScreen extends StatelessWidget {
-  const SignUpOtpScreen({super.key});
+  String email = "";
+  AuthClient cln = AuthClient();
+  TextEditingController contr = TextEditingController();
+
+  SignUpOtpScreen({Key? key, required this.email}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,13 +56,20 @@ class SignUpOtpScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            OtpField(),
+            OtpField(controller: contr),
             const SizedBox(
               height: 50,
             ),
             Primary_Button(
                 onTap: () {
-                  Get.to(() => SignInScreen());
+                  final req_outp =
+                      cln.VerifyOTPRequest(email, contr.toString());
+                  if (req_outp == true) {
+                    SuccessToast("Sucsexfully logged in");
+                    Get.to(() => HomeFeedScreen());
+                  } else {
+                    ErrorToast("Error occured please check logs");
+                  }
                 },
                 text: 'Jump To Home',
                 Width: 272),
