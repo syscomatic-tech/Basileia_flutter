@@ -17,8 +17,6 @@ class AuthClient {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode < 300) {
-      print(await response.stream.bytesToString());
-
       return await response.stream.bytesToString();
     } else {
       print(response.reasonPhrase);
