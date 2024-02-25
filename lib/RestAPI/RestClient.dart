@@ -1,3 +1,4 @@
+import 'dart:async';
 import "dart:convert";
 import 'package:http/http.dart' as http;
 import 'package:basileia/style/style.dart';
@@ -9,8 +10,7 @@ class AuthClient {
 //Login API calling
 
   Future<Object> LoginRequest(String Email, String Password) async {
-    var request =
-        http.Request('POST', Uri.parse('{{BaseURL}}/auth/user/signin'));
+    var request = http.Request('POST', Uri.parse('$BaseURL/auth/user/signin'));
     request.body =
         '''{\n    "email":"$Email",\n    "password":"$Password"\n}''';
 
@@ -59,6 +59,37 @@ class AuthClient {
     } else {
       print(response.reasonPhrase);
       return false;
+    }
+  }
+
+  Future<bool> OTPResend(String Email) async {
+    var request = http.Request('POST', Uri.parse('$BaseURL/auth/otp/resend'));
+    request.body = '''{\n    "email":"$Email"\n}''';
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    } else {
+      print(response.reasonPhrase);
+      return false;
+    }
+  }
+
+  Future<Object> Refresh() async {
+    var request = http.Request('GET', Uri.parse('$BaseURL/auth/refresh'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      final jsonResponse = jsonDecode(await response.stream.bytesToString());
+      return jsonResponse;
+    } else {
+      print(response.reasonPhrase);
+      final jsonResponse = jsonDecode(await response.stream.bytesToString());
+      return jsonResponse;
     }
   }
 }
