@@ -40,7 +40,7 @@ class HomeFeedScreen extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 297,
+                height: 310,
                 decoration: const BoxDecoration(
                     color: primary,
                     borderRadius: BorderRadius.only(
@@ -74,7 +74,7 @@ class HomeFeedScreen extends StatelessWidget {
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.only(top: 20, right: 220),
+                      padding: EdgeInsets.only(top: 20, right: 220,left: 10),
                       child: Text(
                         'Wellcome,',
                         style: TextStyle(
@@ -85,12 +85,12 @@ class HomeFeedScreen extends StatelessWidget {
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.only(right: 37),
+                      padding: EdgeInsets.only(right: 50),
                       child: Text(
                         'Consectetur adipiscing elit ',
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontSize: 22.6,
+                            fontSize: 20.6,
                             color: Colors.white,
                             fontFamily: poppins_regular),
                       ),
@@ -100,14 +100,11 @@ class HomeFeedScreen extends StatelessWidget {
                     ),
                     searchBar(),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, left: 250),
+                      padding: const EdgeInsets.only(top: 15, left: 250),
                       child: AdvanceFilterButton(onTap:() {Get.to(()=>InboxScreen());}),
                     )
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 20,
               ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),

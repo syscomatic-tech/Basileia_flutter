@@ -20,7 +20,6 @@ class AuthClient {
       return await response.stream.bytesToString();
     } else {
       print(response.reasonPhrase);
-      //final outp = jsonDecode(await response.stream.bytesToString());
       return await response.stream.bytesToString();
     }
   }

@@ -4,12 +4,15 @@ import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
+import 'package:basileia/fribase/chat_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+  ChatScreen({super.key});
+  final TextEditingController sentMsgController = TextEditingController();
+  final Chatservice _chatservice = Chatservice();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,7 +163,7 @@ class ChatScreen extends StatelessWidget {
             );
           }, sentOnTap: () {
             Get.to(() => GroupChatScreen());
-          })
+          },controller: sentMsgController)
         ],
       ),
     );

@@ -1711,7 +1711,7 @@ Widget inboxTopItem() {
   );
 }
 
-Widget chatScreenTextField({VoidCallback? micOnTap, VoidCallback? sentOnTap}) {
+Widget chatScreenTextField({VoidCallback? micOnTap, VoidCallback? sentOnTap,controller}) {
   return Container(
     height: 116,
     decoration: BoxDecoration(
@@ -1733,6 +1733,7 @@ Widget chatScreenTextField({VoidCallback? micOnTap, VoidCallback? sentOnTap}) {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
           child: TextField(
+            controller: controller,
             style: const TextStyle(fontSize: 14, fontFamily: poppins_regular),
             decoration: InputDecoration(
               border: InputBorder.none,

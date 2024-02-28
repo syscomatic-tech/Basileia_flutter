@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "666878904847",
+    "project_id": "basileia-578cc",
+    "storage_bucket": "basileia-578cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666878904847:android:cb358352cf291fcb41b17a",
+        "android_client_info": {
+          "package_name": "com.example.boiler_plate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEM-ibwbST0dOr_misISktn8zO0JtbS24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

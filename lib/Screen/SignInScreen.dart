@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/SignUpScreen.dart';
-import 'package:basileia/Screen/SignUpScreen_1.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
