@@ -2,11 +2,27 @@ import 'dart:async';
 import "dart:convert";
 import 'package:http/http.dart' as http;
 
+var jwt_token = "";
+var userId = "";
+var userFullname = "";
+var userEmail = "";
+
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
   var jwt_token = "";
 //Login API calling
+  Future<Map> getUserInfo(String userID) async {
+    var request = http.Request('GET', Uri.parse('$BaseURL/auth/$userID'));
+    var headers = {'Authorization': 'Bearer $jwt_token'};
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode < 300) {
+      return json.decode(await response.stream.bytesToString());
+    } else {
+      return json.decode(await response.stream.bytesToString());
+    }
+  }
 
   Future<String> LoginRequest(String Email, String Password) async {
     var headers = {'Content-Type': 'application/json'};
@@ -17,9 +33,16 @@ class AuthClient {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode < 300) {
-      return await response.stream.bytesToString();
+      Map resp = json.decode(await response.stream.bytesToString());
+      jwt_token = resp["accessToken"];
+      userId = resp["user"]["_id"];
+      var userInfo = await this.getUserInfo(userId);
+      userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
+      userEmail = resp["user"]["email"];
+      return resp["accessToken"];
     } else {
       print(response.reasonPhrase);
+
       return await response.stream.bytesToString();
     }
   }
@@ -64,6 +87,7 @@ class AuthClient {
 
     if (response.statusCode < 300) {
       print(await response.stream.bytesToString());
+
       return true;
     } else {
       print(response.reasonPhrase);
