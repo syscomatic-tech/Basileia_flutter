@@ -11,12 +11,14 @@ import 'package:get/get.dart';
 import '../firebase/chat_service.dart';
 
 class InboxScreen extends StatelessWidget {
-  InboxScreen({super.key,});
+  InboxScreen({
+    super.key,
+  });
   final SocialClient sex_client = SocialClient();
   List<User> UserList = [];
-  void GetUsers() async {
+  Future<List<User>> GetUsers() async {
     final users = await sex_client.get_users();
-
+    List<User> UserList = [];
     if (users is List) {
       for (var user in users) {
         UserList.add(User(
@@ -24,11 +26,15 @@ class InboxScreen extends StatelessWidget {
             id: user["id"],
             email: user["email"]));
       }
+      return UserList;
+    } else {
+      return UserList;
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    GetUsers();
+    GetUsers().then((value) => {UserList = value});
     return Scaffold(
       body: Stack(
         children: [
@@ -71,10 +77,10 @@ class InboxScreen extends StatelessWidget {
                     ),
                     const Padding(
                       padding: EdgeInsets.only(left: 10),
-                      child:  Text(
+                      child: Text(
                         'All Message ',
-                        style:
-                            TextStyle(fontSize: 14, fontFamily: poppins_semibold),
+                        style: TextStyle(
+                            fontSize: 14, fontFamily: poppins_semibold),
                       ),
                     ),
                     Expanded(
@@ -85,31 +91,42 @@ class InboxScreen extends StatelessWidget {
                           itemCount: UserList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 2),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 2),
                               child: Slidable(
-                                  endActionPane: ActionPane(extentRatio: 0.30,
-                                      motion:  const ScrollMotion(), children: [
+                                  endActionPane: ActionPane(
+                                      extentRatio: 0.30,
+                                      motion: const ScrollMotion(),
+                                      children: [
                                         InkWell(
-                                          onTap: (){},
+                                          onTap: () {},
                                           child: Padding(
-                                            padding: const EdgeInsets.only(bottom: 23,left: 10),
+                                            padding: const EdgeInsets.only(
+                                                bottom: 23, left: 10),
                                             child: Container(
                                               height: 80,
                                               width: 85,
                                               decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius: BorderRadius.circular(10)
-                                              ),
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
                                               child: Image.asset(delete),
                                             ),
                                           ),
                                         )
-                                  ]),
+                                      ]),
                                   child: chatItem(
                                       title: userFullname,
                                       subTitle: userFullname,
                                       msgCount: 0,
-                                  onTap: (){Get.to(()=>ChatScreen(recevierEmail: UserList[index].name,receVierId: UserList[index].id,));})),
+                                      onTap: () {
+                                        Get.to(() => ChatScreen(
+                                              recevierEmail:
+                                                  UserList[index].name,
+                                              receVierId: UserList[index].id,
+                                            ));
+                                      })),
                             );
                           },
                         ),
