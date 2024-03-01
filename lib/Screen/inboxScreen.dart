@@ -18,19 +18,18 @@ class InboxScreen extends StatelessWidget {
   List<User> UserList = [];
 
   Future<bool> GetUsers() async {
-    final users = await sex_client.get_users();
-
-    if (users is List) {
-      for (var user in users) {
-        String fname = user['firstName'];
-        String lname = user['lastName'];
-        UserList.add(User(
-            name: fname + " " + lname, id: user["id"], email: user["email"]));
-      }
-      return true;
-    } else {
-      return false;
-    }
+    sex_client.get_users().then((users) => {
+          if (users is List)
+            {
+              for (var user in users)
+                {
+                  UserList.add(User(
+                      name: user['firstName'] + " " + user['lastName'],
+                      id: user["id"],
+                      email: user["email"]))
+                }
+            }
+        });
   }
 
   @override
