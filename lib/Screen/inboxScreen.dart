@@ -17,7 +17,7 @@ class InboxScreen extends StatelessWidget {
   final SocialClient sex_client = SocialClient();
   List<User> UserList = [];
 
-  Future<bool> GetUsers() async {
+  bool GetUsers() {
     sex_client.get_users().then((users) => {
           if (users is List)
             {
@@ -30,10 +30,12 @@ class InboxScreen extends StatelessWidget {
                 }
             }
         });
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
+    GetUsers();
     return Scaffold(
       body: Stack(
         children: [
