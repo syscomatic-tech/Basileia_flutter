@@ -45,13 +45,13 @@ class Chatservice {
     await _firestore
         .collection('chatRooms')
         .doc(chatRoomId)
-        .collection('message')
+        .collection('messages')
         .add(newMessage.toMap());
   }
 
   //get messages
-  Stream<QuerySnapshot> getMessages(String userId, String otherUserID) {
-    List<String> ids = [userId, otherUserID];
+  Stream<QuerySnapshot> getMessages(String senderId, String otherUserID) {
+    List<String> ids = [senderId, otherUserID];
     ids.sort();
     String ChatRoomID = ids.join('_');
     return _firestore

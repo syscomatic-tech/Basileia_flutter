@@ -16,7 +16,6 @@ class InboxScreen extends StatelessWidget {
   });
   final SocialClient sex_client = SocialClient();
   List<User> UserList = [];
-
   bool GetUsers() {
     sex_client.get_users().then((users) => {
           if (users is List)
@@ -25,7 +24,7 @@ class InboxScreen extends StatelessWidget {
                 {
                   UserList.add(User(
                       name: user['firstName'] + " " + user['lastName'],
-                      id: user["id"],
+                      id: user["_id"],
                       email: user["email"]))
                 }
             }
@@ -35,6 +34,7 @@ class InboxScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     GetUsers();
     return Scaffold(
       body: Stack(
@@ -118,8 +118,8 @@ class InboxScreen extends StatelessWidget {
                                         )
                                       ]),
                                   child: chatItem(
-                                      title: userFullname,
-                                      subTitle: userFullname,
+                                      title: UserList[index].name,
+                                      subTitle: UserList[index].email,
                                       msgCount: 0,
                                       onTap: () {
                                         Get.to(() => ChatScreen(

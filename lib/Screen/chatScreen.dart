@@ -102,7 +102,7 @@ class ChatScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: _buildMessageList(),
+            child: _buildMessageList()
           ),
           chatScreenTextField(
               micOnTap: () {
@@ -118,20 +118,24 @@ class ChatScreen extends StatelessWidget {
   }
 
   Widget _buildMessageList() {
+    String senderId = userId;
     return StreamBuilder(
-        stream: _chatservice.getMessages(userId, receVierId),
-        builder: (context, snapShot) {
-          if (snapShot.hasError) {
+        stream: _chatservice.getMessages(receVierId, senderId),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
             return const Text('Error');
           }
-          if (snapShot.connectionState == ConnectionState.waiting) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Loading....');
           }
-          return ListView(
-              children: snapShot.data!.docs
-                  .map((doc) => _buildMessageItem(doc))
-                  .toList());
-        });
+            return ListView(
+                children:
+                snapshot.data!.docs
+                    .map((doc) => _buildMessageItem(doc))
+                    .toList(),
+            );
+          },
+    );
   }
 
   Widget _buildMessageItem(DocumentSnapshot doc) {
