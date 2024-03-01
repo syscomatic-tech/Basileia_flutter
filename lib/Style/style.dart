@@ -4,10 +4,13 @@ import 'package:basileia/Screen/commentScreen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:readmore/readmore.dart';
+import '../RestAPI/RestClient.dart';
+import '../Screen/chatScreen.dart';
 import 'colors.dart';
 import 'fonts.dart';
 import 'images.dart';
@@ -1589,7 +1592,7 @@ Widget chatItem({String? title, String? subTitle, msgCount, onTap}) {
                   children: [
                     Text(
                       title!,
-                      style: const TextStyle(
+                      style: const TextStyle(overflow: TextOverflow.ellipsis,
                           fontFamily: poppins_semibold,
                           fontSize: 14,
                           color: Colors.black),
@@ -1599,7 +1602,7 @@ Widget chatItem({String? title, String? subTitle, msgCount, onTap}) {
                     ),
                     Text(
                       subTitle!,
-                      style: const TextStyle(
+                      style: const TextStyle(overflow: TextOverflow.ellipsis,
                           fontFamily: poppins_regular,
                           fontSize: 12,
                           color: primaryTxt),
@@ -3102,4 +3105,34 @@ void ErrorToast(msg) {
       backgroundColor: colorRed,
       textColor: colorWhite,
       fontSize: 16.0);
+}
+
+Widget user_tile(){
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 2),
+    child: Slidable(
+        endActionPane: ActionPane(extentRatio: 0.30,
+            motion:  const ScrollMotion(), children: [
+              InkWell(
+                onTap: (){},
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 23,left: 10),
+                  child: Container(
+                    height: 80,
+                    width: 85,
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Image.asset(delete),
+                  ),
+                ),
+              )
+            ]),
+        child: chatItem(
+            title: userFullname,
+            subTitle: userFullname,
+            msgCount: 0,
+            onTap: (){Get.to(()=>ChatScreen(recevierEmail: userFullname,receVierId: userId,));})),
+  );
 }

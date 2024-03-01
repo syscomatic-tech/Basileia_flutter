@@ -33,6 +33,7 @@ class AuthClient {
     http.StreamedResponse response = await request.send();
     if (response.statusCode < 300) {
       final resp = json.decode(await response.stream.bytesToString());
+
       jwt_token = resp["accessToken"];
       userId = resp["user"]["_id"];
       // final userInfo = json.decode(await getUserInfo(userId));

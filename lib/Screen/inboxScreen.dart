@@ -1,3 +1,4 @@
+import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/chatScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
@@ -8,6 +9,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 class InboxScreen extends StatelessWidget {
+  InboxScreen({super.key,});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,9 +69,9 @@ class InboxScreen extends StatelessWidget {
                           itemCount: 11,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5),
+                              padding: const EdgeInsets.symmetric(horizontal: 2),
                               child: Slidable(
-                                  endActionPane:  ActionPane(extentRatio: 0.30,
+                                  endActionPane: ActionPane(extentRatio: 0.30,
                                       motion:  const ScrollMotion(), children: [
                                         InkWell(
                                           onTap: (){},
@@ -87,10 +90,10 @@ class InboxScreen extends StatelessWidget {
                                         )
                                   ]),
                                   child: chatItem(
-                                      title: "Gabriella Michalle",
-                                      subTitle: "Hi, how about your progress..",
+                                      title: userFullname,
+                                      subTitle: userFullname,
                                       msgCount: 0,
-                                  onTap: (){Get.to(()=>ChatScreen());})),
+                                  onTap: (){Get.to(()=>ChatScreen(recevierEmail: userFullname,receVierId: userId,));})),
                             );
                           },
                         ),

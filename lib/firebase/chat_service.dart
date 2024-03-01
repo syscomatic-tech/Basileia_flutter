@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:basileia/firebase/message.dart';
 import 'package:basileia/RestAPI/RestClient.dart';
@@ -8,8 +7,8 @@ class Chatservice {
   // get instance of firebase
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Stream<List<Map<String, dynamic>>> getUserStream() {
-    return _firestore.collection('Users').snapshots().map((snapshot) {
+  Stream<List<Map<String,dynamic>>> getUserStream(){
+    return _firestore .collection('Users').snapshots().map((snapshot){
       return snapshot.docs.map((doc) {
         final user = doc.data();
         return user;

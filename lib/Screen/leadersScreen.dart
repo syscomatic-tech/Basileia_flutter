@@ -222,24 +222,32 @@ class LeadersScreen extends StatelessWidget {
                       height: 141,
                       width: 89,
                       decoration: BoxDecoration(
-                        color: red,
+                        color: progressBarBGColor,
                         borderRadius: BorderRadius.circular(5)
                       ),
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              Image.asset(viewIcon,),
-                              const Text('23.5K',style: TextStyle(color: primaryTxt,fontSize: 4,fontFamily: poppins_regular),)
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(reactIcon),
-                              const Text('23.5K',style: TextStyle(color: primaryTxt,fontSize: 4,fontFamily: poppins_regular),)
-                            ],
-                          ),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: [
+                                Image.asset(viewIcon,),
+                                const SizedBox(width: 3,),
+                                const Text('23.5K',style: TextStyle(color: primaryTxt,fontSize: 4,fontFamily: poppins_regular),)
+                              ],
+                            ),
+                            const SizedBox(width: 10,),
+                            Row(
+                              children: [
+                                Image.asset(reactIcon),
+                                const SizedBox(width: 3,),
+                                const Text('23.5K',style: TextStyle(color: primaryTxt,fontSize: 4,fontFamily: poppins_regular),)
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   }, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,mainAxisSpacing: 10,crossAxisSpacing: 10,childAspectRatio: 0.70),
