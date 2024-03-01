@@ -16,9 +16,10 @@ class InboxScreen extends StatelessWidget {
   });
   final SocialClient sex_client = SocialClient();
   List<User> UserList = [];
-  Future<List<User>> GetUsers() async {
+
+  Future<bool> GetUsers() async {
     final users = await sex_client.get_users();
-    List<User> UserList = [];
+
     if (users is List) {
       for (var user in users) {
         UserList.add(User(
@@ -26,15 +27,14 @@ class InboxScreen extends StatelessWidget {
             id: user["id"],
             email: user["email"]));
       }
-      return UserList;
+      return true;
     } else {
-      return UserList;
+      return false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    GetUsers().then((value) => {UserList = value});
     return Scaffold(
       body: Stack(
         children: [

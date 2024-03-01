@@ -10,12 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeFeedScreen extends StatelessWidget {
- final feeds =[
-   Feeds(),
-   Feeds(),
-   Feeds(),
-   AudioFeeds()
- ];
+  final feeds = [Feeds(), Feeds(), Feeds(), AudioFeeds()];
   @override
   Widget build(BuildContext context) {
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
@@ -23,7 +18,9 @@ class HomeFeedScreen extends StatelessWidget {
       floatingActionButton: Visibility(
         visible: !showFAB,
         child: FloatingActionButton(
-          onPressed: () {Get.to(()=>PostOnFeed());},
+          onPressed: () {
+            Get.to(() => PostOnFeed());
+          },
           backgroundColor: primary,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -60,12 +57,21 @@ class HomeFeedScreen extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Profile(onPressed:() {Get.to(()=> ProfileScreen());},OutSidewidth:47,OutSidehight:47,InsideWidth:38,InSideHight:38),
+                              Profile(
+                                  onPressed: () {
+                                    Get.to(() => ProfileScreen());
+                                  },
+                                  OutSidewidth: 47,
+                                  OutSidehight: 47,
+                                  InsideWidth: 38,
+                                  InSideHight: 38),
                               const SizedBox(
                                 width: 5,
                               ),
                               IconButton(
-                                onPressed: () {Get.to(()=>MenuScreen());},
+                                onPressed: () {
+                                  Get.to(() => MenuScreen());
+                                },
                                 icon: Image.asset(menu),
                               )
                             ],
@@ -74,7 +80,7 @@ class HomeFeedScreen extends StatelessWidget {
                       ),
                     ),
                     const Padding(
-                      padding: EdgeInsets.only(top: 20, right: 220,left: 10),
+                      padding: EdgeInsets.only(top: 20, right: 220, left: 10),
                       child: Text(
                         'Wellcome,',
                         style: TextStyle(
@@ -101,17 +107,21 @@ class HomeFeedScreen extends StatelessWidget {
                     searchBar(),
                     Padding(
                       padding: const EdgeInsets.only(top: 15, left: 250),
-                      child: AdvanceFilterButton(onTap:() {Get.to(()=>InboxScreen());}),
+                      child: AdvanceFilterButton(onTap: () async {
+                        var screen = InboxScreen();
+                        screen.GetUsers()
+                            .then((value) => {Get.to(() => screen)});
+                      }),
                     )
                   ],
                 ),
               ),
               ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  primary: false,
                   shrinkWrap: true,
                   itemCount: feeds.length,
-                  itemBuilder: (context,index) {
+                  itemBuilder: (context, index) {
                     return feeds[index];
                   })
             ],
