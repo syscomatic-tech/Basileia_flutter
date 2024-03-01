@@ -1,4 +1,3 @@
-
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/groupChatScreen.dart';
 import 'package:basileia/Style/colors.dart';
@@ -12,20 +11,38 @@ import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 class ChatScreen extends StatelessWidget {
+  final SocialClient sex_client = SocialClient();
   final String recevierEmail;
   final String receVierId;
-  ChatScreen({super.key,required this.recevierEmail,required this.receVierId});
+  ChatScreen(
+      {super.key, required this.recevierEmail, required this.receVierId});
   final TextEditingController sentMsgController = TextEditingController();
   final Chatservice _chatservice = Chatservice();
+  List<User> UserList = [];
 
-  void SendMessage() async{
-    if(sentMsgController.text.isNotEmpty){
+  void SendMessage() async {
+    if (sentMsgController.text.isNotEmpty) {
       await _chatservice.senderMessage(receVierId, sentMsgController.text);
       sentMsgController.clear();
     }
   }
+
+  void GetUsers() async {
+    final users = await sex_client.get_users();
+
+    if (users is List) {
+      for (var user in users) {
+        UserList.add(User(
+            name: user['firstName'] + " " + user["lastName"],
+            id: user["id"],
+            email: user["email"]));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    GetUsers();
     return Scaffold(
       body: Column(
         children: [
@@ -84,7 +101,9 @@ class ChatScreen extends StatelessWidget {
                     ],
                   ),
                   InkWell(
-                    onTap: (){Get.to(GroupChatScreen());},
+                    onTap: () {
+                      Get.to(GroupChatScreen());
+                    },
                     child: const Icon(
                       Icons.call,
                       color: Colors.white,
@@ -95,37 +114,42 @@ class ChatScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-          child: _buildMessageList(),
+            child: _buildMessageList(),
           ),
-          chatScreenTextField(micOnTap: () {
-            Get.bottomSheet(
-              chatBottomSheet(context: context)
-            );
-          }, sentOnTap: () {
-            SendMessage();
-          },controller: sentMsgController)
+          chatScreenTextField(
+              micOnTap: () {
+                Get.bottomSheet(chatBottomSheet(context: context));
+              },
+              sentOnTap: () {
+                SendMessage();
+              },
+              controller: sentMsgController)
         ],
       ),
     );
   }
-  Widget  _buildMessageList(){
-    return StreamBuilder(stream: _chatservice.getMessages(userId, receVierId),
-        builder: (context,snapShot) {
-      if(snapShot.hasError){
-        return const Text('Error');
-      }
-      if(snapShot.connectionState==ConnectionState.waiting){
-        return const Text('Loading....');
-      }
-      return ListView(
-        children:
-          snapShot.data!.docs.map((doc)=> _buildMessageItem(doc)).toList()
-      );
-    }
-    );
+
+  Widget _buildMessageList() {
+    return StreamBuilder(
+        stream: _chatservice.getMessages(userId, receVierId),
+        builder: (context, snapShot) {
+          if (snapShot.hasError) {
+            return const Text('Error');
+          }
+          if (snapShot.connectionState == ConnectionState.waiting) {
+            return const Text('Loading....');
+          }
+          return ListView(
+              children: snapShot.data!.docs
+                  .map((doc) => _buildMessageItem(doc))
+                  .toList());
+        });
   }
-  Widget _buildMessageItem(DocumentSnapshot doc){
-    Map<String,dynamic> data = doc.data() as Map<String,dynamic>;
-    return Text(data["message"],);
+
+  Widget _buildMessageItem(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return Text(
+      data["message"],
+    );
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:async';
 import "dart:convert";
+import 'dart:ffi';
+import 'package:basileia/Style/style.dart';
 import 'package:http/http.dart' as http;
 
 var jwt_token = "";
@@ -124,6 +126,34 @@ class AuthClient {
       print(response.reasonPhrase);
       final jsonResponse = jsonDecode(await response.stream.bytesToString());
       return jsonResponse;
+    }
+  }
+}
+
+class SocialClient {
+  final BaseUrl = "https://api.zahedhasan.com/api/v1";
+  var RequestHeader = {"Content-Type": "application/json"};
+
+  Future<dynamic> get_users() async {
+    var headers = {
+      'Authorization': 'Bearer $jwt_token',
+      "Content-Type": "application/json"
+    };
+    var request = http.Request('GET', Uri.parse('$BaseUrl/auth/getAllUsers'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode < 300) {
+      final obj_resp = json.decode(await response.stream.bytesToString());
+      SuccessToast(obj_resp["message"]);
+      final users = obj_resp["allUsers"];
+      return users;
+    } else {
+      print(response.reasonPhrase);
+      final obj_resp = json.decode(await response.stream.bytesToString());
+      return obj_resp;
     }
   }
 }

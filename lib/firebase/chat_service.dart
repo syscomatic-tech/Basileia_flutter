@@ -1,14 +1,20 @@
-
 import 'package:basileia/firebase/message.dart';
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+class User {
+  var name = "";
+  var email = "";
+  var id = "";
+  User({required this.name, required this.email, required this.id});
+}
 
 class Chatservice {
   // get instance of firebase
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Stream<List<Map<String,dynamic>>> getUserStream(){
-    return _firestore .collection('Users').snapshots().map((snapshot){
+  Stream<List<Map<String, dynamic>>> getUserStream() {
+    return _firestore.collection('Users').snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
         final user = doc.data();
         return user;
@@ -44,7 +50,7 @@ class Chatservice {
   }
 
   //get messages
-  Stream<QuerySnapshot> getMessages(String userId, otherUserID) {
+  Stream<QuerySnapshot> getMessages(String userId, String otherUserID) {
     List<String> ids = [userId, otherUserID];
     ids.sort();
     String ChatRoomID = ids.join('_');
