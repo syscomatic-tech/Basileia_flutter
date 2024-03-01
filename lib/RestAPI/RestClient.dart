@@ -149,6 +149,7 @@ class SocialClient {
       final obj_resp = json.decode(await response.stream.bytesToString());
       SuccessToast(obj_resp["message"]);
       final users = obj_resp["allUsers"];
+      print(response.stream.bytesToString());
       return users;
     } else {
       print(response.reasonPhrase);
