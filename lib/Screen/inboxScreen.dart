@@ -22,10 +22,10 @@ class InboxScreen extends StatelessWidget {
 
     if (users is List) {
       for (var user in users) {
+        String fname = user['firstName'];
+        String lname = user['lastName'];
         UserList.add(User(
-            name: user['firstName'] + " " + user["lastName"],
-            id: user["id"],
-            email: user["email"]));
+            name: fname + " " + lname, id: user["id"], email: user["email"]));
       }
       return true;
     } else {
