@@ -8,11 +8,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
+import '../firebase/chat_service.dart';
+
 class InboxScreen extends StatelessWidget {
   InboxScreen({super.key,});
+  final SocialClient sex_client = SocialClient();
+  List<User> UserList = [];
+  void GetUsers() async {
+    final users = await sex_client.get_users();
 
+    if (users is List) {
+      for (var user in users) {
+        UserList.add(User(
+            name: user['firstName'] + " " + user["lastName"],
+            id: user["id"],
+            email: user["email"]));
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    GetUsers();
     return Scaffold(
       body: Stack(
         children: [
@@ -66,7 +82,7 @@ class InboxScreen extends StatelessWidget {
                         child: ListView.builder(
                           primary: false,
                           shrinkWrap: true,
-                          itemCount: 11,
+                          itemCount: UserList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 2),
@@ -93,7 +109,7 @@ class InboxScreen extends StatelessWidget {
                                       title: userFullname,
                                       subTitle: userFullname,
                                       msgCount: 0,
-                                  onTap: (){Get.to(()=>ChatScreen(recevierEmail: userFullname,receVierId: userId,));})),
+                                  onTap: (){Get.to(()=>ChatScreen(recevierEmail: UserList[index].name,receVierId: UserList[index].id,));})),
                             );
                           },
                         ),

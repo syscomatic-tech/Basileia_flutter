@@ -11,14 +11,14 @@ import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 class ChatScreen extends StatelessWidget {
-  final SocialClient sex_client = SocialClient();
+
   final String recevierEmail;
   final String receVierId;
   ChatScreen(
       {super.key, required this.recevierEmail, required this.receVierId});
   final TextEditingController sentMsgController = TextEditingController();
   final Chatservice _chatservice = Chatservice();
-  List<User> UserList = [];
+
 
   void SendMessage() async {
     if (sentMsgController.text.isNotEmpty) {
@@ -27,22 +27,10 @@ class ChatScreen extends StatelessWidget {
     }
   }
 
-  void GetUsers() async {
-    final users = await sex_client.get_users();
 
-    if (users is List) {
-      for (var user in users) {
-        UserList.add(User(
-            name: user['firstName'] + " " + user["lastName"],
-            id: user["id"],
-            email: user["email"]));
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    GetUsers();
     return Scaffold(
       body: Column(
         children: [
