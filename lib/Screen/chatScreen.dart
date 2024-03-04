@@ -126,16 +126,16 @@ class ChatScreen extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           print(snapshot.data?.docs);
-          final documents = snapshot.data!.docs;
+          final documents = snapshot.data?.docs;
+          var list = documents?.map((e) => (e.data())).toList() ?? [];
           print(documents);
           return ListView.builder(
-            itemCount: documents.length,
+            itemCount: list.length,
             itemBuilder: (context, index) {
-              final documentData = documents[index]
-                  .data(); // Data of each document
+              final documentData = list[index]; // Data of each document
               return ListTile(
-                title: Text(
-                    documentData['message']), // Access your fields using the key
+                title: Text(documentData[
+                    'message']), // Access your fields using the key
               );
             },
           );
@@ -143,7 +143,5 @@ class ChatScreen extends StatelessWidget {
         return Text('No data available');
       },
     );
-
-
   }
 }
