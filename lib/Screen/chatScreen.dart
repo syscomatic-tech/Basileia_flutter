@@ -8,7 +8,6 @@ import 'package:basileia/firebase/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grouped_list/grouped_list.dart';
 
 class ChatScreen extends StatelessWidget {
   final String recevierEmail;
@@ -113,33 +112,38 @@ class ChatScreen extends StatelessWidget {
 
   Widget _buildMessageList() {
     String senderId = userId;
-    return StreamBuilder(
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: _chatservice.getMessages(receVierId, senderId),
       builder: (context, snapshot) {
+        print(snapshot);
         if (snapshot.hasError) {
-          return const Text('Error');
+          return Text('Something went wrong');
         }
+
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading....');
+          return Text("Loading");
         }
-        return ListView(
-          children:
-              snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList(),
-        );
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          print(snapshot.data?.docs);
+          final documents = snapshot.data!.docs;
+          print(documents);
+          return ListView.builder(
+            itemCount: documents.length,
+            itemBuilder: (context, index) {
+              final documentData = documents[index]
+                  .data(); // Data of each document
+              return ListTile(
+                title: Text(
+                    documentData['message']), // Access your fields using the key
+              );
+            },
+          );
+        }
+        return Text('No data available');
       },
     );
-  }
 
-  Widget _buildMessageItem(DocumentSnapshot doc) {
-    var data = doc.data();
-    if (data is Map<String, dynamic>) {
-      return Text(
-        data["message"],
-      );
-    } else {
-      return Text(
-        "Error Occured",
-      );
-    }
+
   }
 }

@@ -45,12 +45,12 @@ class Chatservice {
     await _firestore
         .collection('chatRooms')
         .doc(chatRoomId)
-        .collection('messages')
+        .collection('message')
         .add(newMessage.toMap());
   }
 
   //get messages
-  Stream<QuerySnapshot> getMessages(String senderId, String otherUserID) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(String senderId, String otherUserID) {
     List<String> ids = [senderId, otherUserID];
     ids.sort();
     String ChatRoomID = ids.join('_');
@@ -58,10 +58,9 @@ class Chatservice {
     var snapsots = _firestore
         .collection('chat_rooms')
         .doc(ChatRoomID)
-        .collection('messages');
-    print(snapsots.doc());
+        .collection('message');
+    return snapsots.snapshots();
 
-    return snapsots.orderBy('timestamp', descending: false).snapshots();
-    ;
+    // return snapsots.orderBy('timestamp', descending: false).snapshots();
   }
 }
