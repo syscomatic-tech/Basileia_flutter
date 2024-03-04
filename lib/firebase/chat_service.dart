@@ -49,8 +49,24 @@ class Chatservice {
         .add(newMessage.toMap());
   }
 
+  Stream<List<Map<String, dynamic>>> messagesStream(
+      String senderId, String otherUserID) {
+    List<String> ids = [senderId, otherUserID];
+    ids.sort();
+    String ChatRoomID = ids.join('_');
+    return FirebaseFirestore.instance
+        .collection('chat_rooms')
+        .doc(ChatRoomID)
+        .collection('message')
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => (doc.data())).toList();
+    });
+  }
+
   //get messages
-  Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(String senderId, String otherUserID) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(
+      String senderId, String otherUserID) {
     List<String> ids = [senderId, otherUserID];
     ids.sort();
     String ChatRoomID = ids.join('_');

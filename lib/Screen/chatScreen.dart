@@ -112,10 +112,10 @@ class ChatScreen extends StatelessWidget {
 
   Widget _buildMessageList() {
     String senderId = userId;
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: _chatservice.getMessages(receVierId, senderId),
+    return StreamBuilder<List<Map<String, dynamic>>>(
+      stream: _chatservice.messagesStream(receVierId, senderId),
       builder: (context, snapshot) {
-        print(snapshot);
+        print(snapshot.data);
         if (snapshot.hasError) {
           return Text('Something went wrong');
         }
@@ -125,16 +125,14 @@ class ChatScreen extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          print(snapshot.data?.docs);
-          final documents = snapshot.data?.docs;
-          var list = documents?.map((e) => (e.data())).toList() ?? [];
-          print(documents);
+          var list = snapshot.data;
+
           return ListView.builder(
-            itemCount: list.length,
+            itemCount: list?.length,
             itemBuilder: (context, index) {
-              final documentData = list[index]; // Data of each document
+              final documentData = list?[index]; // Data of each document
               return ListTile(
-                title: Text(documentData[
+                title: Text(documentData?[
                     'message']), // Access your fields using the key
               );
             },
