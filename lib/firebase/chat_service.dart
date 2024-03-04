@@ -54,6 +54,11 @@ class Chatservice {
     List<String> ids = [senderId, otherUserID];
     ids.sort();
     String ChatRoomID = ids.join('_');
+    var tempu = FirebaseFirestore.instance
+        .collection('chat_rooms')
+        .doc(ChatRoomID)
+        .collection('message');
+    print(tempu.doc());
     return FirebaseFirestore.instance
         .collection('chat_rooms')
         .doc(ChatRoomID)
