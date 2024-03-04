@@ -149,7 +149,7 @@ class SocialClient {
       final obj_resp = json.decode(await response.stream.bytesToString());
       SuccessToast(obj_resp["message"]);
       final users = obj_resp["allUsers"];
-      print(users);
+
       return users;
     } else {
       print(response.reasonPhrase);
@@ -157,4 +157,6 @@ class SocialClient {
       return obj_resp;
     }
   }
+
+  void upload_post() async {}
 }

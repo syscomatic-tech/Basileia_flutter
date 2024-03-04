@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 class ChatScreen extends StatelessWidget {
-
   final String recevierEmail;
   final String receVierId;
   ChatScreen(
@@ -19,15 +18,12 @@ class ChatScreen extends StatelessWidget {
   final TextEditingController sentMsgController = TextEditingController();
   final Chatservice _chatservice = Chatservice();
 
-
   void SendMessage() async {
     if (sentMsgController.text.isNotEmpty) {
       await _chatservice.senderMessage(receVierId, sentMsgController.text);
       sentMsgController.clear();
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -101,9 +97,7 @@ class ChatScreen extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: _buildMessageList()
-          ),
+          Expanded(child: _buildMessageList()),
           chatScreenTextField(
               micOnTap: () {
                 Get.bottomSheet(chatBottomSheet(context: context));
@@ -120,28 +114,32 @@ class ChatScreen extends StatelessWidget {
   Widget _buildMessageList() {
     String senderId = userId;
     return StreamBuilder(
-        stream: _chatservice.getMessages(receVierId, senderId),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Error');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text('Loading....');
-          }
-            return ListView(
-                children:
-                snapshot.data!.docs
-                    .map((doc) => _buildMessageItem(doc))
-                    .toList(),
-            );
-          },
+      stream: _chatservice.getMessages(receVierId, senderId),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Error');
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text('Loading....');
+        }
+        return ListView(
+          children:
+              snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList(),
+        );
+      },
     );
   }
 
   Widget _buildMessageItem(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return Text(
-      data["message"],
-    );
+    var data = doc.data();
+    if (data is Map<String, dynamic>) {
+      return Text(
+        data["message"],
+      );
+    } else {
+      return Text(
+        "Error Occured",
+      );
+    }
   }
 }

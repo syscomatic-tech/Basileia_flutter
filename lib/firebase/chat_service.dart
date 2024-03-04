@@ -54,11 +54,14 @@ class Chatservice {
     List<String> ids = [senderId, otherUserID];
     ids.sort();
     String ChatRoomID = ids.join('_');
-    return _firestore
+
+    var snapsots = _firestore
         .collection('chat_rooms')
         .doc(ChatRoomID)
-        .collection('messages')
-        .orderBy('timesTamp', descending: false)
-        .snapshots();
+        .collection('messages');
+    print(snapsots.doc());
+
+    return snapsots.orderBy('timestamp', descending: false).snapshots();
+    ;
   }
 }
