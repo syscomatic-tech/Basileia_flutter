@@ -60,6 +60,7 @@ class Chatservice {
         .collection('message')
         .snapshots()
         .map((snapshot) {
+      print(snapshot);
       return snapshot.docs.map((doc) => (doc.data())).toList();
     });
   }
