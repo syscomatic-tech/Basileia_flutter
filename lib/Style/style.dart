@@ -3136,3 +3136,41 @@ Widget user_tile(){
             onTap: (){Get.to(()=>ChatScreen(recevierEmail: userFullname,receVierId: userId,));})),
   );
 }
+
+class ChatBubble extends StatelessWidget{
+  final String message;
+  final bool isCurrentUser;
+   const ChatBubble({
+    super.key,
+    required this.message,
+    required this.isCurrentUser
+});
+  @override
+  Widget build(BuildContext context) {
+    return
+        Padding(
+          padding: const EdgeInsets.all(5),
+          child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                  color: isCurrentUser ? primary : chatContent,
+                  borderRadius: isCurrentUser
+                      ? const BorderRadius.only(
+                      topRight: Radius.circular(16),
+                      topLeft: Radius.circular(16),
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(4))
+                      : const BorderRadius.only(
+                      topRight: Radius.circular(16),
+                      topLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
+                      bottomLeft: Radius.circular(4))),
+              child: Text(
+                message,
+                style: TextStyle(
+                    color: isCurrentUser ? Colors.white : chatTxtColor,
+                    fontSize: 16),
+              )
+              ),
+        );
+  }}

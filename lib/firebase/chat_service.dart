@@ -1,5 +1,5 @@
-import 'package:basileia/firebase/message.dart';
 import 'package:basileia/RestAPI/RestClient.dart';
+import 'package:basileia/firebase/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
@@ -9,80 +9,41 @@ class User {
   User({required this.name, required this.email, required this.id});
 }
 
-class Chatservice {
-  // get instance of firebase
+class MessageService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  Stream<List<Map<String, dynamic>>> getUserStream() {
-    return _firestore.collection('Users').snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) {
-        final user = doc.data();
-        return user;
-      }).toList();
-    });
-  }
-
-  // send message
-  Future<void> senderMessage(String receiverId, message) async {
-    // get current User Info
-    final String currentUserId = userId;
-    final String CurrName = userFullname;
+// send message
+  Future<void> sendMessage(String receiverID, message) async {
+    final String currentUserID = userId;
+    final String currentUserEmail = userFullname;
     final Timestamp timestamp = Timestamp.now();
 
-    //create new message
-    Message newMessage = Message(
-        senderId: currentUserId,
-        receiverId: receiverId,
+    Message NewMessage = Message(
+        senderID: userId,
+        senderEmail: userFullname,
+        receiverID: receiverID,
         message: message,
-        timestamp: timestamp,
-        senderEmail: CurrName);
-
-    // to ensure uniqueness
-    List<String> ids = [currentUserId, receiverId];
-
+        timestamp: timestamp);
+    List<String> ids = [userId, receiverID];
     ids.sort();
-    String chatRoomId = ids.join('_');
+    String chatRoomID = ids.join('_');
     await _firestore
-        .collection('chatRooms')
-        .doc(chatRoomId)
-        .collection('message')
-        .add(newMessage.toMap());
-  }
-
-  Stream<List<Map<String, dynamic>>> messagesStream(
-      String senderId, String otherUserID) {
-    List<String> ids = [senderId, otherUserID];
-    ids.sort();
-    String ChatRoomID = ids.join('_');
-    var tempu = FirebaseFirestore.instance
-        .collection('chat_rooms')
-        .doc(ChatRoomID)
-        .collection('message');
-    print(tempu.doc());
-    return FirebaseFirestore.instance
-        .collection('chat_rooms')
-        .doc(ChatRoomID)
-        .collection('message')
-        .snapshots()
-        .map((snapshot) {
-      print(snapshot);
-      return snapshot.docs.map((doc) => (doc.data())).toList();
-    });
+        .collection("chat_rooms")
+        .doc(chatRoomID)
+        .collection("messages")
+        .add(NewMessage.toMap());
   }
 
   //get messages
-  Stream<QuerySnapshot<Map<String, dynamic>>> getMessages(
-      String senderId, String otherUserID) {
-    List<String> ids = [senderId, otherUserID];
+  Stream<QuerySnapshot> getMessages(String userID, otherUserID) {
+    List<String> ids = [userID, otherUserID];
     ids.sort();
-    String ChatRoomID = ids.join('_');
+    String chatRoomID = ids.join('_');
 
-    var snapsots = _firestore
-        .collection('chat_rooms')
-        .doc(ChatRoomID)
-        .collection('message');
-    return snapsots.snapshots();
-
-    // return snapsots.orderBy('timestamp', descending: false).snapshots();
+    return _firestore
+        .collection("chat_rooms")
+        .doc(chatRoomID)
+        .collection("messages")
+        .orderBy("timestamp", descending: false)
+        .snapshots();
   }
 }

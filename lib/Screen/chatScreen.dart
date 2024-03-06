@@ -14,12 +14,13 @@ class ChatScreen extends StatelessWidget {
   final String receVierId;
   ChatScreen(
       {super.key, required this.recevierEmail, required this.receVierId});
-  final TextEditingController sentMsgController = TextEditingController();
-  final Chatservice _chatservice = Chatservice();
 
-  void SendMessage() async {
+  final TextEditingController sentMsgController = TextEditingController();
+  final MessageService messageService = MessageService();
+
+  void sendMessage() async {
     if (sentMsgController.text.isNotEmpty) {
-      await _chatservice.senderMessage(receVierId, sentMsgController.text);
+      await messageService.sendMessage(receVierId, sentMsgController.text);
       sentMsgController.clear();
     }
   }
@@ -101,9 +102,7 @@ class ChatScreen extends StatelessWidget {
               micOnTap: () {
                 Get.bottomSheet(chatBottomSheet(context: context));
               },
-              sentOnTap: () {
-                SendMessage();
-              },
+              sentOnTap: () {sendMessage();},
               controller: sentMsgController)
         ],
       ),
@@ -111,35 +110,28 @@ class ChatScreen extends StatelessWidget {
   }
 
   Widget _buildMessageList() {
-    String senderId = userId;
-    return StreamBuilder<List<Map<String, dynamic>>>(
-      stream: _chatservice.messagesStream(receVierId, senderId),
-      builder: (context, snapshot) {
-        print(snapshot.data);
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
+    String senderID = userId;
+    return StreamBuilder(
+      stream: messageService.getMessages(receVierId, senderID),
+      builder: (BuildContext context, snapshot) {
+        if(snapshot.hasError){
+          return const Text('Error');
         }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+        if(snapshot.connectionState ==ConnectionState.waiting){
+          return const Text('Loading..');
         }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-          var list = snapshot.data;
-
-          return ListView.builder(
-            itemCount: list?.length,
-            itemBuilder: (context, index) {
-              final documentData = list?[index]; // Data of each document
-              return ListTile(
-                title: Text(documentData?[
-                    'message']), // Access your fields using the key
-              );
-            },
-          );
-        }
-        return Text('No data available');
+        return ListView(
+          children: snapshot.data!.docs.map((doc)=> _buildMessageItem(doc)).toList(),
+        );
       },
     );
+  }
+
+  Widget _buildMessageItem(DocumentSnapshot doc){
+    Map<String,dynamic> data = doc.data() as Map<String,dynamic>;
+    bool isCurrentUser = data['senderID'] == userId;
+    var alignment = isCurrentUser?Alignment.centerRight:Alignment.centerLeft;
+    return Container(alignment: alignment,
+        child: ChatBubble(message: data["message"],isCurrentUser: isCurrentUser,));
   }
 }
