@@ -1,6 +1,8 @@
 import 'dart:async';
 import "dart:convert";
+import 'dart:io';
 import 'package:basileia/Style/style.dart';
+import 'package:basileia/RestAPI/social.dart';
 import 'package:http/http.dart' as http;
 
 var jwt_token = "";
@@ -11,7 +13,6 @@ var userEmail = "";
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
-  var jwt_token = "";
 //Login API calling
   Future<String> getUserInfo(String userID) async {
     var request = http.Request('GET', Uri.parse('$BaseURL/auth/$userID'));
@@ -133,6 +134,53 @@ class SocialClient {
   final BaseUrl = "https://api.zahedhasan.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
 
+  Future<bool> update_profile(String Fname, String Lname, String path) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $jwt_token'
+    };
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'https://api.zahedhasan.com/api/v1/auth/updateUserProfiler/$userId'));
+    final bytes = await File(path).readAsBytes();
+    request.body = json.encode({
+      "firstName": Fname,
+      "lastName": Lname,
+      "profilePicture": "data:image/jpeg;base64," + base64Encode(bytes)
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    } else {
+      print(response.reasonPhrase);
+      return false;
+    }
+  }
+
+  Future<dynamic> getUserInfo(String usrid) async {
+    var headers = {'Authorization': 'Bearer $jwt_token'};
+    var request = http.Request(
+        'GET', Uri.parse('https://api.zahedhasan.com/api/v1/auth/$usrid'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode < 300) {
+      Map<String, dynamic> resp =
+          json.decode(await response.stream.bytesToString());
+      return resp;
+    } else {
+      print(response.reasonPhrase);
+      return await response.stream.bytesToString();
+    }
+  }
+
   Future<dynamic> get_users() async {
     var headers = {
       'Authorization': 'Bearer $jwt_token',
@@ -157,5 +205,124 @@ class SocialClient {
     }
   }
 
-  void upload_post() async {}
+  Future<bool> upload_post(String filepath) async {
+    var headers = {'Authorization': 'Bearer $jwt_token'};
+    var request = http.MultipartRequest('POST',
+        Uri.parse('https://api.zahedhasan.com/api/v1/upload/fileSystem'));
+    request.fields.addAll({'userId': userId});
+    request.files.add(await http.MultipartFile.fromPath('files', filepath));
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    } else {
+      print(response.reasonPhrase);
+      return false;
+    }
+  }
+
+  Future<Post> get_all_posts() async {
+    var headers = {'Authorization': 'Bearer $jwt_token'};
+    var request = http.Request('GET',
+        Uri.parse('https://api.zahedhasan.com/api/v1/upload/postGetAll'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode < 300) {
+      Map<String, dynamic> resp =
+          jsonDecode(await response.stream.bytesToString());
+      var userInfo = await getUserInfo(resp["userId"]);
+      bool hasVerse = resp.containsKey('verse');
+      Post postt;
+      if (hasVerse) {
+        postt = Post(
+            usrName: userInfo["user"]["firstName"] +
+                " " +
+                userInfo["user"]["lastName"],
+            userID: resp["userId"],
+            id: resp["_id"],
+            likes: resp['likes'],
+            followers: resp["following"],
+            file_content: resp["verse"],
+            post_type: 0);
+      } else {
+        var fl = resp["fileUrl"];
+        var extension = fl.toString().split(".")[-1];
+        int pst_tp = 1;
+        if (extension == "mp3") {
+          pst_tp = 2;
+        } else if (extension == "mp4") {
+          pst_tp = 3;
+        }
+        postt = Post(
+            usrName: userInfo["user"]["firstName"] +
+                " " +
+                userInfo["user"]["lastName"],
+            userID: resp["userId"],
+            id: resp["_id"],
+            likes: resp['likes'],
+            followers: resp["following"],
+            file_content: fl,
+            post_type: pst_tp);
+      }
+      return postt;
+    } else {
+      print(response.reasonPhrase);
+      return Post(
+          usrName: "eRROR",
+          userID: "",
+          id: "",
+          likes: [""],
+          followers: [""],
+          file_content: "",
+          post_type: 0);
+    }
+  }
+
+  Future<bool> likePost(String id) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $jwt_token'
+    };
+    var request = http.Request('POST',
+        Uri.parse('https://api.zahedhasan.com/api/v1/upload/likePost/$id'));
+    request.body = json.encode({"userId": userId});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode < 300) {
+      print(await response.stream.bytesToString());
+      return true;
+    } else {
+      print(response.reasonPhrase);
+      return false;
+    }
+  }
+
+  Future<bool> comment_post(String com, String post_id) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $jwt_token'
+    };
+    var request = http.Request('POST',
+        Uri.parse('https://api.zahedhasan.com/api/v1/upload/comment/$post_id'));
+    request.body = json.encode({"userId": userId, "comment": com});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode < 300) {
+      print(await response.stream.bytesToString());
+      return true;
+    } else {
+      print(await response.stream.bytesToString());
+      return false;
+    }
+  }
 }
