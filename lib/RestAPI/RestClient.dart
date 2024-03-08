@@ -37,10 +37,10 @@ class AuthClient {
       final resp = json.decode(await response.stream.bytesToString());
 
       jwt_token = resp["accessToken"];
-      userId = resp["user"]["_id"];
+      userId = resp["_id"];
       // final userInfo = json.decode(await getUserInfo(userId));
       // userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
-      userFullname = resp["user"]["email"];
+      userFullname = resp["email"];
       return resp["accessToken"];
     } else {
       print(response.reasonPhrase);
@@ -240,8 +240,8 @@ class SocialClient {
       Map<String, dynamic> respp =
           jsonDecode(await response.stream.bytesToString());
       for (var resp in respp["postAll"]) {
-        var userInfo = await getUserInfo(resp["userId"]);
-        print(userInfo["user"]["firstName"]);
+        var userInfoo = await getUserInfo(resp["userId"]);
+        Map<String, dynamic> userInfo = userInfoo["user"];
         bool hasVerse = resp.containsKey('verse');
         Post postt;
         var og_cmnt = resp["comments"];
@@ -255,9 +255,7 @@ class SocialClient {
         }
         if (hasVerse) {
           postt = Post(
-              usrName: userInfo["user"]["firstName"] +
-                  " " +
-                  userInfo["user"]["lastName"],
+              usrName: userInfo["firstName"] + " " + userInfo["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
               likes: resp['likes'].cast<String>(),
@@ -275,9 +273,7 @@ class SocialClient {
             pst_tp = 3;
           }
           postt = Post(
-              usrName: userInfo["user"]["firstName"] +
-                  " " +
-                  userInfo["user"]["lastName"],
+              usrName: userInfo["firstName"] + " " + userInfo["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
               likes: resp['likes'].cast<String>(),
