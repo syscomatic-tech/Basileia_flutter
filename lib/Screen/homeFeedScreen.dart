@@ -13,15 +13,31 @@ import 'package:get/get.dart';
 
 class HomeFeedScreen extends StatelessWidget {
   //final  feeds = [Feeds(), Feeds(), Feeds(), AudioFeeds()];
+  List<Widget> feeds = [];
   List<Post> posts = [];
   var scl_client = SocialClient();
   void call_posts() async {
     posts = await scl_client.get_all_posts();
+    for (var post in posts) {
+      if (post.post_type < 2) {
+        feeds.add(Feeds(
+          userName: post.usrName,
+          followers: post.followers.length.toString(),
+          likes: post.likes.length.toString(),
+          comments: post.comments.length.toString(),
+          postType: post.post_type,
+          content: post.file_content.toString(),
+        ));
+      } else {
+        // Audio and video feeds
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     call_posts();
+
     print(posts);
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
@@ -130,9 +146,9 @@ class HomeFeedScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: 0,
+                  itemCount: feeds.length,
                   itemBuilder: (context, index) {
-                    return Feeds();//feeds[index];
+                    return feeds[index]; //feeds[index];
                   })
             ],
           ),
