@@ -245,7 +245,10 @@ class SocialClient {
         List<Comment> comments = [];
         for (var cmt in og_cmnt) {
           comments.add(Comment(
-              userId: cmt["userId"], id: cmt["_id"], content: cmt["comment"]));
+            userId: cmt["userId"].toString(),
+            id: cmt["_id"].toString(),
+            content: cmt["comment"].toString(),
+          ));
         }
         if (hasVerse) {
           postt = Post(
@@ -254,8 +257,9 @@ class SocialClient {
                   userInfo["user"]["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
-              likes: resp['likes'],
-              followers: resp["followers"],
+              likes: resp['likes'].map((item) => item.toString()).toList(),
+              followers:
+                  resp['followers'].map((item) => item.toString()).toList(),
               comments: comments,
               file_content: resp["verse"],
               post_type: 0);
@@ -274,8 +278,9 @@ class SocialClient {
                   userInfo["user"]["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
-              likes: resp['likes'],
-              followers: resp["followers"],
+              likes: resp['likes'].map((item) => item.toString()).toList(),
+              followers:
+                  resp['followers'].map((item) => item.toString()).toList(),
               comments: comments,
               file_content: fl,
               post_type: pst_tp);
