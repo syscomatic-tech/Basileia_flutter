@@ -1,5 +1,5 @@
-
 import 'package:basileia/RestAPI/RestClient.dart';
+import 'package:basileia/Screen/inboxScreen.dart';
 import 'package:basileia/Screen/menuScreen.dart';
 import 'package:basileia/Screen/postOnFeed.dart';
 import 'package:basileia/Screen/profileScreen.dart';
@@ -8,26 +8,21 @@ import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
+import 'package:basileia/RestAPI/social.dart';
 import 'package:get/get.dart';
 
 class HomeFeedScreen extends StatelessWidget {
-  final SocialClient client =  SocialClient();
-  List<POSTS> posts = [];
-  Future <bool> GetAllPosts()async{
-    var feeds = await client.get_all_posts();
-    if(feeds is List){
-      for(var post in feeds){
-        posts.add(POSTS(
-          username: post['firstName'] + " " + ['lastName'],
-          like: post["likes"],
-          follow:post["followers"],
-          comment:post[]
-        ));
-      }
-    }
+  final feeds = [Feeds(), Feeds(), Feeds(), AudioFeeds()];
+  List<Post> posts = [];
+  var scl_client = SocialClient();
+  void call_posts() async {
+    posts = await scl_client.get_all_posts();
   }
+
   @override
   Widget build(BuildContext context) {
+    call_posts();
+    print(posts);
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       floatingActionButton: Visibility(
@@ -135,11 +130,9 @@ class HomeFeedScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: 1,
+                  itemCount: feeds.length,
                   itemBuilder: (context, index) {
-                    return Feeds(
-
-                    );
+                    return feeds[index];
                   })
             ],
           ),
@@ -147,17 +140,4 @@ class HomeFeedScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class POSTS {
-  var username = "";
-  var like = "";
-  var follow = "";
-  var comment = "";
-  POSTS({
-    required this.username,
-    required this.like,
-    required this.follow,
-    required this.comment,
-});
 }
