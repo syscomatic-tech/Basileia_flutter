@@ -240,7 +240,7 @@ class SocialClient {
       List<Post> posttt = [];
       Map<String, dynamic> respp =
           jsonDecode(await response.stream.bytesToString());
-      dynamic users = await get_users();
+
       Map<String, dynamic> userInfo = {
         "firstName": "Suworer Baccha",
         "lastName": "Error khankir pola"
