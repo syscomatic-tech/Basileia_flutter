@@ -29,6 +29,7 @@ class Post {
       required this.id,
       required this.likes,
       required this.comments,
+      required this.followers,
       required this.file_content,
       required this.post_type});
 }

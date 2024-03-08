@@ -255,6 +255,7 @@ class SocialClient {
               userID: resp["userId"],
               id: resp["_id"],
               likes: resp['likes'],
+              followers: resp["followers"],
               comments: comments,
               file_content: resp["verse"],
               post_type: 0);
@@ -274,6 +275,7 @@ class SocialClient {
               userID: resp["userId"],
               id: resp["_id"],
               likes: resp['likes'],
+              followers: resp["followers"],
               comments: comments,
               file_content: fl,
               post_type: pst_tp);
@@ -291,6 +293,7 @@ class SocialClient {
             id: "",
             likes: [""],
             comments: [],
+            followers: [""],
             file_content: "",
             post_type: 0)
       ];
