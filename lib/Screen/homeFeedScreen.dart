@@ -18,6 +18,13 @@ class HomeFeedScreen extends StatelessWidget {
   var scl_client = SocialClient();
   void call_posts() async {
     posts = await scl_client.get_all_posts();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    call_posts();
+
+    print(posts);
     for (var post in posts) {
       if (post.post_type < 2) {
         feeds.add(Feeds(
@@ -32,13 +39,6 @@ class HomeFeedScreen extends StatelessWidget {
         // Audio and video feeds
       }
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    call_posts();
-
-    print(posts);
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
       floatingActionButton: Visibility(
