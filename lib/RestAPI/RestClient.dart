@@ -246,20 +246,6 @@ class SocialClient {
         "lastName": "Error khankir pola"
       };
       for (var resp in respp["postAll"]) {
-        for (var user in users) {
-          if (user["_id"] == resp["userId"]) {
-            userInfo = {
-              "firstName": user["firstName"],
-              "lastName": user["lastName"]
-            };
-          } else {
-            userInfo = {
-              "firstName": "Suworer Baccha",
-              "lastName": "Error khankir pola"
-            };
-          }
-        }
-
         bool hasVerse = resp.containsKey('verse');
         Post postt;
         var og_cmnt = resp["comments"];
