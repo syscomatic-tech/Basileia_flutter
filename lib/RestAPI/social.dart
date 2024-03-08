@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Post {
   var usrName = "";
   var userID = "";

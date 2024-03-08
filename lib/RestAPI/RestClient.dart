@@ -153,7 +153,7 @@ class SocialClient {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 300) {
       print(await response.stream.bytesToString());
       return true;
     } else {
@@ -215,7 +215,7 @@ class SocialClient {
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
+    if (response.statusCode < 300) {
       print(await response.stream.bytesToString());
       return true;
     } else {
