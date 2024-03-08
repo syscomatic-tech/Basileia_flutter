@@ -240,16 +240,21 @@ class SocialClient {
       List<Post> posttt = [];
       Map<String, dynamic> respp =
           jsonDecode(await response.stream.bytesToString());
+      dynamic users = await get_users();
+      Map<String, dynamic> userInfo;
       for (var resp in respp["postAll"]) {
-        var userInfoo = await getUserInfo(resp["userId"]);
-        Map<String, dynamic> userInfo;
-        if (userInfoo["user"] != null) {
-          userInfo = userInfoo["user"];
-        } else {
-          userInfo = {
-            "firstName": "Suworer baccha",
-            "lastName": "Error Error dicche khankir pola"
-          };
+        for (var user in users) {
+          if (user["_id"] == resp["userId"]) {
+            userInfo = {
+              "firstName": user["firstName"],
+              "lastName": user["lastName"]
+            };
+          } else {
+            userInfo = {
+              "firstName": "Suworer Baccha",
+              "lastName": "Error khankir pola"
+            };
+          }
         }
 
         bool hasVerse = resp.containsKey('verse');
