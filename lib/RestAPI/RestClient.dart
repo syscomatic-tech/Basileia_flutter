@@ -37,10 +37,10 @@ class AuthClient {
       final resp = json.decode(await response.stream.bytesToString());
 
       jwt_token = resp["accessToken"];
-      userId = resp["_id"];
+      userId = resp["user"]["_id"];
       // final userInfo = json.decode(await getUserInfo(userId));
       // userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
-      userFullname = resp["email"];
+      userFullname = resp["user"]["email"];
       return resp["accessToken"];
     } else {
       print(response.reasonPhrase);
