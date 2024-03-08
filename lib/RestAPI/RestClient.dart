@@ -257,9 +257,8 @@ class SocialClient {
                   userInfo["user"]["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
-              likes: resp['likes'].map((item) => item.toString()).toList(),
-              followers:
-                  resp['followers'].map((item) => item.toString()).toList(),
+              likes: resp['likes'].cast<String>(),
+              followers: resp['followers'].cast<String>(),
               comments: comments,
               file_content: resp["verse"],
               post_type: 0);
@@ -278,9 +277,8 @@ class SocialClient {
                   userInfo["user"]["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
-              likes: resp['likes'].map((item) => item.toString()).toList(),
-              followers:
-                  resp['followers'].map((item) => item.toString()).toList(),
+              likes: resp['likes'].cast<String>(),
+              followers: resp['followers'].cast<String>(),
               comments: comments,
               file_content: fl,
               post_type: pst_tp);
