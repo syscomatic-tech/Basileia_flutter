@@ -270,7 +270,7 @@ Widget FeedFollowButton ({onTap}) {
   );
 }
 
-Widget Feeds({String?userName,followers,String?likes,String?comments,}) {
+Widget Feeds({String?userName,String?followers,String?likes,String?comments,postType,content}) {
   return Padding(
     padding: const EdgeInsets.only(right: 10, left: 10),
     child: Column(
@@ -317,10 +317,9 @@ Widget Feeds({String?userName,followers,String?likes,String?comments,}) {
           height: 20,
         ),
         Container(
-          height: 185,
           decoration: BoxDecoration(
-              color: ContainerBG, borderRadius: BorderRadius.circular(10)),
-        ),
+               borderRadius: BorderRadius.circular(10)),
+          child: postType==0 ? Text(content.toString()) : Image.network(content),),
         const SizedBox(
           height: 15,
         ),

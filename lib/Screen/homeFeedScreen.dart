@@ -132,7 +132,7 @@ class HomeFeedScreen extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: 0,
                   itemBuilder: (context, index) {
-                    return Text('');//feeds[index];
+                    return Feeds();//feeds[index];
                   })
             ],
           ),
