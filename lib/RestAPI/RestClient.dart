@@ -241,7 +241,10 @@ class SocialClient {
       Map<String, dynamic> respp =
           jsonDecode(await response.stream.bytesToString());
       dynamic users = await get_users();
-      Map<String, dynamic> userInfo;
+      Map<String, dynamic> userInfo = {
+        "firstName": "Suworer Baccha",
+        "lastName": "Error khankir pola"
+      };
       for (var resp in respp["postAll"]) {
         for (var user in users) {
           if (user["_id"] == resp["userId"]) {
