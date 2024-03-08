@@ -162,7 +162,7 @@ class SocialClient {
     }
   }
 
-  Future<dynamic> getUserInfo(String usrid) async {
+  Future<Map<String, dynamic>> getUserInfo(String usrid) async {
     var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.Request(
         'GET', Uri.parse('https://api.zahedhasan.com/api/v1/auth/$usrid'));
@@ -177,7 +177,9 @@ class SocialClient {
       return resp;
     } else {
       print(response.reasonPhrase);
-      return await response.stream.bytesToString();
+      Map<String, dynamic> resp =
+          json.decode(await response.stream.bytesToString());
+      return resp;
     }
   }
 
@@ -239,6 +241,7 @@ class SocialClient {
           jsonDecode(await response.stream.bytesToString());
       for (var resp in respp["postAll"]) {
         var userInfo = await getUserInfo(resp["userId"]);
+        print(userInfo);
         bool hasVerse = resp.containsKey('verse');
         Post postt;
         var og_cmnt = resp["comments"];
