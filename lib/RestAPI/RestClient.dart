@@ -241,7 +241,6 @@ class SocialClient {
           jsonDecode(await response.stream.bytesToString());
       for (var resp in respp["postAll"]) {
         var userInfo = await getUserInfo(resp["userId"]);
-        print(userInfo);
         bool hasVerse = resp.containsKey('verse');
         Post postt;
         var og_cmnt = resp["comments"];
