@@ -32,7 +32,6 @@ class InboxScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetUsers();
     print(UserList);
     return Scaffold(
       body: Stack(
