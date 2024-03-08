@@ -105,14 +105,14 @@ class HomeFeedScreen extends StatelessWidget {
                       height: 20,
                     ),
                     searchBar(),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15, left: 250),
-                      child: AdvanceFilterButton(onTap: () async {
-                        var inboxscr = InboxScreen();
-                        await inboxscr.GetUsers();
-                        Get.to(() => inboxscr);
-                      }),
-                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 15, left: 250),
+                    //   child: AdvanceFilterButton(onTap: () async {
+                    //     var inboxscr = InboxScreen();
+                    //     await inboxscr.GetUsers();
+                    //     Get.to(() => inboxscr);
+                    //   }),
+                    // )
                   ],
                 ),
               ),

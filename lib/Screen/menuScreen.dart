@@ -30,7 +30,7 @@ class MenuScreen extends StatelessWidget {
     'Change your language from here',
   ];
   final menuCount=[
-    35,0,2,0,0,35,2,0,0,0
+    0,0,0,0,0,0,0,0,0,0
   ];
   @override
   Widget build(BuildContext context) {

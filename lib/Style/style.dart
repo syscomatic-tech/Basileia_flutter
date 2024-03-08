@@ -11,6 +11,7 @@ import 'package:pinput/pinput.dart';
 import 'package:readmore/readmore.dart';
 import '../RestAPI/RestClient.dart';
 import '../Screen/chatScreen.dart';
+import '../Screen/inboxScreen.dart';
 import 'colors.dart';
 import 'fonts.dart';
 import 'images.dart';
@@ -1247,7 +1248,7 @@ Widget statistic({Color? backGround, String? lastTitle, String? midTitle}) {
   );
 }
 
-Widget menuItem({String? title, String? subtitle, count}) {
+Widget menuItem({String? title, String? subtitle, count,}) {
   return Column(
     children: [
       SizedBox(
@@ -1300,7 +1301,13 @@ Widget menuItem({String? title, String? subtitle, count}) {
                   const SizedBox(
                     width: 20,
                   ),
-                  listTielButton(onTap: () {})
+                  listTielButton(onTap: () async{
+                    if(title=="Messages"){
+                      var inboxscr = InboxScreen();
+                      await inboxscr.GetUsers();
+                      Get.to(() => inboxscr);
+                    }
+                  })
                 ],
               ),
             ],
