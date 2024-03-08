@@ -241,6 +241,12 @@ class SocialClient {
         var userInfo = await getUserInfo(resp["userId"]);
         bool hasVerse = resp.containsKey('verse');
         Post postt;
+        var og_cmnt = resp["comments"];
+        List<Comment> comments = [];
+        for (var cmt in og_cmnt) {
+          comments.add(Comment(
+              userId: cmt["userId"], id: cmt["_id"], content: cmt["comment"]));
+        }
         if (hasVerse) {
           postt = Post(
               usrName: userInfo["user"]["firstName"] +
@@ -249,7 +255,7 @@ class SocialClient {
               userID: resp["userId"],
               id: resp["_id"],
               likes: resp['likes'],
-              followers: resp["following"],
+              comments: comments,
               file_content: resp["verse"],
               post_type: 0);
         } else {
@@ -268,7 +274,7 @@ class SocialClient {
               userID: resp["userId"],
               id: resp["_id"],
               likes: resp['likes'],
-              followers: resp["following"],
+              comments: comments,
               file_content: fl,
               post_type: pst_tp);
         }
@@ -284,7 +290,7 @@ class SocialClient {
             userID: "",
             id: "",
             likes: [""],
-            followers: [""],
+            comments: [],
             file_content: "",
             post_type: 0)
       ];
