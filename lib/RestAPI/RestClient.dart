@@ -261,7 +261,7 @@ class SocialClient {
               post_type: 0);
         } else {
           var fl = resp["fileUrl"];
-          var extension = fl.toString().split(".")[-1];
+          var extension = fl.toString().split(".").last;
           int pst_tp = 1;
           if (extension == "mp3") {
             pst_tp = 2;

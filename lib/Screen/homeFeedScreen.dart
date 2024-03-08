@@ -12,7 +12,7 @@ import 'package:basileia/RestAPI/social.dart';
 import 'package:get/get.dart';
 
 class HomeFeedScreen extends StatelessWidget {
-  final feeds = [Feeds(), Feeds(), Feeds(), AudioFeeds()];
+  //final  feeds = [Feeds(), Feeds(), Feeds(), AudioFeeds()];
   List<Post> posts = [];
   var scl_client = SocialClient();
   void call_posts() async {
@@ -130,9 +130,9 @@ class HomeFeedScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: feeds.length,
+                  itemCount: 0,
                   itemBuilder: (context, index) {
-                    return feeds[index];
+                    return Text('');//feeds[index];
                   })
             ],
           ),
