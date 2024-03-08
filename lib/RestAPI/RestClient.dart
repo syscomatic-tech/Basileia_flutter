@@ -224,7 +224,7 @@ class SocialClient {
     }
   }
 
-  Future<Post> get_all_posts() async {
+  Future<List<Post>> get_all_posts() async {
     var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.Request('GET',
         Uri.parse('https://api.zahedhasan.com/api/v1/upload/postGetAll'));
@@ -234,53 +234,60 @@ class SocialClient {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode < 300) {
-      Map<String, dynamic> resp =
+      List<Post> posttt = [];
+      Map<String, dynamic> respp =
           jsonDecode(await response.stream.bytesToString());
-      var userInfo = await getUserInfo(resp["userId"]);
-      bool hasVerse = resp.containsKey('verse');
-      Post postt;
-      if (hasVerse) {
-        postt = Post(
-            usrName: userInfo["user"]["firstName"] +
-                " " +
-                userInfo["user"]["lastName"],
-            userID: resp["userId"],
-            id: resp["_id"],
-            likes: resp['likes'],
-            followers: resp["following"],
-            file_content: resp["verse"],
-            post_type: 0);
-      } else {
-        var fl = resp["fileUrl"];
-        var extension = fl.toString().split(".")[-1];
-        int pst_tp = 1;
-        if (extension == "mp3") {
-          pst_tp = 2;
-        } else if (extension == "mp4") {
-          pst_tp = 3;
+      for (var resp in respp["postAll"]) {
+        var userInfo = await getUserInfo(resp["userId"]);
+        bool hasVerse = resp.containsKey('verse');
+        Post postt;
+        if (hasVerse) {
+          postt = Post(
+              usrName: userInfo["user"]["firstName"] +
+                  " " +
+                  userInfo["user"]["lastName"],
+              userID: resp["userId"],
+              id: resp["_id"],
+              likes: resp['likes'],
+              followers: resp["following"],
+              file_content: resp["verse"],
+              post_type: 0);
+        } else {
+          var fl = resp["fileUrl"];
+          var extension = fl.toString().split(".")[-1];
+          int pst_tp = 1;
+          if (extension == "mp3") {
+            pst_tp = 2;
+          } else if (extension == "mp4") {
+            pst_tp = 3;
+          }
+          postt = Post(
+              usrName: userInfo["user"]["firstName"] +
+                  " " +
+                  userInfo["user"]["lastName"],
+              userID: resp["userId"],
+              id: resp["_id"],
+              likes: resp['likes'],
+              followers: resp["following"],
+              file_content: fl,
+              post_type: pst_tp);
         }
-        postt = Post(
-            usrName: userInfo["user"]["firstName"] +
-                " " +
-                userInfo["user"]["lastName"],
-            userID: resp["userId"],
-            id: resp["_id"],
-            likes: resp['likes'],
-            followers: resp["following"],
-            file_content: fl,
-            post_type: pst_tp);
+        posttt.add(postt);
       }
-      return postt;
+
+      return posttt;
     } else {
       print(response.reasonPhrase);
-      return Post(
-          usrName: "eRROR",
-          userID: "",
-          id: "",
-          likes: [""],
-          followers: [""],
-          file_content: "",
-          post_type: 0);
+      return [
+        Post(
+            usrName: "eRROR",
+            userID: "",
+            id: "",
+            likes: [""],
+            followers: [""],
+            file_content: "",
+            post_type: 0)
+      ];
     }
   }
 
