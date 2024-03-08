@@ -238,7 +238,7 @@ Widget FeedIcButton({onTap, ic, text}) {
   );
 }
 
-Widget FeedFollowButton({onTap}) {
+Widget FeedFollowButton ({onTap}) {
   return InkWell(
     onTap: onTap,
     child: Container(
@@ -270,7 +270,7 @@ Widget FeedFollowButton({onTap}) {
   );
 }
 
-Widget Feeds() {
+Widget Feeds({String?userName,followers,String?likes,String?comments,}) {
   return Padding(
     padding: const EdgeInsets.only(right: 10, left: 10),
     child: Column(
@@ -289,18 +289,18 @@ Widget Feeds() {
                 const SizedBox(
                   width: 10,
                 ),
-                const Column(
+                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'William Grace',
+                    Text  (
+                      userName!,
                       style: TextStyle(
                           fontSize: 16.3,
                           fontFamily: poppins_regular,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      '1,5K Follwoers',
+                      followers.toString(),
                       style: TextStyle(
                           fontSize: 10.87,
                           color: textFi,
@@ -327,13 +327,13 @@ Widget Feeds() {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FeedIcButton(onTap: () {}, ic: Like_ic, text: '120 Likes'),
+            FeedIcButton(onTap: () {}, ic: Like_ic, text: '${likes.toString()}Likes'),
             FeedIcButton(
                 onTap: () {
                   Get.to(() => CommentScreen());
                 },
                 ic: Comment_ic,
-                text: '6 Comments'),
+                text: '${comments.toString()}Comments'),
             FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
           ],
         ),
@@ -428,8 +428,8 @@ Widget AudioFeeds() {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120 Likes'),
-              FeedIcButton(onTap: () {}, ic: Comment_ic, text: '6 Comments'),
+              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120''Likes'),
+              FeedIcButton(onTap: () {}, ic: Comment_ic, text: '6 ''Comments'),
               FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
             ],
           ),

@@ -1,4 +1,5 @@
-import 'package:basileia/Screen/inboxScreen.dart';
+
+import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/menuScreen.dart';
 import 'package:basileia/Screen/postOnFeed.dart';
 import 'package:basileia/Screen/profileScreen.dart';
@@ -10,7 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeFeedScreen extends StatelessWidget {
-  final feeds = [Feeds(), Feeds(), Feeds(), AudioFeeds()];
+  final SocialClient client =  SocialClient();
+  List<POSTS> posts = [];
+  Future <bool> GetAllPosts()async{
+    var feeds = await client.get_all_posts();
+    if(feeds is List){
+      for(var post in feeds){
+        posts.add(POSTS(
+          username: post['firstName'] + " " + ['lastName'],
+          like: post["likes"],
+          follow:post["followers"],
+          comment:post[]
+        ));
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
@@ -120,9 +135,11 @@ class HomeFeedScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: feeds.length,
+                  itemCount: 1,
                   itemBuilder: (context, index) {
-                    return feeds[index];
+                    return Feeds(
+
+                    );
                   })
             ],
           ),
@@ -130,4 +147,17 @@ class HomeFeedScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class POSTS {
+  var username = "";
+  var like = "";
+  var follow = "";
+  var comment = "";
+  POSTS({
+    required this.username,
+    required this.like,
+    required this.follow,
+    required this.comment,
+});
 }

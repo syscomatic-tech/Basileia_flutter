@@ -20,7 +20,8 @@ class InboxScreen extends StatelessWidget {
     var users = await sex_client.get_users();
     if (users is List) {
       for (var user in users) {
-        UserList.add(User(
+        UserList.add(
+            User(
             name: user['firstName'] + " " + user['lastName'],
             id: user["_id"],
             email: user["email"]));
