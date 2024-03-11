@@ -242,10 +242,17 @@ class SocialClient {
           jsonDecode(await response.stream.bytesToString());
 
       Map<String, dynamic> userInfo = {
-        "firstName": "Suworer Baccha",
-        "lastName": "Error khankir pola"
+        "firstName": "Deleted",
+        "lastName": "user"
       };
       for (var resp in respp["postAll"]) {
+        userId = resp["userId"];
+        final userInf = await getUserInfo(userId);
+        print(userInf);
+        if (userInf["user"] != null) {
+          userInfo = userInf["user"];
+        }
+        userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
         bool hasVerse = resp.containsKey('verse');
         Post postt;
         var og_cmnt = resp["comments"];
