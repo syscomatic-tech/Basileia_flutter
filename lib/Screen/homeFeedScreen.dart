@@ -1,8 +1,8 @@
+
 import 'package:basileia/RestAPI/RestClient.dart';
-import 'package:basileia/Screen/inboxScreen.dart';
 import 'package:basileia/Screen/menuScreen.dart';
-import 'package:basileia/Screen/postOnFeed.dart';
 import 'package:basileia/Screen/profileScreen.dart';
+import 'package:basileia/Screen/readbookScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/images.dart';
@@ -12,10 +12,13 @@ import 'package:basileia/RestAPI/social.dart';
 import 'package:get/get.dart';
 
 class HomeFeedScreen extends StatelessWidget {
-  //final  feeds = [Feeds(), Feeds(), Feeds(), AudioFeeds()];
+
   List<Widget> feeds = [];
+
   List<Post> posts = [];
+
   var scl_client = SocialClient();
+
   void call_posts() async {
     posts = await scl_client.get_all_posts();
   }
@@ -23,8 +26,6 @@ class HomeFeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     call_posts();
-
-    print(posts);
     for (var post in posts) {
       if (post.post_type < 2) {
         feeds.add(Feeds(
@@ -45,7 +46,7 @@ class HomeFeedScreen extends StatelessWidget {
         visible: !showFAB,
         child: FloatingActionButton(
           onPressed: () {
-            Get.to(() => PostOnFeed());
+            Get.to(() => ReadBook());
           },
           backgroundColor: primary,
           shape: const RoundedRectangleBorder(

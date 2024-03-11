@@ -4,6 +4,7 @@ import 'package:basileia/Screen/commentScreen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -292,12 +293,16 @@ Widget Feeds({String?userName,String?followers,String?likes,String?comments,post
                  Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text  (
-                      userName!,
-                      style: TextStyle(
-                          fontSize: 16.3,
-                          fontFamily: poppins_regular,
-                          fontWeight: FontWeight.w700),
+                    Expanded(
+                      child: Text (
+                        maxLines: 1,
+                        userName!,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 16.3,
+                            fontFamily: poppins_regular,
+                            fontWeight: FontWeight.w700),
+                      ),
                     ),
                     Text(
                       followers.toString(),
@@ -350,7 +355,7 @@ Widget Feeds({String?userName,String?followers,String?likes,String?comments,post
   );
 }
 
-Widget AudioFeeds() {
+Widget AudioFeeds({String?username,String?followers,content,postType,String?like,String?comment,}) {
   return Padding(
     padding: const EdgeInsets.only(right: 10, left: 10),
     child: SizedBox(
