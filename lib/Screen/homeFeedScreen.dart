@@ -1,4 +1,3 @@
-
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/menuScreen.dart';
 import 'package:basileia/Screen/profileScreen.dart';
@@ -12,7 +11,6 @@ import 'package:basileia/RestAPI/social.dart';
 import 'package:get/get.dart';
 
 class HomeFeedScreen extends StatelessWidget {
-
   List<Widget> feeds = [];
 
   List<Post> posts = [];
@@ -28,14 +26,18 @@ class HomeFeedScreen extends StatelessWidget {
     call_posts();
     for (var post in posts) {
       if (post.post_type < 2) {
-        feeds.add(Feeds(
-          userName: post.usrName,
-          followers: post.followers.length.toString(),
-          likes: post.likes.length.toString(),
-          comments: post.comments.length.toString(),
-          postType: post.post_type,
-          content: post.file_content.toString(),
-        ));
+        if (!post.file_content
+            .toString()
+            .contains("https://api.zahedhasan.com/api/v1/uploads/users")) {
+          feeds.add(Feeds(
+            userName: post.usrName,
+            followers: post.followers.length.toString(),
+            likes: post.likes.length.toString(),
+            comments: post.comments.length.toString(),
+            postType: post.post_type,
+            content: post.file_content.toString(),
+          ));
+        }
       } else {
         // Audio and video feeds
       }
