@@ -13,12 +13,13 @@ import 'package:get/get.dart';
 class HomeFeedScreen extends StatelessWidget {
   List<Widget> feeds = [];
 
-  List<Post> posts = [];
+  Set<Post> posts = {};
 
   var scl_client = SocialClient();
 
   Future<void> call_posts() async {
-    posts = await scl_client.get_all_posts();
+    final postss = await scl_client.get_all_posts();
+    posts.addAll(postss);
   }
 
   @override
