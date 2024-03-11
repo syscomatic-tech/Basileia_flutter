@@ -17,13 +17,13 @@ class HomeFeedScreen extends StatelessWidget {
 
   var scl_client = SocialClient();
 
-  void call_posts() async {
+  Future<void> call_posts() async {
     posts = await scl_client.get_all_posts();
   }
 
   @override
   Widget build(BuildContext context) {
-    call_posts();
+    //call_posts();
     for (var post in posts) {
       if (post.post_type < 2) {
         if (!post.file_content
