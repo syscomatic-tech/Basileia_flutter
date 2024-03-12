@@ -1,5 +1,6 @@
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/menuScreen.dart';
+import 'package:basileia/Screen/postOnFeed.dart';
 import 'package:basileia/Screen/profileScreen.dart';
 import 'package:basileia/Screen/readbookScreen.dart';
 import 'package:basileia/Style/colors.dart';
@@ -49,7 +50,7 @@ class HomeFeedScreen extends StatelessWidget {
         visible: !showFAB,
         child: FloatingActionButton(
           onPressed: () {
-            Get.to(() => ReadBook());
+            Get.to(() => PostOnFeed());
           },
           backgroundColor: primary,
           shape: const RoundedRectangleBorder(
@@ -150,7 +151,7 @@ class HomeFeedScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: feeds.length,
+                  itemCount: (feeds.length / 3).round(),
                   itemBuilder: (context, index) {
                     return feeds[index]; //feeds[index];
                   })

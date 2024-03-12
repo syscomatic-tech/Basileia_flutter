@@ -293,16 +293,14 @@ Widget Feeds({String?userName,String?followers,String?likes,String?comments,post
                  Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Text (
-                        maxLines: 1,
-                        userName!,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 16.3,
-                            fontFamily: poppins_regular,
-                            fontWeight: FontWeight.w700),
-                      ),
+                    Text (
+                      maxLines: 1,
+                      userName!,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 16.3,
+                          fontFamily: poppins_regular,
+                          fontWeight: FontWeight.w700),
                     ),
                     Text(
                       followers.toString(),
