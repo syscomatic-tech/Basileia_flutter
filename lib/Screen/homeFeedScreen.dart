@@ -10,6 +10,7 @@ import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:basileia/RestAPI/social.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class HomeFeedController extends GetxController {
   List<Post> posts = [];
@@ -20,13 +21,14 @@ class HomeFeedController extends GetxController {
   }
 
   @override
-  void onInit() async {
+  void onInit() async{
     super.onInit();
     await call_posts();
   }
 }
 
 class HomeFeedScreen extends GetView<HomeFeedController> {
+  final HomeFeedController controller = Get.put(HomeFeedController());
   List<Widget> feeds = [];
   List<Post> posts = [];
   var scl_client = SocialClient();
