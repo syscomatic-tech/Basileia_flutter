@@ -256,7 +256,8 @@ class SocialClient {
       List<Post> posttt = [];
       Map<String, dynamic> respp =
           jsonDecode(await response.stream.bytesToString());
-
+      print("Number of posts fetched");
+      print(respp["postAll"].length);
       Map<String, dynamic> userInfo = {
         "firstName": "Deleted",
         "lastName": "user"
@@ -264,9 +265,11 @@ class SocialClient {
       for (var resp in respp["postAll"]) {
         userId = resp["userId"];
         final userInf = await getUserInfo(userId);
-        print(userInf);
+
         if (userInf["user"] != null) {
           userInfo = userInf["user"];
+        } else {
+          userInfo = {"firstName": "Deleted", "lastName": "user"};
         }
         userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
         bool hasVerse = resp.containsKey('verse');
@@ -311,7 +314,7 @@ class SocialClient {
         }
         posttt.add(postt);
       }
-      print(posttt.length);
+
       return posttt;
     } else {
       print(response.reasonPhrase);
