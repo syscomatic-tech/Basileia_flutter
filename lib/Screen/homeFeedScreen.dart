@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 class HomeFeedScreen extends StatelessWidget {
   List<Widget> feeds = [];
 
-  Set<Post> posts = {};
+  List<Post> posts = [];
 
   var scl_client = SocialClient();
 
@@ -26,6 +26,7 @@ class HomeFeedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //call_posts();
+    print(posts.length);
     for (var post in posts) {
       if (post.post_type < 2) {
         if (!post.file_content
