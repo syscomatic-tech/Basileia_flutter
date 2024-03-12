@@ -38,6 +38,7 @@ class HomeFeedScreen extends StatelessWidget {
             comments: post.comments.length.toString(),
             postType: post.post_type,
             content: post.file_content.toString(),
+            postID: post.id.toString(),
           ));
         }
       } else {

@@ -239,7 +239,7 @@ Widget FeedIcButton({onTap, ic, text}) {
   );
 }
 
-Widget FeedFollowButton ({onTap}) {
+Widget FeedFollowButton({onTap}) {
   return InkWell(
     onTap: onTap,
     child: Container(
@@ -271,7 +271,14 @@ Widget FeedFollowButton ({onTap}) {
   );
 }
 
-Widget Feeds({String?userName,String?followers,String?likes,String?comments,postType,content}) {
+Widget Feeds(
+    {String? userName,
+    String? followers,
+    String? likes,
+    String? comments,
+    String postID = "",
+    postType,
+    content}) {
   return Padding(
     padding: const EdgeInsets.only(right: 10, left: 10),
     child: Column(
@@ -290,10 +297,10 @@ Widget Feeds({String?userName,String?followers,String?likes,String?comments,post
                 const SizedBox(
                   width: 10,
                 ),
-                 Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text (
+                    Text(
                       maxLines: 1,
                       userName!,
                       overflow: TextOverflow.ellipsis,
@@ -320,16 +327,23 @@ Widget Feeds({String?userName,String?followers,String?likes,String?comments,post
           height: 20,
         ),
         Container(
-          decoration: BoxDecoration(
-               borderRadius: BorderRadius.circular(10)),
-          child: postType==0 ? Text(content.toString()) : Image.network(content),),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          child:
+              postType == 0 ? Text(content.toString()) : Image.network(content),
+        ),
         const SizedBox(
           height: 15,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FeedIcButton(onTap: () {}, ic: Like_ic, text: '${likes.toString()}Likes'),
+            FeedIcButton(
+                onTap: () async {
+                  SocialClient scl_cl = SocialClient();
+                  await scl_cl.likePost(postID);
+                },
+                ic: Like_ic,
+                text: '${likes.toString()}Likes'),
             FeedIcButton(
                 onTap: () {
                   Get.to(() => CommentScreen());
@@ -353,7 +367,14 @@ Widget Feeds({String?userName,String?followers,String?likes,String?comments,post
   );
 }
 
-Widget AudioFeeds({String?username,String?followers,content,postType,String?like,String?comment,}) {
+Widget AudioFeeds({
+  String? username,
+  String? followers,
+  content,
+  postType,
+  String? like,
+  String? comment,
+}) {
   return Padding(
     padding: const EdgeInsets.only(right: 10, left: 10),
     child: SizedBox(
@@ -430,8 +451,8 @@ Widget AudioFeeds({String?username,String?followers,content,postType,String?like
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120''Likes'),
-              FeedIcButton(onTap: () {}, ic: Comment_ic, text: '6 ''Comments'),
+              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120' 'Likes'),
+              FeedIcButton(onTap: () {}, ic: Comment_ic, text: '6 ' 'Comments'),
               FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
             ],
           ),
@@ -1250,7 +1271,11 @@ Widget statistic({Color? backGround, String? lastTitle, String? midTitle}) {
   );
 }
 
-Widget menuItem({String? title, String? subtitle, count,}) {
+Widget menuItem({
+  String? title,
+  String? subtitle,
+  count,
+}) {
   return Column(
     children: [
       SizedBox(
@@ -1303,8 +1328,8 @@ Widget menuItem({String? title, String? subtitle, count,}) {
                   const SizedBox(
                     width: 20,
                   ),
-                  listTielButton(onTap: () async{
-                    if(title=="Messages"){
+                  listTielButton(onTap: () async {
+                    if (title == "Messages") {
                       var inboxscr = InboxScreen();
                       await inboxscr.GetUsers();
                       Get.to(() => inboxscr);
@@ -1601,7 +1626,8 @@ Widget chatItem({String? title, String? subTitle, msgCount, onTap}) {
                   children: [
                     Text(
                       title!,
-                      style: const TextStyle(overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
                           fontFamily: poppins_semibold,
                           fontSize: 14,
                           color: Colors.black),
@@ -1611,7 +1637,8 @@ Widget chatItem({String? title, String? subTitle, msgCount, onTap}) {
                     ),
                     Text(
                       subTitle!,
-                      style: const TextStyle(overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
                           fontFamily: poppins_regular,
                           fontSize: 12,
                           color: primaryTxt),
@@ -1723,7 +1750,8 @@ Widget inboxTopItem() {
   );
 }
 
-Widget chatScreenTextField({VoidCallback? micOnTap, VoidCallback? sentOnTap,controller}) {
+Widget chatScreenTextField(
+    {VoidCallback? micOnTap, VoidCallback? sentOnTap, controller}) {
   return Container(
     height: 116,
     decoration: BoxDecoration(
@@ -3116,23 +3144,24 @@ void ErrorToast(msg) {
       fontSize: 16.0);
 }
 
-Widget user_tile(){
+Widget user_tile() {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 2),
     child: Slidable(
-        endActionPane: ActionPane(extentRatio: 0.30,
-            motion:  const ScrollMotion(), children: [
+        endActionPane: ActionPane(
+            extentRatio: 0.30,
+            motion: const ScrollMotion(),
+            children: [
               InkWell(
-                onTap: (){},
+                onTap: () {},
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 23,left: 10),
+                  padding: const EdgeInsets.only(bottom: 23, left: 10),
                   child: Container(
                     height: 80,
                     width: 85,
                     decoration: BoxDecoration(
                         color: Colors.red,
-                        borderRadius: BorderRadius.circular(10)
-                    ),
+                        borderRadius: BorderRadius.circular(10)),
                     child: Image.asset(delete),
                   ),
                 ),
@@ -3142,44 +3171,45 @@ Widget user_tile(){
             title: userFullname,
             subTitle: userFullname,
             msgCount: 0,
-            onTap: (){Get.to(()=>ChatScreen(recevierEmail: userFullname,receVierId: userId,));})),
+            onTap: () {
+              Get.to(() => ChatScreen(
+                    recevierEmail: userFullname,
+                    receVierId: userId,
+                  ));
+            })),
   );
 }
 
-class ChatBubble extends StatelessWidget{
+class ChatBubble extends StatelessWidget {
   final String message;
   final bool isCurrentUser;
-   const ChatBubble({
-    super.key,
-    required this.message,
-    required this.isCurrentUser
-});
+  const ChatBubble(
+      {super.key, required this.message, required this.isCurrentUser});
   @override
   Widget build(BuildContext context) {
-    return
-        Padding(
-          padding: const EdgeInsets.all(5),
-          child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                  color: isCurrentUser ? primary : chatContent,
-                  borderRadius: isCurrentUser
-                      ? const BorderRadius.only(
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+              color: isCurrentUser ? primary : chatContent,
+              borderRadius: isCurrentUser
+                  ? const BorderRadius.only(
                       topRight: Radius.circular(16),
                       topLeft: Radius.circular(16),
                       bottomLeft: Radius.circular(16),
                       bottomRight: Radius.circular(4))
-                      : const BorderRadius.only(
+                  : const BorderRadius.only(
                       topRight: Radius.circular(16),
                       topLeft: Radius.circular(16),
                       bottomRight: Radius.circular(16),
                       bottomLeft: Radius.circular(4))),
-              child: Text(
-                message,
-                style: TextStyle(
-                    color: isCurrentUser ? Colors.white : chatTxtColor,
-                    fontSize: 16),
-              )
-              ),
-        );
-  }}
+          child: Text(
+            message,
+            style: TextStyle(
+                color: isCurrentUser ? Colors.white : chatTxtColor,
+                fontSize: 16),
+          )),
+    );
+  }
+}
