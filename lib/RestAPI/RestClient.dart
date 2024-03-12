@@ -208,6 +208,22 @@ class SocialClient {
     }
   }
 
+  Future<bool> upload_verse(String text) async {
+    var headers = {'Authorization': 'Bearer $jwt_token'};
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('https://api.zahedhasan.com/api/v1/upload/addVerse'));
+    request.fields.addAll({'userId': userId, "verse": text});
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode < 300) {
+      print(await response.stream.bytesToString());
+      return true;
+    } else {
+      print(response.reasonPhrase);
+      return false;
+    }
+  }
+
   Future<bool> upload_post(String filepath) async {
     var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.MultipartRequest('POST',
