@@ -11,20 +11,29 @@ import 'package:flutter/material.dart';
 import 'package:basileia/RestAPI/social.dart';
 import 'package:get/get.dart';
 
-class HomeFeedScreen extends StatelessWidget {
-  List<Widget> feeds = [];
-
+class HomeFeedController extends GetxController {
   List<Post> posts = [];
-
   var scl_client = SocialClient();
-
   Future<void> call_posts() async {
     final postss = await scl_client.get_all_posts();
     posts.addAll(postss);
   }
 
   @override
+  void onInit() async {
+    super.onInit();
+    await call_posts();
+  }
+}
+
+class HomeFeedScreen extends GetView<HomeFeedController> {
+  List<Widget> feeds = [];
+  List<Post> posts = [];
+  var scl_client = SocialClient();
+
+  @override
   Widget build(BuildContext context) {
+    posts = controller.posts;
     //call_posts();
     print(posts.length);
     for (var post in posts) {
@@ -153,7 +162,7 @@ class HomeFeedScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: posts.length ,
+                  itemCount: posts.length,
                   itemBuilder: (context, index) {
                     return feeds[index]; //feeds[index];
                   })

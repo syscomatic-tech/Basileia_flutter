@@ -111,7 +111,6 @@ class SignInScreen extends StatelessWidget {
               try {
                 SuccessToast(req_outp);
                 final hm_screen = HomeFeedScreen();
-               await hm_screen.call_posts();
                 Get.to(() => hm_screen);
               } catch (Error) {
                 ErrorToast(req_outp);
