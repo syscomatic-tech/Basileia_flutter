@@ -5,12 +5,16 @@ import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../RestAPI/RestClient.dart';
 import '../Style/controller.dart';
 
 class PostOnFeed extends StatelessWidget {
+  const PostOnFeed({super.key});
+
   @override
   Widget build(BuildContext context) {
     final MyTabsController controller = Get.put(MyTabsController());
+    final ImagePick _imagepick = Get.put(ImagePick());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -28,7 +32,15 @@ class PostOnFeed extends StatelessWidget {
                         fontSize: 18,
                         fontFamily: poppins_semibold),
                   ),
-                  button(Width:72, Height:45, onTap:() {Get.to(()=>PostOnFeed_1());}, text:'Next')
+                  button(
+                      Width: 72,
+                      Height: 45,
+                      onTap: () async{
+                        SocialClient scl_cl = SocialClient();
+                        await scl_cl.upload_post(_imagepick.imagePath.toString());
+                        SuccessToast('upload successful');
+                        },
+                      text: 'Next')
                 ],
               ),
             ),
@@ -94,18 +106,23 @@ class PostOnFeed extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            Container(
-              child: SizedBox(
-                width: double.maxFinite,
-                height: 500,
-                child: TabBarView(
-                  controller: controller.tabController,
-                  children: [
-                    PostPhoto(),
-                    PostPhoto(),
-                    audioPost()
-                  ],
-                ),
+            SizedBox(
+              width: double.maxFinite,
+              height: 500,
+              child: TabBarView(
+                controller: controller.tabController,
+                children: [
+                  PostPhoto(context: context,
+                    onTap: () {
+                      _imagepick.pickImage();
+                    },
+                    onPasteButtonTap: () {},
+                  ),
+                  PostPhoto(
+                    context: context
+                  ),
+                  audioPost()
+                ],
               ),
             )
           ],

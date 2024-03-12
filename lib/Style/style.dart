@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:basileia/Screen/commentScreen.dart';
@@ -14,18 +15,11 @@ import '../RestAPI/RestClient.dart';
 import '../Screen/chatScreen.dart';
 import '../Screen/inboxScreen.dart';
 import 'colors.dart';
+import 'controller.dart';
 import 'fonts.dart';
 import 'images.dart';
 
-const colorRed = Color.fromRGBO(231, 28, 36, 1);
-const colorDark = Color.fromRGBO(136, 28, 32, 1);
-const colorGreen = Color.fromRGBO(33, 191, 115, 1);
-const colorBlue = Color.fromRGBO(52, 152, 219, 1.0);
-const colorOrange = Color.fromRGBO(230, 126, 34, 1.0);
-const colorWhite = Color.fromRGBO(255, 255, 255, 1.0);
-const colorDarkBlue = Color.fromRGBO(44, 62, 80, 1.0);
-const colorLightGray = Color.fromRGBO(135, 142, 150, 1.0);
-const colorLight = Color.fromRGBO(211, 211, 211, 1.0);
+final ImagePick _imagepick = Get.put(ImagePick());
 
 Widget Basic_Button({
   onTap,
@@ -91,6 +85,8 @@ Widget textField(
     child: Padding(
       padding: const EdgeInsets.only(bottom: 3, left: 10),
       child: TextField(
+        style: const TextStyle(
+            fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
         controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -304,14 +300,14 @@ Widget Feeds(
                       maxLines: 1,
                       userName!,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16.3,
                           fontFamily: poppins_regular,
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
                       followers.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 10.87,
                           color: textFi,
                           fontWeight: FontWeight.w700),
@@ -509,70 +505,92 @@ Widget button({double? Width, double? Height, onTap, String? text}) {
   );
 }
 
-Widget PostPhoto() {
+Widget PostPhoto({onTap, textController, onPasteButtonTap,context}) {
   return Padding(
     padding: const EdgeInsets.only(top: 10),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 380,
-          height: 211,
-          child: DottedBorder(
-              radius: const Radius.circular(15),
-              dashPattern: const [10, 10],
-              strokeWidth: 2,
-              borderType: BorderType.RRect,
-              color: bordar,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    button(
-                        Height: 45,
-                        Width: 151,
-                        onTap: () {},
-                        text: 'Select Files'),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      'Add Photos & Videos or Files',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: bordar),
-                    )
-                  ],
-                ),
-              )),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        const Text(
-          'Or',
-          style: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.w600, color: bordar),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            textField(
-                width: 290,
-                hight: 48,
-                lebelText: 'Paste Verse or Select Verse',
-                textfieldBg: TabBG),
-            const SizedBox(
-              width: 10,
+    child: Obx((){
+       return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 0.92,
+            height: 211,
+            child: _imagepick.imagePath.isEmpty
+                ? DottedBorder(
+                radius: const Radius.circular(15),
+                dashPattern: const [10, 10],
+                strokeWidth: 2,
+                borderType: BorderType.RRect,
+                color: bordar,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      button(
+                          Height: 45,
+                          Width: 151,
+                          onTap: onTap,
+                          text: 'Select Files'),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const Text(
+                        'Add Photos & Videos or Files',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: bordar),
+                      )
+                    ],
+                  ),
+                ))
+                : SizedBox(
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 0.92,
+              height: 211,
+              child: Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: FileImage(
+                            File(_imagepick.imagePath.toString())))),
+              ),
             ),
-            button(Height: 45, Width: 70, onTap: () {}, text: "Paste")
-          ],
-        )
-      ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const Text(
+            'Or',
+            style: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.w600, color: bordar),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              textField(
+                  controller: textController,
+                  width: 290,
+                  hight: 48,
+                  lebelText: 'Paste Verse or Select Verse',
+                  textfieldBg: TabBG),
+              const SizedBox(
+                width: 10,
+              ),
+              button(
+                  Height: 45, Width: 70, onTap: onPasteButtonTap, text: "Paste")
+            ],
+          )
+        ],
+      );
+    }
     ),
   );
 }

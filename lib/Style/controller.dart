@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MyTabsController extends GetxController with GetSingleTickerProviderStateMixin {
   late TabController tabController;
@@ -69,5 +70,18 @@ class LeadersController extends GetxController with GetSingleTickerProviderState
   void onClose() {
     tabController.dispose();
     super.onClose();
+  }
+}
+class ImagePick extends GetxController {
+  RxString imagePath = ''.obs;
+  final ImagePicker picker = ImagePicker();
+
+  Future pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imagePath.value = pickedFile.path.toString();
+    } else {
+      print('No image selected');
+    }
   }
 }

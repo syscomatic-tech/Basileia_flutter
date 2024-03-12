@@ -153,7 +153,7 @@ class HomeFeedScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: (feeds.length / 3).round(),
+                  itemCount: posts.length ,
                   itemBuilder: (context, index) {
                     return feeds[index]; //feeds[index];
                   })
