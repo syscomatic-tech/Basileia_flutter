@@ -15,6 +15,7 @@ class PostOnFeed extends StatelessWidget {
   Widget build(BuildContext context) {
     final MyTabsController controller = Get.put(MyTabsController());
     final ImagePick _imagepick = Get.put(ImagePick());
+    final TextEditingController _verseController = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -112,11 +113,16 @@ class PostOnFeed extends StatelessWidget {
               child: TabBarView(
                 controller: controller.tabController,
                 children: [
-                  PostPhoto(context: context,
+                  PostPhoto(
+                    textController: _verseController,
+                    context: context,
                     onTap: () {
                       _imagepick.pickImage();
                     },
-                    onPasteButtonTap: () {},
+                    onPasteButtonTap: () async{
+                      SocialClient scl_cl = SocialClient();
+                      await scl_cl.upload_verse(_verseController.text.toString());
+                    },
                   ),
                   PostPhoto(
                     context: context

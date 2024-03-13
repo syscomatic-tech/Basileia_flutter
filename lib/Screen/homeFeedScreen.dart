@@ -21,16 +21,6 @@ class HomeFeedController extends GetxController {
     return postss;
   }
 
-  @override
-  void onInit() async {
-    super.onInit();
-    unawaited(() async {
-      await Future.delayed(const Duration(seconds: 2))
-          .then((_) => print("Oops I am late"));
-    }.call());
-
-    call_posts();
-  }
 }
 
 class HomeFeedScreen extends GetView<HomeFeedController> {
@@ -46,9 +36,9 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
     return FutureBuilder(
         future: controller.call_posts(),
-        builder: (BuildContext context, AsyncSnapshot<List<Post>> snapshot) {
+        builder: ( context, AsyncSnapshot<List<Post>> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return CircularProgressIndicator();
+            return const Center(child: SizedBox(height: 50,width: 50, child: CircularProgressIndicator()));
           } else {
             if (snapshot.hasData) {
               posts = snapshot.data;
@@ -181,7 +171,7 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                           physics: const NeverScrollableScrollPhysics(),
                           primary: false,
                           shrinkWrap: true,
-                          itemCount: posts!.length,
+                          itemCount: feeds.length,
                           itemBuilder: (context, index) {
                             return feeds[index]; //feeds[index];
                           })

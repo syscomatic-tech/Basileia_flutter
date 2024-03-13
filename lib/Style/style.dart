@@ -306,7 +306,7 @@ Widget Feeds(
                           fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      followers.toString(),
+                      '${followers.toString()} Followers',
                       style: const TextStyle(
                           fontSize: 10.87,
                           color: textFi,
@@ -339,13 +339,13 @@ Widget Feeds(
                   await scl_cl.likePost(postID);
                 },
                 ic: Like_ic,
-                text: '${likes.toString()}Likes'),
+                text: '${likes.toString()} Likes'),
             FeedIcButton(
                 onTap: () {
                   Get.to(() => CommentScreen());
                 },
                 ic: Comment_ic,
-                text: '${comments.toString()}Comments'),
+                text: '${comments.toString()} Comments'),
             FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
           ],
         ),
@@ -447,7 +447,7 @@ Widget AudioFeeds({
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120' 'Likes'),
+              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120''Likes'),
               FeedIcButton(onTap: () {}, ic: Comment_ic, text: '6 ' 'Comments'),
               FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
             ],
@@ -505,61 +505,55 @@ Widget button({double? Width, double? Height, onTap, String? text}) {
   );
 }
 
-Widget PostPhoto({onTap, textController, onPasteButtonTap,context}) {
+Widget PostPhoto({onTap, textController, onPasteButtonTap, context}) {
   return Padding(
     padding: const EdgeInsets.only(top: 10),
-    child: Obx((){
-       return Column(
+    child: Obx(() {
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * 0.92,
+            width: MediaQuery.of(context).size.width * 0.92,
             height: 211,
             child: _imagepick.imagePath.isEmpty
                 ? DottedBorder(
-                radius: const Radius.circular(15),
-                dashPattern: const [10, 10],
-                strokeWidth: 2,
-                borderType: BorderType.RRect,
-                color: bordar,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      button(
-                          Height: 45,
-                          Width: 151,
-                          onTap: onTap,
-                          text: 'Select Files'),
-                      const SizedBox(
-                        height: 20,
+                    radius: const Radius.circular(15),
+                    dashPattern: const [10, 10],
+                    strokeWidth: 2,
+                    borderType: BorderType.RRect,
+                    color: bordar,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          button(
+                              Height: 45,
+                              Width: 151,
+                              onTap: onTap,
+                              text: 'Select Files'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text(
+                            'Add Photos & Videos or Files',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: bordar),
+                          )
+                        ],
                       ),
-                      const Text(
-                        'Add Photos & Videos or Files',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: bordar),
-                      )
-                    ],
-                  ),
-                ))
+                    ))
                 : SizedBox(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.92,
-              height: 211,
-              child: Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: FileImage(
-                            File(_imagepick.imagePath.toString())))),
-              ),
-            ),
+                    width: MediaQuery.of(context).size.width * 0.92,
+                    height: 211,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: FileImage(
+                                  File(_imagepick.imagePath.toString())))),
+                    ),
+                  ),
           ),
           const SizedBox(
             height: 20,
@@ -590,8 +584,7 @@ Widget PostPhoto({onTap, textController, onPasteButtonTap,context}) {
           )
         ],
       );
-    }
-    ),
+    }),
   );
 }
 
