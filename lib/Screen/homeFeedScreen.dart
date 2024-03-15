@@ -20,7 +20,6 @@ class HomeFeedController extends GetxController {
     final postss = await scl_client.get_all_posts();
     return postss;
   }
-
 }
 
 class HomeFeedScreen extends GetView<HomeFeedController> {
@@ -36,9 +35,14 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
     return FutureBuilder(
         future: controller.call_posts(),
-        builder: ( context, AsyncSnapshot<List<Post>> snapshot) {
+        builder: (context, AsyncSnapshot<List<Post>> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(child: SizedBox(height: 50,width: 50, child: CircularProgressIndicator()));
+            return Scaffold(
+                body: Center(
+                    child: SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator())));
           } else {
             if (snapshot.hasData) {
               posts = snapshot.data;
