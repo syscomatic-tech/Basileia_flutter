@@ -109,9 +109,13 @@ class SignInScreen extends StatelessWidget {
               final req_outp = await auth.LoginRequest(
                   email.text.toString(), password.text.toString());
               try {
-                SuccessToast(req_outp);
-                final hm_screen = HomeFeedScreen();
-                Get.to(() => hm_screen);
+                if (!req_outp.contains("Error")) {
+                  SuccessToast(req_outp);
+                  final hm_screen = HomeFeedScreen();
+                  Get.to(() => hm_screen);
+                } else {
+                  ErrorToast("Please Login with accurate credentials. ");
+                }
               } catch (Error) {
                 ErrorToast(req_outp);
               }
