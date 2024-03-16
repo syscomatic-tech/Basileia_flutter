@@ -878,7 +878,7 @@ Widget button_(
   );
 }
 
-Widget Comments() {
+Widget Comments({String?user,String?content,String?like,String?reply,String?share}) {
   return Column(
     children: [
       Padding(
@@ -928,12 +928,6 @@ Widget Comments() {
             ),
             const SizedBox(
               height: 20,
-            ),
-            Container(
-              width: double.maxFinite,
-              height: 271,
-              decoration: BoxDecoration(
-                  color: ContainerBG, borderRadius: BorderRadius.circular(10)),
             ),
             const SizedBox(
               height: 10,
@@ -3224,3 +3218,34 @@ class ChatBubble extends StatelessWidget {
     );
   }
 }
+ Widget commentTextFiled({Context,controller,onTap}){
+  return Container(
+    height: 110,
+    decoration: const BoxDecoration(
+        color: Colors.white
+    ),
+    child: Center(
+      child: Container(
+        height: 52,
+        width: MediaQuery.of(Context).size.width*0.90,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: bordar),
+            borderRadius: BorderRadius.circular(30)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15,right: 10),
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Write comment...',
+                hintStyle: const TextStyle(fontSize: 14,color: bordar),
+                suffixIcon: InkWell(onTap: onTap,child: Image.asset(send))
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+ }

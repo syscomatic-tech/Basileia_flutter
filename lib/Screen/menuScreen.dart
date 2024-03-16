@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 class MenuScreen extends StatelessWidget {
   MenuScreen({super.key});
   final menuTitle=[
-    'Activity',
-    'Friends',
+    'Connections',
     'Messages',
-    'Albums',
-    'Favorites',
+    'Church Page',
     'Forums',
     'Groups',
     'Delate Account',
@@ -18,11 +16,9 @@ class MenuScreen extends StatelessWidget {
     'Language',
   ];
   final menuSubTitle=[
-    'See your recent activity',
     'Friendlist totals',
     'Message your friends',
-    'Save or post your albums',
-    'Friends you love',
+    'Message your friends',
     'See your recent activity',
     'Message your friends',
     'Message your friends',

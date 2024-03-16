@@ -38,9 +38,9 @@ class AuthClient {
 
       jwt_token = resp["accessToken"];
       userId = resp["user"]["_id"];
-      // final userInfo = json.decode(await getUserInfo(userId));
-      // userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
-      userFullname = resp["user"]["email"];
+      final userInfo = json.decode(await getUserInfo(userId));
+       userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
+      userEmail = resp["user"]["email"];
       return resp["accessToken"];
     } else {
       print(response.reasonPhrase);
@@ -228,7 +228,7 @@ class SocialClient {
     var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.MultipartRequest('POST',
         Uri.parse('https://api.zahedhasan.com/api/v1/upload/fileSystem'));
-    request.fields.addAll({'userId': userId});
+    request.fields.addAll({'userId': userId,'caption':''});
     request.files.add(await http.MultipartFile.fromPath('files', filepath));
     request.headers.addAll(headers);
 

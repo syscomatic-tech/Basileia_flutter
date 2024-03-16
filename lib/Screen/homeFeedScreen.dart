@@ -2,7 +2,6 @@ import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/menuScreen.dart';
 import 'package:basileia/Screen/postOnFeed.dart';
 import 'package:basileia/Screen/profileScreen.dart';
-import 'package:basileia/Screen/readbookScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/images.dart';
@@ -10,7 +9,6 @@ import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:basileia/RestAPI/social.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'dart:async';
 
 class HomeFeedController extends GetxController {
@@ -30,14 +28,13 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
 
   @override
   Widget build(BuildContext context) {
-    //call_posts();
 
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
     return FutureBuilder(
         future: controller.call_posts(),
         builder: (context, AsyncSnapshot<List<Post>> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return Scaffold(
+            return const Scaffold(
                 body: Center(
                     child: SizedBox(
                         height: 50,
