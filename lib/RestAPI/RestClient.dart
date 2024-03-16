@@ -38,9 +38,9 @@ class AuthClient {
 
       jwt_token = resp["accessToken"];
       userId = resp["user"]["_id"];
-      final userInfo = json.decode(await getUserInfo(userId));
-       userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
-      userEmail = resp["user"]["email"];
+      // final userInfo = json.decode(await getUserInfo(userId));
+      // userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
+      userFullname = resp["user"]["email"];
       return resp["accessToken"];
     } else {
       print(response.reasonPhrase);
