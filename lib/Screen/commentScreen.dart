@@ -90,7 +90,7 @@ class CommentScreen extends StatelessWidget {
               commentTextFiled(
                 Context: context,
                 onTap: () async {
-                  if (commentController.text.isEmpty) {
+                  if (commentController.text.isNotEmpty) {
                     final out =
                         await scl.comment_post(commentController.text, post.id);
                     if (out) {
