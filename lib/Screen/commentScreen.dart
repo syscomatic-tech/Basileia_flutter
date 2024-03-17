@@ -14,13 +14,6 @@ class CommentScreen extends StatelessWidget {
   late Post post;
   CommentScreen({super.key, required this.post});
   var scl = SocialClient();
-  Future<void> sendComment() async {
-    if (commentController.text.isNotEmpty) {
-      await scl.comment_post(commentController.text, post.id);
-      //print(PostId);
-      commentController.clear();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +90,17 @@ class CommentScreen extends StatelessWidget {
               commentTextFiled(
                 Context: context,
                 onTap: () async {
-                  await sendComment();
-                  SuccessToast("Comment Added");
+                  if (commentController.text.isEmpty) {
+                    final out =
+                        await scl.comment_post(commentController.text, post.id);
+                    if (out) {
+                      SuccessToast("Comment Added");
+                    } else {
+                      ErrorToast("Something Went wrong");
+                    }
+                  } else {
+                    ErrorToast("Please enter a comment");
+                  }
                 },
                 controller: commentController,
               )
