@@ -98,6 +98,7 @@ class CommentScreen extends StatelessWidget {
                 Context: context,
                 onTap: () async {
                   await sendComment();
+                  SuccessToast("Comment Added");
                 },
                 controller: commentController,
               )
