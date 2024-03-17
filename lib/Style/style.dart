@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:basileia/Screen/commentScreen.dart';
+import 'package:basileia/RestAPI/social.dart';
+import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -216,8 +218,9 @@ Widget AdvanceFilterButton({onTap}) {
   );
 }
 
-Widget FeedIcButton({onTap, ic, text}) {
+Widget FeedIcButton({onTap, ic, text, clr}) {
   return InkWell(
+    splashColor: clr,
     onTap: onTap,
     child: Row(
       children: [
@@ -273,8 +276,10 @@ Widget Feeds(
     String? likes,
     String? comments,
     String postID = "",
+    String capt = "",
     postType,
-    content}) {
+    content,
+    post}) {
   return Padding(
     padding: const EdgeInsets.only(right: 10, left: 10),
     child: Column(
@@ -323,10 +328,15 @@ Widget Feeds(
           height: 20,
         ),
         Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-          child:
-              postType == 0 ? Text(content.toString()) : Image.network(content),
-        ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              children: [
+                Text(capt),
+                postType == 0
+                    ? Text(content.toString())
+                    : Image.network(content),
+              ],
+            )),
         const SizedBox(
           height: 15,
         ),
@@ -337,12 +347,18 @@ Widget Feeds(
                 onTap: () async {
                   SocialClient scl_cl = SocialClient();
                   await scl_cl.likePost(postID);
+                  SuccessToast("Successfully liked the post");
+                  post.likes.add(userId);
+                  Get.to(() => HomeFeedScreen());
                 },
-                ic: Like_ic,
-                text: '${likes.toString()} Likes'),
+                ic: post.likes.contains(userId) ? Liked_ic : Like_ic,
+                text: '${likes.toString()} Likes',
+                clr: Colors.red),
             FeedIcButton(
                 onTap: () {
-                  Get.to(() => CommentScreen());
+                  Get.to(() => CommentScreen(
+                        post: post!,
+                      ));
                 },
                 ic: Comment_ic,
                 text: '${comments.toString()} Comments'),
@@ -447,7 +463,7 @@ Widget AudioFeeds({
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120''Likes'),
+              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120' 'Likes'),
               FeedIcButton(onTap: () {}, ic: Comment_ic, text: '6 ' 'Comments'),
               FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
             ],
@@ -878,7 +894,13 @@ Widget button_(
   );
 }
 
-Widget Comments({String?user,String?content,String?like,String?reply,String?share}) {
+Widget Comments(
+    {String user = "",
+    String? content,
+    String? like,
+    String? reply,
+    String? share}) {
+  final userr = user;
   return Column(
     children: [
       Padding(
@@ -894,11 +916,11 @@ Widget Comments({String?user,String?content,String?like,String?reply,String?shar
                     const SizedBox(
                       width: 12,
                     ),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Anne Southern',
+                          userr,
                           style: TextStyle(
                               fontSize: 15,
                               fontFamily: poppins_semibold,
@@ -921,8 +943,8 @@ Widget Comments({String?user,String?content,String?like,String?reply,String?shar
             const SizedBox(
               height: 15,
             ),
-            const Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+            Text(
+              content!,
               style: TextStyle(
                   fontFamily: poppins_regular, color: primaryTxt, fontSize: 12),
             ),
@@ -945,8 +967,8 @@ Widget Comments({String?user,String?content,String?like,String?reply,String?shar
                     const SizedBox(
                       width: 7,
                     ),
-                    const Text(
-                      '36',
+                    Text(
+                      like!,
                       style: TextStyle(
                           fontSize: 12,
                           fontFamily: poppins_regular,
@@ -3218,34 +3240,31 @@ class ChatBubble extends StatelessWidget {
     );
   }
 }
- Widget commentTextFiled({Context,controller,onTap}){
+
+Widget commentTextFiled({Context, controller, onTap}) {
   return Container(
     height: 110,
-    decoration: const BoxDecoration(
-        color: Colors.white
-    ),
+    decoration: const BoxDecoration(color: Colors.white),
     child: Center(
       child: Container(
         height: 52,
-        width: MediaQuery.of(Context).size.width*0.90,
+        width: MediaQuery.of(Context).size.width * 0.90,
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: bordar),
-            borderRadius: BorderRadius.circular(30)
-        ),
+            borderRadius: BorderRadius.circular(30)),
         child: Padding(
-          padding: const EdgeInsets.only(left: 15,right: 10),
+          padding: const EdgeInsets.only(left: 15, right: 10),
           child: TextField(
             controller: controller,
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Write comment...',
-                hintStyle: const TextStyle(fontSize: 14,color: bordar),
-                suffixIcon: InkWell(onTap: onTap,child: Image.asset(send))
-            ),
+                hintStyle: const TextStyle(fontSize: 14, color: bordar),
+                suffixIcon: InkWell(onTap: onTap, child: Image.asset(send))),
           ),
         ),
       ),
     ),
   );
- }
+}

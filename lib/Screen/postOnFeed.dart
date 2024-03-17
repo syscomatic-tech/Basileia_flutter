@@ -1,8 +1,10 @@
+import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Screen/postOnFeed_1.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../RestAPI/RestClient.dart';
@@ -36,11 +38,24 @@ class PostOnFeed extends StatelessWidget {
                   button(
                       Width: 72,
                       Height: 45,
-                      onTap: () async{
+                      onTap: () async {
                         SocialClient scl_cl = SocialClient();
-                        await scl_cl.upload_post(_imagepick.imagePath.toString());
-                        SuccessToast('upload successful');
-                        },
+                        if (_imagepick.imagePath.toString().isNotEmpty) {
+                          await scl_cl
+                              .upload_post(_imagepick.imagePath.toString());
+                          SuccessToast('upload successful');
+                        } else if (_verseController.text
+                            .toString()
+                            .isNotEmpty) {
+                          await scl_cl
+                              .upload_verse(_verseController.text.toString());
+                          SuccessToast('upload successful');
+                        } else {
+                          ErrorToast("No Post selected");
+                        }
+
+                        Get.to(() => HomeFeedScreen());
+                      },
                       text: 'Next')
                 ],
               ),
@@ -119,14 +134,16 @@ class PostOnFeed extends StatelessWidget {
                     onTap: () {
                       _imagepick.pickImage();
                     },
-                    onPasteButtonTap: () async{
-                      SocialClient scl_cl = SocialClient();
-                      await scl_cl.upload_verse(_verseController.text.toString());
+                    onPasteButtonTap: () async {
+                      ClipboardData? clipboardData =
+                          await Clipboard.getData(Clipboard.kTextPlain);
+                      if (clipboardData != null) {
+                        // Assuming you have a TextEditingController for your TextField
+                        _verseController.text = clipboardData.text!;
+                      }
                     },
                   ),
-                  PostPhoto(
-                    context: context
-                  ),
+                  PostPhoto(context: context),
                   audioPost()
                 ],
               ),

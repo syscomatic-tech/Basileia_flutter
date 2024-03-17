@@ -28,7 +28,6 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
 
   @override
   Widget build(BuildContext context) {
-
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
     return FutureBuilder(
         future: controller.call_posts(),
@@ -44,6 +43,7 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
             if (snapshot.hasData) {
               posts = snapshot.data;
             } else {
+              print(snapshot);
               posts = [];
             }
             for (var post in posts!) {
@@ -51,14 +51,15 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                 if (!post.file_content.toString().contains(
                     "https://api.zahedhasan.com/api/v1/uploads/users")) {
                   feeds.add(Feeds(
-                    userName: post.usrName,
-                    followers: post.followers.length.toString(),
-                    likes: post.likes.length.toString(),
-                    comments: post.comments.length.toString(),
-                    postType: post.post_type,
-                    content: post.file_content.toString(),
-                    postID: post.id.toString(),
-                  ));
+                      userName: post.usrName,
+                      followers: post.followers.length.toString(),
+                      likes: post.likes.length.toString(),
+                      comments: post.comments.length.toString(),
+                      postType: post.post_type,
+                      content: post.file_content.toString(),
+                      postID: post.id.toString(),
+                      capt: post.caption,
+                      post: post));
                 }
               } else {
                 // Audio and video feeds
@@ -174,7 +175,7 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                           shrinkWrap: true,
                           itemCount: feeds.length,
                           itemBuilder: (context, index) {
-                            return feeds[index]; //feeds[index];
+                            return feeds[index];
                           })
                     ],
                   ),

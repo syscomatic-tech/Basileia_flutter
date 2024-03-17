@@ -14,15 +14,25 @@ class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
 //Login API calling
-  Future<String> getUserInfo(String userID) async {
-    var request = http.Request('GET', Uri.parse('$BaseURL/auth/$userID'));
+  Future<Map<String, dynamic>> getUserInfo(String usrid) async {
     var headers = {'Authorization': 'Bearer $jwt_token'};
+    var request = http.Request(
+        'GET', Uri.parse('https://api.zahedhasan.com/api/v1/auth/$usrid'));
+
     request.headers.addAll(headers);
+
     http.StreamedResponse response = await request.send();
+
     if (response.statusCode < 300) {
-      return await response.stream.bytesToString();
+      Map<String, dynamic> resp =
+          json.decode(await response.stream.bytesToString());
+      return resp;
     } else {
-      return await response.stream.bytesToString();
+      print(response.reasonPhrase);
+      Map<String, dynamic> resp =
+          json.decode(await response.stream.bytesToString());
+      print(resp);
+      return resp;
     }
   }
 
@@ -38,9 +48,14 @@ class AuthClient {
 
       jwt_token = resp["accessToken"];
       userId = resp["user"]["_id"];
-      // final userInfo = json.decode(await getUserInfo(userId));
-      // userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
-      userFullname = resp["user"]["email"];
+      final userInfo = await getUserInfo(userId);
+      if (userInfo["user"] != null) {
+        userFullname =
+            userInfo["user"]["firstName"] + " " + userInfo["user"]["lastName"];
+      } else {
+        userFullname = "Deleted User";
+      }
+      userEmail = resp["user"]["email"];
       return resp["accessToken"];
     } else {
       print(response.reasonPhrase);
@@ -228,7 +243,7 @@ class SocialClient {
     var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.MultipartRequest('POST',
         Uri.parse('https://api.zahedhasan.com/api/v1/upload/fileSystem'));
-    request.fields.addAll({'userId': userId,'caption':''});
+    request.fields.addAll({'userId': userId, 'caption': ''});
     request.files.add(await http.MultipartFile.fromPath('files', filepath));
     request.headers.addAll(headers);
 
@@ -276,12 +291,23 @@ class SocialClient {
         Post postt;
         var og_cmnt = resp["comments"];
         List<Comment> comments = [];
+        String capt = "";
         for (var cmt in og_cmnt) {
+          final cInf = await getUserInfo(cmt["userId"]);
+          Map<String, dynamic> cInfo;
+          if (cInf["user"] != null) {
+            cInfo = cInf["user"];
+          } else {
+            cInfo = {"firstName": "Deleted", "lastName": "user"};
+          }
           comments.add(Comment(
-            userId: cmt["userId"].toString(),
-            id: cmt["_id"].toString(),
-            content: cmt["comment"].toString(),
-          ));
+              userId: cmt["userId"].toString(),
+              id: cmt["_id"].toString(),
+              content: cmt["comment"].toString(),
+              usrname: cInfo["firstName"]! + " " + cInfo["lastName"]!));
+        }
+        if (resp.containsKey("caption")) {
+          capt = resp["caption"];
         }
         if (hasVerse) {
           postt = Post(
@@ -292,7 +318,8 @@ class SocialClient {
               followers: resp['followers'].cast<String>(),
               comments: comments,
               file_content: resp["verse"],
-              post_type: 0);
+              post_type: 0,
+              caption: capt);
         } else {
           var fl = resp["fileUrl"];
           var extension = fl.toString().split(".").last;
@@ -310,7 +337,8 @@ class SocialClient {
               followers: resp['followers'].cast<String>(),
               comments: comments,
               file_content: fl,
-              post_type: pst_tp);
+              post_type: pst_tp,
+              caption: capt);
         }
         posttt.add(postt);
       }
@@ -327,7 +355,8 @@ class SocialClient {
             comments: [],
             followers: [""],
             file_content: "",
-            post_type: 0)
+            post_type: 0,
+            caption: "Failed to Fetch")
       ];
     }
   }

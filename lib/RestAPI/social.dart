@@ -2,14 +2,15 @@ class Comment {
   String userId;
   String id;
   String content;
+  String usrname;
   List<Comment> replies = [];
 
   // Constructor
-  Comment({
-    required this.userId,
-    required this.id,
-    required this.content,
-  });
+  Comment(
+      {required this.userId,
+      required this.id,
+      required this.content,
+      required this.usrname});
 }
 
 class Post {
@@ -20,6 +21,7 @@ class Post {
   var followers = [''];
   List<Comment> comments = [];
   var file_content = "";
+  var caption = "";
   var post_type =
       0; // 0 = verse , 1 = file_link, 2 = audio_link, 3 = video_link
 
@@ -31,5 +33,6 @@ class Post {
       required this.comments,
       required this.followers,
       required this.file_content,
-      required this.post_type});
+      required this.post_type,
+      required this.caption});
 }
