@@ -92,9 +92,9 @@ class AuthClient {
     if (response.statusCode < 300) {
       return true;
     } else {
-      print(await response.stream.bytesToString());
-
-      print(await response.reasonPhrase);
+      final out = json.decode(await response.stream.bytesToString());
+      ErrorToast(out["message"]);
+      ErrorToast(response.reasonPhrase);
       return false;
     }
   }
