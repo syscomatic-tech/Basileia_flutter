@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:basileia/RestAPI/social.dart';
 
 class MyTabsController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -106,5 +107,14 @@ class PostLikeController extends GetxController {
     // Here, you can also handle your backend logic such as calling API to like the post
     // For example: SocialClient().likePost(postID);
     // And then, you can update the UI accordingly based on the response
+  }
+}
+
+class PostCommentController extends GetxController {
+  Post post;
+  PostCommentController({required this.post});
+
+  void AddComment(comnt) {
+    post.comments.add(comnt);
   }
 }
