@@ -23,57 +23,57 @@ class CommentScreen extends StatelessWidget {
     for (var commnt in post.comments) {
       cumments.add(commnt.content);
     }
-    return Obx(() => Scaffold(
-          body: Stack(
+    return Scaffold(
+      body: Stack(
+        children: [
+          Column(
             children: [
               Column(
                 children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 30, left: 15, right: 15),
-                        child: Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Get.to(() => HomeFeedScreen());
-                              },
-                              child: Container(
-                                height: 45,
-                                width: 45,
-                                decoration: BoxDecoration(
-                                    color: primary,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Image.asset(arrow_ic),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 100),
-                              child: Text(
-                                'Comments',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontFamily: poppins_semibold),
-                              ),
-                            ),
-                          ],
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 30, left: 15, right: 15),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => HomeFeedScreen());
+                          },
+                          child: Container(
+                            height: 45,
+                            width: 45,
+                            decoration: BoxDecoration(
+                                color: primary,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Image.asset(arrow_ic),
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      const Divider(
-                        color: bordar,
-                      ),
-                    ],
+                        const Padding(
+                          padding: EdgeInsets.only(left: 100),
+                          child: Text(
+                            'Comments',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontFamily: poppins_semibold),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ListView.builder(
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Divider(
+                    color: bordar,
+                  ),
+                ],
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Obx(() => ListView.builder(
                             shrinkWrap: true,
                             primary: false,
                             itemCount: cmnt.post.value.comments.length,
@@ -86,40 +86,40 @@ class CommentScreen extends StatelessWidget {
                                   reply: 0.toString(),
                                   share: 0.toString());
                             },
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          )
-                        ],
-                      ),
-                    ),
+                          )),
+                      const SizedBox(
+                        height: 20,
+                      )
+                    ],
                   ),
-                  commentTextFiled(
-                    Context: context,
-                    onTap: () async {
-                      if (commentController.text.isNotEmpty) {
-                        final out = await scl.comment_post(
-                            commentController.text, post.id);
-                        cmnt.AddComment(Comment(
-                            userId: userId,
-                            id: post.id,
-                            content: commentController.text,
-                            usrname: userFullname));
-                        if (out) {
-                          SuccessToast("Comment Added");
-                        } else {
-                          ErrorToast("Something Went wrong");
-                        }
-                      } else {
-                        ErrorToast("Please enter a comment");
-                      }
-                    },
-                    controller: commentController,
-                  )
-                ],
+                ),
               ),
+              commentTextFiled(
+                Context: context,
+                onTap: () async {
+                  if (commentController.text.isNotEmpty) {
+                    final out =
+                        await scl.comment_post(commentController.text, post.id);
+                    cmnt.AddComment(Comment(
+                        userId: userId,
+                        id: post.id,
+                        content: commentController.text,
+                        usrname: userFullname));
+                    if (out) {
+                      SuccessToast("Comment Added");
+                    } else {
+                      ErrorToast("Something Went wrong");
+                    }
+                  } else {
+                    ErrorToast("Please enter a comment");
+                  }
+                },
+                controller: commentController,
+              )
             ],
           ),
-        ));
+        ],
+      ),
+    );
   }
 }
