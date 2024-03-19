@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-class MyTabsController extends GetxController with GetSingleTickerProviderStateMixin {
+class MyTabsController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late TabController tabController;
   @override
   void onInit() {
     tabController = TabController(length: 3, vsync: this);
     super.onInit();
   }
+
   @override
   void onClose() {
     tabController.dispose();
@@ -16,26 +18,31 @@ class MyTabsController extends GetxController with GetSingleTickerProviderStateM
   }
 }
 
-class TabsController extends GetxController with GetSingleTickerProviderStateMixin {
+class TabsController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late TabController tabController;
   @override
   void onInit() {
     tabController = TabController(length: 2, vsync: this);
     super.onInit();
   }
+
   @override
   void onClose() {
     tabController.dispose();
     super.onClose();
   }
 }
-class religionsPageController extends GetxController with GetSingleTickerProviderStateMixin {
+
+class religionsPageController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late TabController tabController;
   @override
   void onInit() {
     tabController = TabController(length: 4, vsync: this);
     super.onInit();
   }
+
   @override
   void onClose() {
     tabController.dispose();
@@ -59,19 +66,22 @@ class ColorController extends GetxController {
   }
 }
 
-class LeadersController extends GetxController with GetSingleTickerProviderStateMixin {
+class LeadersController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late TabController tabController;
   @override
   void onInit() {
     tabController = TabController(length: 4, vsync: this);
     super.onInit();
   }
+
   @override
   void onClose() {
     tabController.dispose();
     super.onClose();
   }
 }
+
 class ImagePick extends GetxController {
   RxString imagePath = ''.obs;
   final ImagePicker picker = ImagePicker();
@@ -83,5 +93,16 @@ class ImagePick extends GetxController {
     } else {
       print('No image selected');
     }
+  }
+}
+
+class PostLikeController extends GetxController {
+  var isLiked = false.obs; // Observable variable
+
+  void toggleLike() {
+    isLiked.value = !isLiked.value; // Toggle post like status
+    // Here, you can also handle your backend logic such as calling API to like the post
+    // For example: SocialClient().likePost(postID);
+    // And then, you can update the UI accordingly based on the response
   }
 }

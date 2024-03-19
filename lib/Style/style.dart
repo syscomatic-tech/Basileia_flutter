@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:basileia/Screen/commentScreen.dart';
 import 'package:basileia/RestAPI/social.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
+import 'package:basileia/Style/likeiconwidget.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -343,19 +344,7 @@ Widget Feeds(
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FeedIcButton(
-                onTap: () async {
-                  SocialClient scl_cl = SocialClient();
-                  await scl_cl.likePost(postID);
-                  SuccessToast("Successfully liked the post");
-                  post.likes.add(userId);
-                  print(userId);
-                  print(userFullname);
-                  Get.to(() => HomeFeedScreen());
-                },
-                ic: post.likes.contains(userId) ? Liked_ic : Like_ic,
-                text: '${likes.toString()} Likes',
-                clr: Colors.red),
+            LikeWidget(likes: post.likes, postID: postID),
             FeedIcButton(
                 onTap: () {
                   Get.to(() => CommentScreen(
