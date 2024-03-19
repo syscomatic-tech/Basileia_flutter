@@ -111,10 +111,22 @@ class PostLikeController extends GetxController {
 }
 
 class PostCommentController extends GetxController {
-  Post post;
-  PostCommentController({required this.post});
+  var post = Rx<Post>(Post(
+    usrName: '',
+    userID: '',
+    id: '',
+    likes: [],
+    comments: [],
+    followers: [],
+    file_content: '',
+    post_type: 0,
+    caption: '',
+  ));
+  PostCommentController(Post initialPost) {
+    post.value = initialPost; // Set the initial post
+  }
 
   void AddComment(comnt) {
-    post.comments.add(comnt);
+    post.value.comments.add(comnt);
   }
 }

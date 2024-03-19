@@ -22,7 +22,7 @@ class CommentScreen extends StatelessWidget {
     for (var commnt in post.comments) {
       cumments.add(commnt.content);
     }
-    cmnt = PostCommentController(post: post);
+    cmnt = PostCommentController(post);
     return Obx(() => Scaffold(
           body: Stack(
             children: [
@@ -76,11 +76,12 @@ class CommentScreen extends StatelessWidget {
                           ListView.builder(
                             shrinkWrap: true,
                             primary: false,
-                            itemCount: cmnt.post.comments.length,
+                            itemCount: cmnt.post.value.comments.length,
                             itemBuilder: (context, index) {
                               return Comments(
-                                  user: cmnt.post.comments[index].usrname,
-                                  content: cmnt.post.comments[index].content,
+                                  user: cmnt.post.value.comments[index].usrname,
+                                  content:
+                                      cmnt.post.value.comments[index].content,
                                   like: 0.toString(),
                                   reply: 0.toString(),
                                   share: 0.toString());
@@ -99,7 +100,11 @@ class CommentScreen extends StatelessWidget {
                       if (commentController.text.isNotEmpty) {
                         final out = await scl.comment_post(
                             commentController.text, post.id);
-                        cmnt.AddComment(Comment(userId: userId, id: post.id, content: commentController.text, usrname: userFullname))
+                        cmnt.AddComment(Comment(
+                            userId: userId,
+                            id: post.id,
+                            content: commentController.text,
+                            usrname: userFullname));
                         if (out) {
                           SuccessToast("Comment Added");
                         } else {
