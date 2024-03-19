@@ -11,13 +11,12 @@ import '../RestAPI/RestClient.dart';
 import '../Style/controller.dart';
 
 class PostOnFeed extends StatelessWidget {
-  const PostOnFeed({super.key});
+  final MyTabsController controller = Get.put(MyTabsController());
+  final ImagePick _imagepick = Get.put(ImagePick());
+  final TextEditingController _verseController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final MyTabsController controller = Get.put(MyTabsController());
-    final ImagePick _imagepick = Get.put(ImagePick());
-    final TextEditingController _verseController = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
