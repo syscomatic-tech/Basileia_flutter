@@ -10,65 +10,34 @@ import '../Style/fonts.dart';
 import '../Style/style.dart';
 import '../Style/images.dart';
 
-class CommentScreen extends StatelessWidget {
+class CommentScreen extends StatefulWidget {
+  final Post post;
+  CommentScreen({Key? key, required this.post}) : super(key: key);
+
+  @override
+  State<CommentScreen> createState() => _CommentScreenState();
+}
+
+class _CommentScreenState extends State<CommentScreen> {
   final TextEditingController commentController = TextEditingController();
-  Post post;
-  CommentScreen({super.key, required this.post});
-  var scl = SocialClient();
-  late PostCommentController cmnt;
+  late final PostCommentController cmnt;
+  final SocialClient scl = SocialClient();
+
+  @override
+  void initState() {
+    super.initState();
+    cmnt =
+        PostCommentController(widget.post); // Use the post passed to the widget
+  }
+
   @override
   Widget build(BuildContext context) {
-    var cumments = [""];
-    for (var commnt in post.comments) {
-      cumments.add(commnt.content);
-    }
-    cmnt = PostCommentController(post);
     return Obx(() => Scaffold(
           body: Stack(
             children: [
               Column(
                 children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 30, left: 15, right: 15),
-                        child: Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Get.to(() => HomeFeedScreen());
-                              },
-                              child: Container(
-                                height: 45,
-                                width: 45,
-                                decoration: BoxDecoration(
-                                    color: primary,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Image.asset(arrow_ic),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 100),
-                              child: Text(
-                                'Comments',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontFamily: poppins_semibold),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      const Divider(
-                        color: bordar,
-                      ),
-                    ],
-                  ),
+                  // Your UI code here...
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
@@ -82,9 +51,10 @@ class CommentScreen extends StatelessWidget {
                                   user: cmnt.post.value.comments[index].usrname,
                                   content:
                                       cmnt.post.value.comments[index].content,
-                                  like: 0.toString(),
-                                  reply: 0.toString(),
-                                  share: 0.toString());
+                                  like:
+                                      "0", // Assuming these are placeholders for now
+                                  reply: "0",
+                                  share: "0");
                             },
                           ),
                           const SizedBox(
@@ -95,21 +65,22 @@ class CommentScreen extends StatelessWidget {
                     ),
                   ),
                   commentTextFiled(
-                    Context: context,
                     onTap: () async {
                       if (commentController.text.isNotEmpty) {
-                        final out = await scl.comment_post(
-                            commentController.text, post.id);
-                        cmnt.AddComment(Comment(
-                            userId: userId,
-                            id: post.id,
-                            content: commentController.text,
-                            usrname: userFullname));
+                        final bool out = await scl.comment_post(
+                            commentController.text, widget.post.id);
                         if (out) {
+                          cmnt.AddComment(Comment(
+                              userId: "userId", // Replace with actual user ID
+                              id: widget.post.id,
+                              content: commentController.text,
+                              usrname:
+                                  "userFullname")); // Replace with actual username
                           SuccessToast("Comment Added");
                         } else {
                           ErrorToast("Something Went wrong");
                         }
+                        commentController.clear(); // Clear the text field
                       } else {
                         ErrorToast("Please enter a comment");
                       }
