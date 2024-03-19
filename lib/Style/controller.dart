@@ -98,9 +98,11 @@ class ImagePick extends GetxController {
 
 class PostLikeController extends GetxController {
   var isLiked = false.obs; // Observable variable
+  var id = "";
 
   void toggleLike() {
-    isLiked.value = !isLiked.value; // Toggle post like status
+    isLiked.value = !isLiked.value;
+    // Toggle post like status
     // Here, you can also handle your backend logic such as calling API to like the post
     // For example: SocialClient().likePost(postID);
     // And then, you can update the UI accordingly based on the response

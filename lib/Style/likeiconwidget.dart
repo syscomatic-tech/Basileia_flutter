@@ -11,7 +11,7 @@ class LikeWidget extends StatelessWidget {
   var postID = "";
   LikeWidget({super.key, required this.likes, required this.postID});
   final PostLikeController postController =
-      Get.put(PostLikeController()); // Create an instance of PostController
+      PostLikeController(); // Create an instance of PostController
 
   @override
   Widget build(BuildContext context) {
