@@ -1,4 +1,4 @@
-package com.example.boiler_plate
+package com.sysco.basileia
 
 import io.flutter.embedding.android.FlutterActivity
 
