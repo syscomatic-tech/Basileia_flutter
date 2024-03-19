@@ -349,6 +349,8 @@ Widget Feeds(
                   await scl_cl.likePost(postID);
                   SuccessToast("Successfully liked the post");
                   post.likes.add(userId);
+                  print(userId);
+                  print(userFullname);
                   Get.to(() => HomeFeedScreen());
                 },
                 ic: post.likes.contains(userId) ? Liked_ic : Like_ic,

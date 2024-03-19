@@ -1,6 +1,7 @@
 import 'dart:async';
 import "dart:convert";
 import 'dart:io';
+import 'dart:math';
 import 'package:basileia/Style/style.dart';
 import 'package:basileia/RestAPI/social.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +9,7 @@ import 'package:http/http.dart' as http;
 var jwt_token = "";
 var userId = "";
 var userFullname = "";
+var userPass = "";
 var userEmail = "";
 
 class AuthClient {
@@ -48,7 +50,9 @@ class AuthClient {
 
       jwt_token = resp["accessToken"];
       userId = resp["user"]["_id"];
+      print(userId);
       final userInfo = await getUserInfo(userId);
+      print(userInfo);
       if (userInfo["user"] != null) {
         userFullname =
             userInfo["user"]["firstName"] + " " + userInfo["user"]["lastName"];
@@ -71,6 +75,9 @@ class AuthClient {
     var headers = {'Content-Type': 'application/json'};
     var request =
         http.Request('POST', Uri.parse('$BaseURL/auth/admin/register'));
+    userFullname = FirstName + " " + LastName;
+    userEmail = Email;
+    userPass = pass;
 
     request.body = jsonEncode({
       "firstName": FirstName,
@@ -104,7 +111,8 @@ class AuthClient {
 
     if (response.statusCode < 300) {
       print(await response.stream.bytesToString());
-
+      var out = await LoginRequest(userEmail, userPass);
+      print(out);
       return true;
     } else {
       print(response.reasonPhrase);
@@ -278,15 +286,17 @@ class SocialClient {
         "lastName": "user"
       };
       for (var resp in respp["postAll"]) {
-        userId = resp["userId"];
-        final userInf = await getUserInfo(userId);
-
+        var useid = resp["userId"];
+        var userflname = "";
+        final userInf = await getUserInfo(useid);
+        print(userInf["user"]);
         if (userInf["user"] != null) {
           userInfo = userInf["user"];
         } else {
           userInfo = {"firstName": "Deleted", "lastName": "user"};
         }
-        userFullname = userInfo["firstName"] + " " + userInfo["lastName"];
+
+        userflname = userInfo["firstName"] + " " + userInfo["lastName"];
         bool hasVerse = resp.containsKey('verse');
         Post postt;
         var og_cmnt = resp["comments"];
@@ -387,6 +397,7 @@ class SocialClient {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $jwt_token'
     };
+
     var request = http.Request('POST',
         Uri.parse('https://api.zahedhasan.com/api/v1/upload/comment/$post_id'));
     request.body = json.encode({"userId": userId, "comment": com});
