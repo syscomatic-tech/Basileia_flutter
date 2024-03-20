@@ -247,11 +247,11 @@ class SocialClient {
     }
   }
 
-  Future<bool> upload_post(String filepath) async {
+  Future<bool> upload_post(String filepath, caption) async {
     var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.MultipartRequest('POST',
         Uri.parse('https://api.zahedhasan.com/api/v1/upload/fileSystem'));
-    request.fields.addAll({'userId': userId, 'caption': ''});
+    request.fields.addAll({'userId': userId, 'caption': caption});
     request.files.add(await http.MultipartFile.fromPath('files', filepath));
     request.headers.addAll(headers);
 

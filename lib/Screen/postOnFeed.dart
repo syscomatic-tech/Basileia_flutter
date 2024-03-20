@@ -1,5 +1,7 @@
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Screen/postOnFeed_1.dart';
+
+import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/style.dart';
@@ -36,22 +38,19 @@ class PostOnFeed extends StatelessWidget {
                   button(
                       Width: 72,
                       Height: 45,
-                      onTap: () {
-                        Get.to( ()=> PostOnFeed_1());
-                        // SocialClient scl_cl = SocialClient();
-                        // if (_imagepick.imagePath.toString().isNotEmpty) {
-                        //   await scl_cl
-                        //       .upload_post(_imagepick.imagePath.toString());
-                        //   SuccessToast('upload successful');
-                        // } else if (_verseController.text
-                        //     .toString()
-                        //     .isNotEmpty) {
-                        //   await scl_cl
-                        //       .upload_verse(_verseController.text.toString());
-                        //   SuccessToast('upload successful');
-                        // } else {
-                        //   ErrorToast("No Post selected");
-                        // }
+                      onTap: () async {
+                        SocialClient scl_cl = SocialClient();
+                        if (_imagepick.imagePath.toString().isNotEmpty) {
+                          Get.to(() => PostOnFeed_1());
+                        } else if (_verseController.text
+                            .toString()
+                            .isNotEmpty) {
+                          await scl_cl
+                              .upload_verse(_verseController.text.toString());
+                          SuccessToast('upload successful');
+                        } else {
+                          ErrorToast("No Post selected");
+                        }
                         //
                         // Get.to(() => HomeFeedScreen());
                       },

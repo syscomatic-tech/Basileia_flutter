@@ -1,19 +1,26 @@
-
+import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:basileia/RestAPI/RestClient.dart';
+import 'package:basileia/Style/images.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'dart:io';
 import '../Style/colors.dart';
 import '../Style/controller.dart';
 import '../Style/fonts.dart';
 import '../Style/style.dart';
 
 class PostOnFeed_1 extends StatelessWidget {
-  const PostOnFeed_1({super.key,});
-  @override
-  Widget build(BuildContext context) {
   final TabsController controller_1 = Get.put(TabsController());
   final ImagePick imagePick = Get.put(ImagePick());
-  return Scaffold(
+  final _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -30,7 +37,23 @@ class PostOnFeed_1 extends StatelessWidget {
                         fontSize: 18,
                         fontFamily: poppins_semibold),
                   ),
-                  button(Width:72, Height:45, onTap:() {Get.to(()=>PostOnFeed_1());}, text:'Post'),
+                  button(
+                      Width: 72,
+                      Height: 45,
+                      onTap: () {
+                        if (_controller.text.isNotEmpty) {
+                          SocialClient scl_cl = SocialClient();
+                          scl_cl.upload_post(
+                              imagePick.imagePath.toString(), _controller.text);
+                        } else {
+                          SocialClient scl_cl = SocialClient();
+                          scl_cl.upload_post(
+                              imagePick.imagePath.toString(), "");
+                        }
+                        SuccessToast("post uploaded");
+                        Get.to(() => HomeFeedScreen());
+                      },
+                      text: 'Post'),
                 ],
               ),
             ),
@@ -43,11 +66,127 @@ class PostOnFeed_1 extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             SizedBox(
               width: double.maxFinite,
               height: 500,
-              child: postPhoto_1(),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 380,
+                      height: 66,
+                      child: DottedBorder(
+                          radius: const Radius.circular(5),
+                          dashPattern: const [15, 10],
+                          strokeWidth: 2,
+                          borderType: BorderType.RRect,
+                          color: bordar,
+                          child: Center(
+                            child: InkWell(
+                              onTap: () {},
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 11),
+                                    child: Container(
+                                      width: 60,
+                                      height: 46,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: FileImage(File(imagePick
+                                                  .imagePath
+                                                  .toString())),
+                                              fit: BoxFit.fill),
+                                          color: ContainerBG,
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  const SizedBox(
+                                    width: 280,
+                                    height: 46,
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(
+                                        'Photo1202460',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: textFi,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: poppins_regular),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 273,
+                      width: 373,
+                      decoration: BoxDecoration(
+                          color: TabBG,
+                          borderRadius: BorderRadius.circular(19)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: TextFormField(
+                          controller: _controller,
+                          maxLines: null,
+                          decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'What’s On Your Mind',
+                              hintStyle: TextStyle(
+                                fontSize: 15,
+                                fontFamily: poppins_regular,
+                              )),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Post In :',
+                          style: TextStyle(
+                              fontFamily: poppins_regular,
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        textField(
+                            width: 256,
+                            hight: 48,
+                            lebelText: 'My Profile',
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: InkWell(
+                                  onTap: () {},
+                                  child: Image.asset(Downarrow_ic)),
+                            ),
+                            textfieldBg: TabBG),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             )
           ],
         ),

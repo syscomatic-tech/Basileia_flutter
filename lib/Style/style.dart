@@ -724,7 +724,7 @@ Widget audioPost() {
   );
 }
 
-Widget postPhoto_1() {
+Widget postPhoto_1({imagepick}) {
   return Padding(
     padding: const EdgeInsets.only(top: 10),
     child: Column(
@@ -750,7 +750,8 @@ Widget postPhoto_1() {
                           width: 60,
                           height: 46,
                           decoration: BoxDecoration(
-                            image: _imagepick.imagePath,
+                              image: DecorationImage(
+                                  image: imagepick.imagePath, fit: BoxFit.fill),
                               color: ContainerBG,
                               borderRadius: BorderRadius.circular(5)),
                         ),
