@@ -455,7 +455,7 @@ Future<List<Question>> getForumPosts() async {
           type: forum["categories"],
           id: forum["_id"],
           content: forum["question"],
-          upvotes: forum["upvotes"],
+          upvotes: forum["upvotes"].map((item) => item.toString()).toList(),
           userID: forum["userId"]["_id"],
           usrName:
               forum["userId"]["firstName"] + " " + forum["userId"]["lastName"],
