@@ -515,83 +515,81 @@ Widget button({double? Width, double? Height, onTap, String? text}) {
 Widget PostPhoto({onTap, textController, onPasteButtonTap, context}) {
   return Padding(
     padding: const EdgeInsets.only(top: 10),
-    child: Obx(() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.92,
-            height: 211,
-            child: _imagepick.imagePath.isEmpty
-                ? DottedBorder(
-                    radius: const Radius.circular(15),
-                    dashPattern: const [10, 10],
-                    strokeWidth: 2,
-                    borderType: BorderType.RRect,
-                    color: bordar,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          button(
-                              Height: 45,
-                              Width: 151,
-                              onTap: onTap,
-                              text: 'Select Files'),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Text(
-                            'Add Photos & Videos or Files',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: bordar),
-                          )
-                        ],
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Obx(() => SizedBox(
+              width: MediaQuery.of(context).size.width * 0.92,
+              height: 211,
+              child: _imagepick.imagePath.isEmpty
+                  ? DottedBorder(
+                      radius: const Radius.circular(15),
+                      dashPattern: const [10, 10],
+                      strokeWidth: 2,
+                      borderType: BorderType.RRect,
+                      color: bordar,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            button(
+                                Height: 45,
+                                Width: 151,
+                                onTap: onTap,
+                                text: 'Select Files'),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const Text(
+                              'Add Photos & Videos or Files',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: bordar),
+                            )
+                          ],
+                        ),
+                      ))
+                  : SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.92,
+                      height: 211,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: FileImage(
+                                    File(_imagepick.imagePath.toString())))),
                       ),
-                    ))
-                : SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.92,
-                    height: 211,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: FileImage(
-                                  File(_imagepick.imagePath.toString())))),
                     ),
-                  ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            'Or',
-            style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w600, color: bordar),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              textField(
-                  controller: textController,
-                  width: 290,
-                  hight: 48,
-                  lebelText: 'Paste Verse or Select Verse',
-                  textfieldBg: TabBG),
-              const SizedBox(
-                width: 10,
-              ),
-              button(
-                  Height: 45, Width: 70, onTap: onPasteButtonTap, text: "Paste")
-            ],
-          )
-        ],
-      );
-    }),
+            )),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          'Or',
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w600, color: bordar),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            textField(
+                controller: textController,
+                width: 290,
+                hight: 48,
+                lebelText: 'Paste Verse or Select Verse',
+                textfieldBg: TabBG),
+            const SizedBox(
+              width: 10,
+            ),
+            button(
+                Height: 45, Width: 70, onTap: onPasteButtonTap, text: "Paste")
+          ],
+        )
+      ],
+    ),
   );
 }
 
