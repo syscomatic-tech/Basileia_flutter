@@ -1,4 +1,5 @@
 import 'package:basileia/Screen/questionDetailsScreen.dart';
+import 'package:basileia/Screen/ForumsUpload.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
@@ -36,6 +37,7 @@ class ForumsScreen extends StatelessWidget {
                 visible: !showFAB,
                 child: FloatingActionButton(
                   onPressed: () {
+                    Get.to(() => ForumsUpload());
                     // Get.to(() => const QuestionDetailScreen());
                   },
                   shape: RoundedRectangleBorder(
