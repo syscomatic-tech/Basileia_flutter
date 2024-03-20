@@ -144,8 +144,10 @@ class PostOnFeed extends StatelessWidget {
                   PostPhoto(
                     textController: _verseController,
                     context: context,
-                    onTap: () {
-                      _imagepick.pickImage();
+                    onTap: () async {
+                      await _imagepick.pickImage();
+                      SuccessToast(
+                          "File chosen " + _imagepick.imagePath.toString());
                     },
                     onPasteButtonTap: () async {
                       ClipboardData? clipboardData =
