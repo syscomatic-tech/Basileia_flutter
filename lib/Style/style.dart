@@ -2372,11 +2372,6 @@ class question extends StatelessWidget {
                       )
                     ],
                   ),
-                  const Text(
-                    '21 mins ago',
-                    style: TextStyle(
-                        fontSize: 8, fontWeight: FontWeight.w400, color: primary),
-                  )
                 ],
               ),
               const SizedBox(
@@ -2450,11 +2445,6 @@ class answer extends StatelessWidget {
                   )
                 ],
               ),
-              const Text(
-                '21 mins ago',
-                style: TextStyle(
-                    fontSize: 8, fontWeight: FontWeight.w400, color: primary),
-              )
             ],
           ),
           const SizedBox(
