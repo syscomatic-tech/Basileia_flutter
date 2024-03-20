@@ -14,7 +14,7 @@ import '../Style/controller.dart';
 
 class PostOnFeed extends StatelessWidget {
   final MyTabsController controller = Get.put(MyTabsController());
-  final ImagePick _imagepick = Get.put(ImagePick());
+  ImagePick _imagepick = Get.put(ImagePick());
   final TextEditingController _verseController = TextEditingController();
 
   @override
@@ -30,7 +30,7 @@ class PostOnFeed extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      _imagepick.imagePath.close();
+                      _imagepick = ImagePick();
                       Get.back();
                     },
                     child: Container(
