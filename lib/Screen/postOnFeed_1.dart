@@ -40,14 +40,14 @@ class PostOnFeed_1 extends StatelessWidget {
                   button(
                       Width: 72,
                       Height: 45,
-                      onTap: () {
+                      onTap: () async {
                         if (_controller.text.isNotEmpty) {
                           SocialClient scl_cl = SocialClient();
-                          scl_cl.upload_post(
+                          await scl_cl.upload_post(
                               imagePick.imagePath.toString(), _controller.text);
                         } else {
                           SocialClient scl_cl = SocialClient();
-                          scl_cl.upload_post(
+                          await scl_cl.upload_post(
                               imagePick.imagePath.toString(), "");
                         }
                         SuccessToast("post uploaded");
