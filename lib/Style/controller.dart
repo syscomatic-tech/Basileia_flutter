@@ -95,6 +95,9 @@ class ImagePick extends GetxController {
       print('No image selected');
     }
   }
+  void clearImagePath() {
+    imagePath = ''.obs;
+  }
 }
 
 class PostLikeController extends GetxController {
