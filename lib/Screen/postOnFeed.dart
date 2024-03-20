@@ -4,6 +4,7 @@ import 'package:basileia/Screen/postOnFeed_1.dart';
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
+import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +28,20 @@ class PostOnFeed extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  arrowButton(),
+                  InkWell(
+                    onTap: () {
+                      _imagepick.imagePath.close();
+                      Get.back();
+                    },
+                    child: Container(
+                      height: 45,
+                      width: 45,
+                      decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Image.asset(arrow_ic),
+                    ),
+                  ),
                   const Text(
                     'New Post',
                     style: TextStyle(
