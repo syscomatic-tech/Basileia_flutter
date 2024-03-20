@@ -488,6 +488,8 @@ Future<bool> uploadForumPost(post, category) async {
     SuccessToast(outp["message"]);
     return true;
   } else {
+    var outp = jsonDecode(await response.stream.bytesToString());
+    ErrorToast(outp["message"]);
     print(response.reasonPhrase);
     return false;
   }
