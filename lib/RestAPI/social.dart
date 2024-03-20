@@ -41,7 +41,7 @@ class Question {
   var type = ""; //it can be BL=Bible, GEN=general, QS=questions
   var id = "";
   var content = "";
-  List<dynamic> Upvotes = [];
+  List<dynamic> upvotes = [];
   var userID = "";
   var usrName = "";
   List<Comment> comments = [];
