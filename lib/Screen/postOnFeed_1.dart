@@ -110,13 +110,15 @@ class PostOnFeed_1 extends StatelessWidget {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  const SizedBox(
+                                  SizedBox(
                                     width: 280,
                                     height: 46,
                                     child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
                                       child: Text(
-                                        'Photo1202460',
+                                        imagePick.imagePath
+                                            .toString()
+                                            .split("/")[-1],
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: textFi,
