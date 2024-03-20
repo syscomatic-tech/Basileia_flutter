@@ -48,11 +48,12 @@ class PostOnFeed extends StatelessWidget {
                           await scl_cl
                               .upload_verse(_verseController.text.toString());
                           SuccessToast('upload successful');
+                          Get.to(() => HomeFeedScreen());
                         } else {
                           ErrorToast("No Post selected");
                         }
                         //
-                        // Get.to(() => HomeFeedScreen());
+                        //
                       },
                       text: 'Next')
                 ],
