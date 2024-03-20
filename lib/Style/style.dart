@@ -750,6 +750,7 @@ Widget postPhoto_1() {
                           width: 60,
                           height: 46,
                           decoration: BoxDecoration(
+                            image: _imagepick.imagePath,
                               color: ContainerBG,
                               borderRadius: BorderRadius.circular(5)),
                         ),

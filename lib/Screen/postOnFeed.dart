@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../RestAPI/RestClient.dart';
 import '../Style/controller.dart';
 
 class PostOnFeed extends StatelessWidget {
@@ -37,23 +36,24 @@ class PostOnFeed extends StatelessWidget {
                   button(
                       Width: 72,
                       Height: 45,
-                      onTap: () async {
-                        SocialClient scl_cl = SocialClient();
-                        if (_imagepick.imagePath.toString().isNotEmpty) {
-                          await scl_cl
-                              .upload_post(_imagepick.imagePath.toString());
-                          SuccessToast('upload successful');
-                        } else if (_verseController.text
-                            .toString()
-                            .isNotEmpty) {
-                          await scl_cl
-                              .upload_verse(_verseController.text.toString());
-                          SuccessToast('upload successful');
-                        } else {
-                          ErrorToast("No Post selected");
-                        }
-
-                        Get.to(() => HomeFeedScreen());
+                      onTap: () {
+                        Get.to( ()=> PostOnFeed_1());
+                        // SocialClient scl_cl = SocialClient();
+                        // if (_imagepick.imagePath.toString().isNotEmpty) {
+                        //   await scl_cl
+                        //       .upload_post(_imagepick.imagePath.toString());
+                        //   SuccessToast('upload successful');
+                        // } else if (_verseController.text
+                        //     .toString()
+                        //     .isNotEmpty) {
+                        //   await scl_cl
+                        //       .upload_verse(_verseController.text.toString());
+                        //   SuccessToast('upload successful');
+                        // } else {
+                        //   ErrorToast("No Post selected");
+                        // }
+                        //
+                        // Get.to(() => HomeFeedScreen());
                       },
                       text: 'Next')
                 ],
