@@ -414,3 +414,81 @@ class SocialClient {
     }
   }
 }
+
+Future<List<Question>> getForumPosts() async {
+  var headers = {
+    'Authorization': 'Bearer $jwt_token',
+  };
+  var request = http.Request('GET',
+      Uri.parse('https://api.zahedhasan.com/api/v1/question/latestQuestion'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode < 300) {
+    List<Question> Forums = [];
+    var ForumPosts = jsonDecode(await response.stream.bytesToString());
+    for (var forum in ForumPosts["latestQuestions"]) {
+      List<Comment> cmments = [];
+      for (var cmnt in forum["comments"]) {
+        SocialClient socialClient = SocialClient();
+        var userinf = (await socialClient.getUserInfo(cmnt["userId"]))["user"];
+        if (userinf == null) {
+          userinf["firstName"] = "Deleted";
+          userinf["lastName"] = "User";
+        }
+        cmments.add(Comment(
+            userId: cmnt["userId"],
+            id: cmnt["_id"],
+            content: cmnt["comment"],
+            usrname: userinf["firstName"] + " " + userinf["lastName"]));
+      }
+      if (forum["userId"] == null) {
+        forum["userId"] = {
+          "_id": "0",
+          "firstName": "Deleted",
+          "lastName": "User"
+        };
+      }
+      Forums.add(Question(
+          type: forum["categories"],
+          id: forum["_id"],
+          content: forum["question"],
+          upvotes: forum["upvotes"],
+          userID: forum["userId"]["_id"],
+          usrName:
+              forum["userId"]["firstName"] + " " + forum["userId"]["lastName"],
+          comments: cmments));
+    }
+    return Forums;
+  } else {
+    print(response.reasonPhrase);
+    var outp = jsonDecode(await response.stream.bytesToString());
+    ErrorToast(outp["message"]);
+    return [];
+  }
+}
+
+Future<bool> uploadForumPost(post, category) async {
+  var headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $jwt_token',
+  };
+  var request = http.Request('POST',
+      Uri.parse('https://api.zahedhasan.com/api/v1/question/questionAdd'));
+  request.body =
+      json.encode({"userId": userId, "question": post, "categories": category});
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    var outp = jsonDecode(await response.stream.bytesToString());
+    SuccessToast(outp["message"]);
+    return true;
+  } else {
+    print(response.reasonPhrase);
+    return false;
+  }
+}

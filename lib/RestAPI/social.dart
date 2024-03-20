@@ -36,3 +36,22 @@ class Post {
       required this.post_type,
       required this.caption});
 }
+
+class Question {
+  var type = ""; //it can be BL=Bible, GEN=general, QS=questions
+  var id = "";
+  var content = "";
+  var upvotes = [''];
+  var userID = "";
+  var usrName = "";
+  List<Comment> comments = [];
+  Question({
+    required this.type,
+    required this.id,
+    required this.content,
+    required this.upvotes,
+    required this.userID,
+    required this.usrName,
+    required this.comments,
+  });
+}
