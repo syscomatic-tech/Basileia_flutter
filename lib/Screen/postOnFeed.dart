@@ -1,6 +1,11 @@
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Screen/postOnFeed_1.dart';
-
+import 'package:basileia/Style/images.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import "dart:io";
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
@@ -141,22 +146,104 @@ class PostOnFeed extends StatelessWidget {
               child: TabBarView(
                 controller: controller.tabController,
                 children: [
-                  PostPhoto(
-                    textController: _verseController,
-                    context: context,
-                    onTap: () async {
-                      await _imagepick.pickImage();
-                      SuccessToast(
-                          "File chosen " + _imagepick.imagePath.toString());
-                    },
-                    onPasteButtonTap: () async {
-                      ClipboardData? clipboardData =
-                          await Clipboard.getData(Clipboard.kTextPlain);
-                      if (clipboardData != null) {
-                        // Assuming you have a TextEditingController for your TextField
-                        _verseController.text = clipboardData.text!;
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Obx(() => SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.92,
+                              height: 211,
+                              child: _imagepick.imagePath.isEmpty
+                                  ? DottedBorder(
+                                      radius: const Radius.circular(15),
+                                      dashPattern: const [10, 10],
+                                      strokeWidth: 2,
+                                      borderType: BorderType.RRect,
+                                      color: bordar,
+                                      child: Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            button(
+                                                Height: 45,
+                                                Width: 151,
+                                                onTap: () async {
+                                                  await _imagepick.pickImage();
+                                                  SuccessToast("File chosen " +
+                                                      _imagepick.imagePath
+                                                          .toString());
+                                                },
+                                                text: 'Select Files'),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            const Text(
+                                              'Add Photos & Videos or Files',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: bordar),
+                                            )
+                                          ],
+                                        ),
+                                      ))
+                                  : SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.92,
+                                      height: 211,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: FileImage(File(_imagepick
+                                                    .imagePath
+                                                    .toString())))),
+                                      ),
+                                    ),
+                            )),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Text(
+                          'Or',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: bordar),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            textField(
+                                controller: _verseController,
+                                width: 290,
+                                hight: 48,
+                                lebelText: 'Paste Verse or Select Verse',
+                                textfieldBg: TabBG),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            button(
+                                Height: 45,
+                                Width: 70,
+                                onTap: () async {
+                                  ClipboardData? clipboardData =
+                                      await Clipboard.getData(
+                                          Clipboard.kTextPlain);
+                                  if (clipboardData != null) {
+                                    // Assuming you have a TextEditingController for your TextField
+                                    _verseController.text = clipboardData.text!;
+                                  }
+                                },
+                                text: "Paste")
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   PostPhoto(context: context),
                   audioPost()
