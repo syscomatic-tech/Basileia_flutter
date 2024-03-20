@@ -45,7 +45,7 @@ class QuestionDetailScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                question(),
+                question(username: '',content: '',contentType: '',),
                 const SizedBox(
                   height: 25,
                 ),
@@ -73,7 +73,7 @@ class QuestionDetailScreen extends StatelessWidget {
                       itemCount: 5,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
-                        return answer();
+                        return answer(username: '',content: '',vote: '',);
                       },
                     ),
                   ),

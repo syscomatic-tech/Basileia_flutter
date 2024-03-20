@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:basileia/Screen/commentScreen.dart';
 import 'package:basileia/RestAPI/social.dart';
+import 'package:basileia/Screen/forumsScreen.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Style/likeiconwidget.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -1351,6 +1352,8 @@ Widget menuItem({
                       var inboxscr = InboxScreen();
                       await inboxscr.GetUsers();
                       Get.to(() => inboxscr);
+                    }if(title=='Forums'){
+                      await Get.to(()=> const ForumsScreen());
                     }
                   })
                 ],
@@ -2313,174 +2316,187 @@ Widget seeAllButton({onTap}) {
       ));
 }
 
-Widget question() {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 15),
-    child: Container(
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(26)),
-      child: Padding(
-        padding:
-            const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                          color: primaryTxt,
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'History',
-                          style: TextStyle(
-                              fontSize: 8,
-                              color: primary,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          'Kaiya Curtis',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                const Text(
-                  '21 mins ago',
-                  style: TextStyle(
-                      fontSize: 8, fontWeight: FontWeight.w400, color: primary),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const ReadMoreText(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus felis sit amet nisi posuere tristique. Pellentesque vel tristique erat. Curabitur posuere porttitor lectus, in vehicula urna feugiat eget aa',
-              trimLength: 210,
-              style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500),
-              moreStyle: TextStyle(
-                  color: Colors.red,
-                  decoration: TextDecoration.underline,
-                  decorationColor: Colors.red,
-                  fontStyle: FontStyle.italic),
-              lessStyle: TextStyle(
-                  color: bordar,
-                  decoration: TextDecoration.underline,
-                  decorationColor: bordar),
-            )
-          ],
+class question extends StatelessWidget {
+
+  final String username;
+  final String content;
+  final String contentType;
+
+  const question({super.key,required this.username,required this.content, required this.contentType});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: Container(
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(26)),
+        child: Padding(
+          padding:
+          const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                            color: primaryTxt,
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            contentType,
+                            style: const TextStyle(
+                                fontSize: 8,
+                                color: primary,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Text(
+                            username,
+                            style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  const Text(
+                    '21 mins ago',
+                    style: TextStyle(
+                        fontSize: 8, fontWeight: FontWeight.w400, color: primary),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ReadMoreText(content,
+                trimLength: 210,
+                style: const TextStyle(
+                    fontSize: 10,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500),
+                moreStyle: const TextStyle(
+                    color: Colors.red,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Colors.red,
+                    fontStyle: FontStyle.italic),
+                lessStyle: const TextStyle(
+                    color: bordar,
+                    decoration: TextDecoration.underline,
+                    decorationColor: bordar),
+              )
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
-
-Widget answer() {
-  return Padding(
-    padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                      color: primaryTxt,
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '70+ votes',
-                      style: TextStyle(
-                          fontSize: 8, color: red, fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      'Kaiya Curtis',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
-                    )
-                  ],
-                )
-              ],
-            ),
-            const Text(
-              '21 mins ago',
-              style: TextStyle(
-                  fontSize: 8, fontWeight: FontWeight.w400, color: primary),
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        const Text(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rhoncus felis sit amet nisi posuere tristique. Pellentesque vel tristique erat. Curabitur posuere porttitor lectus, in vehicula urna feugiat eget aa',
-          style: TextStyle(
-              fontSize: 10, color: Colors.black, fontWeight: FontWeight.w500),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            InkWell(
-                onTap: () {},
-                child: Image.asset(
-                  like,
-                  height: 10,
-                )),
-            const SizedBox(
-              width: 5,
-            ),
-            InkWell(
-                onTap: () {},
-                child: const Text(
-                  'Reply',
-                  style: TextStyle(
-                      fontSize: 8, decoration: TextDecoration.underline),
-                ))
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        const Divider(
-          color: bordar,
-        )
-      ],
-    ),
-  );
+class answer extends StatelessWidget {
+  final String username;
+  final String content;
+  final String vote;
+   const answer({super.key,required this.username,required this.content,required this.vote});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                        color: primaryTxt,
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '{$vote} votes',
+                        style: const TextStyle(
+                            fontSize: 8, color: red, fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        username,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              const Text(
+                '21 mins ago',
+                style: TextStyle(
+                    fontSize: 8, fontWeight: FontWeight.w400, color: primary),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            content,
+            style: const TextStyle(
+                fontSize: 10, color: Colors.black, fontWeight: FontWeight.w500),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                  onTap: () {},
+                  child: Image.asset(
+                    like,
+                    height: 10,
+                  )),
+              const SizedBox(
+                width: 5,
+              ),
+              InkWell(
+                  onTap: () {},
+                  child: const Text(
+                    'Reply',
+                    style: TextStyle(
+                        fontSize: 8, decoration: TextDecoration.underline),
+                  ))
+            ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          const Divider(
+            color: bordar,
+          )
+        ],
+      ),
+    );
+  }
 }
-
 Widget avatar({double? height, double? width}) {
   return Container(
     height: height,

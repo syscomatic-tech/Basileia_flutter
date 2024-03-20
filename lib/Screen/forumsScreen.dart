@@ -1,3 +1,4 @@
+
 import 'package:basileia/Screen/questionDetailsScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/images.dart';
@@ -112,7 +113,7 @@ class ForumsScreen extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
-                    return question();
+                    return question(username: '',contentType: '',content: '',);
                   },
                 )
               ],

@@ -56,14 +56,14 @@ class MenuScreen extends StatelessWidget {
                             children: [
                               Text(
                                 userFullname,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: poppins_semibold,
                                     fontSize: 16),
                               ),
                               Text(
                                 userEmail,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: primaryTxt,
                                     fontFamily: poppins_regular,
                                     fontSize: 12),

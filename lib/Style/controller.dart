@@ -126,7 +126,7 @@ class PostCommentController extends GetxController {
     caption: '',
   ));
   PostCommentController(Post initialPost) {
-    post.value = initialPost; // Set the initial post
+    post.value = initialPost;
   }
 
   void AddComment(comnt) {
