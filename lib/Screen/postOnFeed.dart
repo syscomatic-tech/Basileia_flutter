@@ -30,7 +30,7 @@ class PostOnFeed extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.find<ImagePick>().clearImagePath();
+                      _imagepick.clearImagePath();
                       Get.back();
                     },
                     child: Container(
