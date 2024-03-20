@@ -118,7 +118,8 @@ class PostOnFeed_1 extends StatelessWidget {
                                       child: Text(
                                         imagePick.imagePath
                                             .toString()
-                                            .split("/")[-1],
+                                            .split("/")
+                                            .last,
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: textFi,
