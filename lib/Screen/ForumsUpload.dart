@@ -102,10 +102,10 @@ class ForumsUpload extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Post In :',
                           style: TextStyle(
                               fontFamily: poppins_regular,
@@ -113,22 +113,13 @@ class ForumsUpload extends StatelessWidget {
                               fontSize: 18,
                               fontWeight: FontWeight.w500),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           width: 20,
                         ),
-                        textField(
-                            width: 256,
-                            hight: 48,
-                            lebelText: 'General',
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: InkWell(
-                                  onTap: () {},
-                                  child: Image.asset(Downarrow_ic)),
-                            ),
-                            textfieldBg: TabBG),
+
                       ],
-                    )
+                    ),
+                    dropdownItem()
                   ],
                 ),
               ),

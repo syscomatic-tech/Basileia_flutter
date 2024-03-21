@@ -5,6 +5,7 @@ import 'package:basileia/Screen/commentScreen.dart';
 import 'package:basileia/RestAPI/social.dart';
 import 'package:basileia/Screen/forumsScreen.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
+import 'package:basileia/Screen/questionDetailsScreen.dart';
 import 'package:basileia/Style/likeiconwidget.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -2325,75 +2326,78 @@ class question extends StatelessWidget {
   const question({super.key,required this.username,required this.content, required this.contentType});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: Container(
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(26)),
-        child: Padding(
-          padding:
-          const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                            color: primaryTxt,
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            contentType,
-                            style: const TextStyle(
-                                fontSize: 8,
-                                color: primary,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            username,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ReadMoreText(content,
-                trimLength: 210,
-                style: const TextStyle(
-                    fontSize: 10,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500),
-                moreStyle: const TextStyle(
-                    color: Colors.red,
-                    decoration: TextDecoration.underline,
-                    decorationColor: Colors.red,
-                    fontStyle: FontStyle.italic),
-                lessStyle: const TextStyle(
-                    color: bordar,
-                    decoration: TextDecoration.underline,
-                    decorationColor: bordar),
-              )
-            ],
+    return InkWell(
+      onTap: (){Get.to(()=> const QuestionDetailScreen());},
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 15),
+        child: Container(
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(26)),
+          child: Padding(
+            padding:
+            const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                              color: primaryTxt,
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              contentType,
+                              style: const TextStyle(
+                                  fontSize: 8,
+                                  color: primary,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              username,
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ReadMoreText(content,
+                  trimLength: 210,
+                  style: const TextStyle(
+                      fontSize: 10,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500),
+                  moreStyle: const TextStyle(
+                      color: Colors.red,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.red,
+                      fontStyle: FontStyle.italic),
+                  lessStyle: const TextStyle(
+                      color: bordar,
+                      decoration: TextDecoration.underline,
+                      decorationColor: bordar),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -3264,4 +3268,33 @@ Widget commentTextFiled({Context, controller, onTap}) {
       ),
     ),
   );
+}
+class dropdownItem extends StatelessWidget{
+  final DropdownController controller = Get.put(DropdownController());
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => SizedBox(
+      child: DropdownButton<String>(
+        value: controller.selectedItem.value,
+        onChanged: (newValue) {
+          controller.setSelectedItem(newValue!);
+        },
+        items: [
+          DropdownMenuItem<String>(
+            value: 'Option 1',
+            child: Text('Option 1'),
+          ),
+          DropdownMenuItem<String>(
+            value: 'Option 2',
+            child: Text('Option 2'),
+          ),
+          DropdownMenuItem<String>(
+            value: 'Option 3',
+            child: Text('Option 3'),
+          ),
+        ],
+      ),
+    ));
+  }
+
 }
