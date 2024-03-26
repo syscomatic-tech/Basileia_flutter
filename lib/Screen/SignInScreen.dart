@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/SignUpScreen.dart';
@@ -75,6 +74,7 @@ class SignInScreen extends StatelessWidget {
         ),
         Obx(
           () => textField(
+            obscureText: controller.isObscured.value,
               width: 272,
               hight: 48,
               lebelText: 'Password',

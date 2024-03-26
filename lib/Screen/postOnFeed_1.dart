@@ -41,6 +41,7 @@ class PostOnFeed_1 extends StatelessWidget {
                       Width: 72,
                       Height: 45,
                       onTap: () async {
+                        SuccessToast('PLease wait');
                         if (_controller.text.isNotEmpty) {
                           SocialClient scl_cl = SocialClient();
                           await scl_cl.upload_post(

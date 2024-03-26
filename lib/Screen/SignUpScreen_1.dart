@@ -97,6 +97,7 @@ class SignUpScreen_1 extends StatelessWidget {
             ),
             Obx(
               () => textField(
+                  obscureText: controller.isObscured.value,
                   width: 272,
                   hight: 48,
                   lebelText: "Password",
@@ -127,6 +128,11 @@ class SignUpScreen_1 extends StatelessWidget {
                       password.text.toString());
                   if (req_outp == true) {
                     Get.to(() => SignUpOtpScreen(email: email.text.toString()));
+                  }
+                  if (checkboxController.isChecked.value !=
+                      checkboxController.isChecked.value) {
+                    ErrorToast(
+                        'your not agree with our Privacy Policy and Terms of Service.');
                   } else {
                     ErrorToast("Error occured Check the logs");
                   }

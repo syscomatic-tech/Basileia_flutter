@@ -11,12 +11,12 @@ import '../Style/style.dart';
 import '../Style/images.dart';
 
 class CommentScreen extends StatelessWidget {
+  final FocusNode _focusNode = FocusNode();
   final TextEditingController commentController = TextEditingController();
   Post post;
   CommentScreen({super.key, required this.post});
   var scl = SocialClient();
   late PostCommentController cmnt = PostCommentController(post);
-
   @override
   Widget build(BuildContext context) {
     var cumments = [""];
@@ -95,6 +95,7 @@ class CommentScreen extends StatelessWidget {
                 ),
               ),
               commentTextFiled(
+                focusNode: _focusNode,
                 Context: context,
                 onTap: () async {
                   if (commentController.text.isNotEmpty) {
@@ -113,6 +114,8 @@ class CommentScreen extends StatelessWidget {
                   } else {
                     ErrorToast("Please enter a comment");
                   }
+                  commentController.clear();
+                  _focusNode.unfocus();
                 },
                 controller: commentController,
               )

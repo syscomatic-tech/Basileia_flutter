@@ -77,7 +77,7 @@ Widget textField(
     String? lebelText,
     suffixIcon,
     Color? textfieldBg,
-    controller}) {
+    controller,bool?obscureText}) {
   return Container(
     width: width,
     height: hight,
@@ -90,6 +90,7 @@ Widget textField(
     child: Padding(
       padding: const EdgeInsets.only(bottom: 3, left: 10),
       child: TextField(
+        obscureText: obscureText ?? false,
         style: const TextStyle(
             fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
         controller: controller,
@@ -3242,7 +3243,7 @@ class ChatBubble extends StatelessWidget {
   }
 }
 
-Widget commentTextFiled({Context, controller, onTap}) {
+Widget commentTextFiled({Context, controller, onTap,focusNode}) {
   return Container(
     height: 110,
     decoration: const BoxDecoration(color: Colors.white),
@@ -3257,6 +3258,7 @@ Widget commentTextFiled({Context, controller, onTap}) {
         child: Padding(
           padding: const EdgeInsets.only(left: 15, right: 10),
           child: TextField(
+            focusNode: focusNode,
             controller: controller,
             decoration: InputDecoration(
                 border: InputBorder.none,
