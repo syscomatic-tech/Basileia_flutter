@@ -17,7 +17,7 @@ class PostOnFeed_1 extends StatelessWidget {
   final TabsController controller_1 = Get.put(TabsController());
   final ImagePick imagePick = Get.put(ImagePick());
   final _controller = TextEditingController();
-
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,18 +41,28 @@ class PostOnFeed_1 extends StatelessWidget {
                       Width: 72,
                       Height: 45,
                       onTap: () async {
-                        SuccessToast('PLease wait');
-                        if (_controller.text.isNotEmpty) {
-                          SocialClient scl_cl = SocialClient();
-                          await scl_cl.upload_post(
-                              imagePick.imagePath.toString(), _controller.text);
+                        SocialClient scl_cl = SocialClient();
+
+                        if (count < 1) {
+                          SuccessToast("uploading post please wait");
+                          if (_controller.text.isNotEmpty) {
+                            await scl_cl.upload_post(
+                                imagePick.imagePath.toString(),
+                                _controller.text);
+                          } else {
+                            await scl_cl.upload_post(
+                                imagePick.imagePath.toString(), "");
+                          }
+                          SuccessToast("post uploaded");
+
+                          Get.to(() => HomeFeedScreen());
+                        } else if (count > 5) {
+                          SuccessToast("be patient please");
                         } else {
-                          SocialClient scl_cl = SocialClient();
-                          await scl_cl.upload_post(
-                              imagePick.imagePath.toString(), "");
+                          SuccessToast(
+                              "Post is being uploaded. Sit tight and wait please.");
                         }
-                        SuccessToast("post uploaded");
-                        Get.to(() => HomeFeedScreen());
+                        count += 1;
                       },
                       text: 'Post'),
                 ],
