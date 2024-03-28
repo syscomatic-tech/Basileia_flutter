@@ -2,7 +2,7 @@ import 'dart:async';
 import "dart:convert";
 import 'dart:io';
 import 'package:basileia/Style/style.dart';
-import 'package:basileia/RestAPI/social.dart';
+import 'package:basileia/RestAPI/model.dart';
 import 'package:http/http.dart' as http;
 
 var jwt_token = "";
@@ -490,6 +490,7 @@ Future<bool> uploadForumPost(post, category) async {
     return false;
   }
 }
+
 Future<bool> totalFollowers(String id) async {
   var headers = {
     'Content-Type': 'application/json',

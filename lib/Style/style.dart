@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:basileia/Screen/commentScreen.dart';
-import 'package:basileia/RestAPI/social.dart';
+import 'package:basileia/RestAPI/model.dart';
 import 'package:basileia/Screen/forumsScreen.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Screen/profileScreen.dart';
@@ -341,7 +341,10 @@ Widget Feeds(
               children: [
                 Text(capt),
                 postType == 0
-                    ? Text(content.toString(),textAlign: TextAlign.left,)
+                    ? Text(
+                        content.toString(),
+                        textAlign: TextAlign.left,
+                      )
                     : Image.network(content),
               ],
             )),
@@ -1539,14 +1542,14 @@ class profilePosts extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              if(content == null)
-              Container(
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                    color: ContainerBG,
-                    borderRadius: BorderRadius.circular(10)),
-                child: Image.network(content),
-              ),
+              if (content == null)
+                Container(
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                      color: ContainerBG,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Image.network(content),
+                ),
               const SizedBox(
                 height: 10,
               ),
@@ -1563,7 +1566,7 @@ class profilePosts extends StatelessWidget {
                       const SizedBox(
                         width: 7,
                       ),
-                       Text(
+                      Text(
                         share,
                         style: const TextStyle(
                             fontSize: 12,

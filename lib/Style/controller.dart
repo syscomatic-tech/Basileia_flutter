@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:basileia/RestAPI/social.dart';
+import 'package:basileia/RestAPI/model.dart';
 
 class MyTabsController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -98,6 +98,7 @@ class ImagePick extends GetxController {
       print('No image selected');
     }
   }
+
   void clearImagePath() {
     imagePath = ''.obs;
   }
@@ -136,7 +137,8 @@ class PostCommentController extends GetxController {
     post.value.comments.add(comnt);
   }
 }
-class DropdownController extends GetxController{
+
+class DropdownController extends GetxController {
   var selectedItem = 'Option 1'.obs;
   void setSelectedItem(String value) {
     selectedItem.value = value;
