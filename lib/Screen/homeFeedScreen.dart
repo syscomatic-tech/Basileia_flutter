@@ -180,6 +180,7 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                       InkWell(
                         onTap: (){},
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                              const Text(
                               'Load more feeds',
@@ -189,6 +190,7 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                                 fontSize: 12,
                               ),
                             ),
+                        const SizedBox(width: 5,),
                         Image.asset(Button_Next)
                         ],
                         ),
