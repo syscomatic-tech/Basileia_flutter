@@ -4,7 +4,7 @@ import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:basileia/RestAPI/RestClient.dart';
-import 'package:basileia/RestAPI/social.dart';
+import 'package:basileia/RestAPI/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
