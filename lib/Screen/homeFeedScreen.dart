@@ -179,15 +179,21 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                           }),
                       InkWell(
                         onTap: (){},
-                        child: Text(
-                          'Load more feeds',
-                          style: TextStyle(
-                            color: fontColor_2,
-                            fontFamily: poppins_regular,
-                            fontSize: 12,
-                          ),
+                        child: Row(
+                          children: [
+                             const Text(
+                              'Load more feeds',
+                              style: TextStyle(
+                                color: fonts,
+                                fontFamily: poppins_regular,
+                                fontSize: 12,
+                              ),
+                            ),
+                        Image.asset(Button_Next)
+                        ],
                         ),
-                      )
+                      ),
+                      const SizedBox(height: 10,),
                     ],
                   ),
                 ),
