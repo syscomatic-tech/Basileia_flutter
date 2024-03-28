@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:basileia/Screen/commentScreen.dart';
-import 'package:basileia/RestAPI/model.dart';
+import 'package:basileia/RestAPI/social.dart';
 import 'package:basileia/Screen/forumsScreen.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Screen/questionDetailsScreen.dart';
@@ -77,8 +77,7 @@ Widget textField(
     String? lebelText,
     suffixIcon,
     Color? textfieldBg,
-    controller,
-    bool? obscureText}) {
+    controller,bool?obscureText}) {
   return Container(
     width: width,
     height: hight,
@@ -1355,9 +1354,8 @@ Widget menuItem({
                       var inboxscr = InboxScreen();
                       await inboxscr.GetUsers();
                       Get.to(() => inboxscr);
-                    }
-                    if (title == 'Forums') {
-                      await Get.to(() => const ForumsScreen());
+                    }if(title=='Forums'){
+                      await Get.to(()=> const ForumsScreen());
                     }
                   })
                 ],
@@ -2321,21 +2319,16 @@ Widget seeAllButton({onTap}) {
 }
 
 class question extends StatelessWidget {
+
   final String username;
   final String content;
   final String contentType;
 
-  const question(
-      {super.key,
-      required this.username,
-      required this.content,
-      required this.contentType});
+  const question({super.key,required this.username,required this.content, required this.contentType});
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Get.to(() => const QuestionDetailScreen());
-      },
+      onTap: (){Get.to(()=> const QuestionDetailScreen());},
       child: Padding(
         padding: const EdgeInsets.only(bottom: 15),
         child: Container(
@@ -2344,7 +2337,7 @@ class question extends StatelessWidget {
               color: Colors.white, borderRadius: BorderRadius.circular(26)),
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
+            const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
             child: Column(
               children: [
                 Row(
@@ -2388,8 +2381,7 @@ class question extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                ReadMoreText(
-                  content,
+                ReadMoreText(content,
                   trimLength: 210,
                   style: const TextStyle(
                       fontSize: 10,
@@ -2413,16 +2405,11 @@ class question extends StatelessWidget {
     );
   }
 }
-
 class answer extends StatelessWidget {
   final String username;
   final String content;
   final String vote;
-  const answer(
-      {super.key,
-      required this.username,
-      required this.content,
-      required this.vote});
+   const answer({super.key,required this.username,required this.content,required this.vote});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -2450,9 +2437,7 @@ class answer extends StatelessWidget {
                       Text(
                         '{$vote} votes',
                         style: const TextStyle(
-                            fontSize: 8,
-                            color: red,
-                            fontWeight: FontWeight.w500),
+                            fontSize: 8, color: red, fontWeight: FontWeight.w500),
                       ),
                       Text(
                         username,
@@ -2507,7 +2492,6 @@ class answer extends StatelessWidget {
     );
   }
 }
-
 Widget avatar({double? height, double? width}) {
   return Container(
     height: height,
@@ -3259,7 +3243,7 @@ class ChatBubble extends StatelessWidget {
   }
 }
 
-Widget commentTextFiled({Context, controller, onTap, focusNode}) {
+Widget commentTextFiled({Context, controller, onTap,focusNode}) {
   return Container(
     height: 110,
     decoration: const BoxDecoration(color: Colors.white),
@@ -3287,32 +3271,32 @@ Widget commentTextFiled({Context, controller, onTap, focusNode}) {
     ),
   );
 }
-
-class dropdownItem extends StatelessWidget {
+class dropdownItem extends StatelessWidget{
   final DropdownController controller = Get.put(DropdownController());
   @override
   Widget build(BuildContext context) {
     return Obx(() => SizedBox(
-          child: DropdownButton<String>(
-            value: controller.selectedItem.value,
-            onChanged: (newValue) {
-              controller.setSelectedItem(newValue!);
-            },
-            items: [
-              DropdownMenuItem<String>(
-                value: 'Option 1',
-                child: Text('Option 1'),
-              ),
-              DropdownMenuItem<String>(
-                value: 'Option 2',
-                child: Text('Option 2'),
-              ),
-              DropdownMenuItem<String>(
-                value: 'Option 3',
-                child: Text('Option 3'),
-              ),
-            ],
+      child: DropdownButton<String>(
+        value: controller.selectedItem.value,
+        onChanged: (newValue) {
+          controller.setSelectedItem(newValue!);
+        },
+        items: [
+          DropdownMenuItem<String>(
+            value: 'Option 1',
+            child: Text('Option 1'),
           ),
-        ));
+          DropdownMenuItem<String>(
+            value: 'Option 2',
+            child: Text('Option 2'),
+          ),
+          DropdownMenuItem<String>(
+            value: 'Option 3',
+            child: Text('Option 3'),
+          ),
+        ],
+      ),
+    ));
   }
+
 }

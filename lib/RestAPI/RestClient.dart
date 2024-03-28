@@ -3,7 +3,7 @@ import "dart:convert";
 import 'dart:io';
 import 'dart:math';
 import 'package:basileia/Style/style.dart';
-import 'package:basileia/RestAPI/model.dart';
+import 'package:basileia/RestAPI/social.dart';
 import 'package:http/http.dart' as http;
 
 var jwt_token = "";

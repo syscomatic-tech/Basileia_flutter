@@ -7,7 +7,7 @@ import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
-import 'package:basileia/RestAPI/model.dart';
+import 'package:basileia/RestAPI/social.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
