@@ -176,7 +176,18 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                           itemCount: feeds.length,
                           itemBuilder: (context, index) {
                             return feeds[index];
-                          })
+                          }),
+                      InkWell(
+                        onTap: (){},
+                        child: Text(
+                          'Load more feeds',
+                          style: TextStyle(
+                            color: fontColor_2,
+                            fontFamily: poppins_regular,
+                            fontSize: 12,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

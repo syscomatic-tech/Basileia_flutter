@@ -17,9 +17,9 @@ class ProfileScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 arrowButton(),
+                SizedBox(width: MediaQuery.of(context).size.width*0.30,),
                 const Text(
                   'Profile',
                   style: TextStyle(
@@ -27,22 +27,6 @@ class ProfileScreen extends StatelessWidget {
                       fontSize: 18,
                       fontFamily: poppins_semibold),
                 ),
-                Row(
-                  children: [
-                    InkWell(onTap: () {}, child: Image.asset(profileHeart_ic)),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.search,
-                        color: fonts,
-                        size: 25,
-                      ),
-                    )
-                  ],
-                )
               ],
             ),
           ),

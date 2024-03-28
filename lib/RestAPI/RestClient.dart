@@ -63,6 +63,7 @@ class AuthClient {
     } else {
       print(response.reasonPhrase);
       var outp = await response.stream.bytesToString();
+      print(outp);
       return "Error " + outp;
     }
   }
@@ -496,9 +497,8 @@ Future<bool> totalFollowers(String id) async {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer $jwt_token'
   };
-  var request = http.Request('POST',
+  var request = http.Request('GET',
       Uri.parse('https://api.zahedhasan.com/api/v1//upload/$id/followers'));
-  request.body = json.encode({"userId": userId});
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();

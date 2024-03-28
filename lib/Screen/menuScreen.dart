@@ -31,6 +31,7 @@ class MenuScreen extends StatelessWidget {
   var postID = "";
   @override
   Widget build(BuildContext context) {
+    totalFollowers(userId);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
