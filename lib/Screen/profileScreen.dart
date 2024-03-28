@@ -1,3 +1,4 @@
+import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:flutter/material.dart';
@@ -6,15 +7,10 @@ import '../Style/fonts.dart';
 import '../Style/style.dart';
 
 class ProfileScreen extends StatelessWidget {
-   ProfileScreen({super.key});
-  final comments = [
-    profilePosts(),
-    profilePosts(),
-    profilePosts(),
-    profilePosts(),
-  ];
+  ProfileScreen({super.key});
+  String bio = '';
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
@@ -96,55 +92,77 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    const Text(
-                      'Prince Armand',
-                      style:
-                          TextStyle(fontSize: 16, fontFamily: poppins_semibold),
+                    Text(
+                      userFullname,
+                      style: const TextStyle(
+                          fontSize: 16, fontFamily: poppins_semibold),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 65, right: 65),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 65, right: 65),
                       child: Text(
-                        'Lorem ipsum dolor sit amet, consec',
-                        style: TextStyle(
+                        bio,
+                        style: const TextStyle(
                             fontSize: 12,
                             fontFamily: poppins_regular,
                             color: primaryTxt),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 65, right: 65),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 65, right: 65),
                       child: Text(
-                        'adipiscing elit, sed do eiusmod',
-                        style: TextStyle(
+                        bio,
+                        style: const TextStyle(
                             fontSize: 12,
                             fontFamily: poppins_regular,
                             color: primaryTxt),
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         profileButton(
                             onTap: () {}, text: 'Location', ic: location_ic),
-                        const SizedBox(width: 15,),
+                        const SizedBox(
+                          width: 15,
+                        ),
                         profileMassageButton(),
-                        const SizedBox(width: 10,),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         profileButton(
-                            onTap: () {}, text: 'Church I attend', ic: institution_ic),
+                            onTap: () {},
+                            text: 'Church I attend',
+                            ic: institution_ic),
                       ],
                     ),
-                    const SizedBox(height: 20,),
-                    statistic(backGround: TabBG),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    statistic(
+                      backGround: TabBG,
+                      following: '',
+                      POST: '',
+                      followers: '',
+                    ),
                     ListView.builder(
                       shrinkWrap: true,
                       primary: false,
-                      itemCount: comments.length,
+                      itemCount: 1,
                       itemBuilder: (context, index) {
-                        return comments[index];
+                        return profilePosts(
+                          like: '',
+                          caption: '',
+                          content: '',
+                          comment: '',
+                          share: '',
+                          username: '',
+                        );
                       },
                     )
                   ],

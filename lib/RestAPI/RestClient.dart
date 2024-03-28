@@ -1,7 +1,6 @@
 import 'dart:async';
 import "dart:convert";
 import 'dart:io';
-import 'dart:math';
 import 'package:basileia/Style/style.dart';
 import 'package:basileia/RestAPI/social.dart';
 import 'package:http/http.dart' as http;
@@ -232,7 +231,6 @@ class SocialClient {
   }
 
   Future<bool> upload_verse(String text) async {
-    var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://api.zahedhasan.com/api/v1/upload/addVerse'));
     request.fields.addAll({'userId': userId, "verse": text});
@@ -287,7 +285,6 @@ class SocialClient {
       };
       for (var resp in respp["postAll"]) {
         var useid = resp["userId"];
-        var userflname = "";
         final userInf = await getUserInfo(useid);
         print(userInf["user"]);
         if (userInf["user"] != null) {
@@ -296,7 +293,6 @@ class SocialClient {
           userInfo = {"firstName": "Deleted", "lastName": "user"};
         }
 
-        userflname = userInfo["firstName"] + " " + userInfo["lastName"];
         bool hasVerse = resp.containsKey('verse');
         Post postt;
         var og_cmnt = resp["comments"];
@@ -490,6 +486,26 @@ Future<bool> uploadForumPost(post, category) async {
   } else {
     var outp = jsonDecode(await response.stream.bytesToString());
     ErrorToast(outp["message"]);
+    print(response.reasonPhrase);
+    return false;
+  }
+}
+Future<bool> totalFollowers(String id) async {
+  var headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $jwt_token'
+  };
+  var request = http.Request('POST',
+      Uri.parse('https://api.zahedhasan.com/api/v1//upload/$id/followers'));
+  request.body = json.encode({"userId": userId});
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode < 300) {
+    print(await response.stream.bytesToString());
+    return true;
+  } else {
     print(response.reasonPhrase);
     return false;
   }

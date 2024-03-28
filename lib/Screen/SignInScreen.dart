@@ -1,6 +1,7 @@
 
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/SignUpScreen.dart';
+import 'package:basileia/Screen/forgotScreen.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -94,7 +95,7 @@ class SignInScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 20, right: 160),
           child: InkWell(
-              onTap: () {},
+              onTap: () {Get.to(()=>ForgotPasswordScreen());},
               child: const Text(
                 'Forgot password?',
                 style: TextStyle(

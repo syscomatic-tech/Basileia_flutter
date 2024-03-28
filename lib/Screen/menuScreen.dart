@@ -27,6 +27,8 @@ class MenuScreen extends StatelessWidget {
     'Change your language from here',
   ];
   final menuCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var followers=[''];
+  var postID = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +83,7 @@ class MenuScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            statistic(backGround: primary_1),
+            statistic(backGround: primary_1,followers: '',following: '',POST: '',),
             ListView.builder(
               itemCount: menuTitle.length,
               itemBuilder: (context, index) {

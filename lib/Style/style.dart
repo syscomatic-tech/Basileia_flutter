@@ -5,6 +5,7 @@ import 'package:basileia/Screen/commentScreen.dart';
 import 'package:basileia/RestAPI/social.dart';
 import 'package:basileia/Screen/forumsScreen.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
+import 'package:basileia/Screen/profileScreen.dart';
 import 'package:basileia/Screen/questionDetailsScreen.dart';
 import 'package:basileia/Style/likeiconwidget.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -77,7 +78,8 @@ Widget textField(
     String? lebelText,
     suffixIcon,
     Color? textfieldBg,
-    controller,bool?obscureText}) {
+    controller,
+    bool? obscureText}) {
   return Container(
     width: width,
     height: hight,
@@ -294,7 +296,9 @@ Widget Feeds(
             Row(
               children: [
                 Profile(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => ProfileScreen());
+                    },
                     OutSidehight: 47,
                     OutSidewidth: 47,
                     InSideHight: 38,
@@ -337,7 +341,7 @@ Widget Feeds(
               children: [
                 Text(capt),
                 postType == 0
-                    ? Text(content.toString())
+                    ? Text(content.toString(),textAlign: TextAlign.left,)
                     : Image.network(content),
               ],
             )),
@@ -1171,125 +1175,139 @@ Widget listTielButton({onTap}) {
   );
 }
 
-Widget statistic({Color? backGround, String? lastTitle, String? midTitle}) {
-  return Container(
-    width: double.maxFinite,
-    height: 126,
-    color: backGround,
-    child: Padding(
-      padding: const EdgeInsets.only(left: 25, right: 25),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: 90,
-            height: 82,
-            decoration: BoxDecoration(
-                color: primary, borderRadius: BorderRadius.circular(10)),
-            child: Center(
-                child: Container(
-              height: 77.44,
-              width: 85,
+class statistic extends StatelessWidget {
+  final Color? backGround;
+  final String? followers;
+  final String? POST;
+  final String? following;
+  const statistic(
+      {super.key,
+      required this.backGround,
+      this.followers,
+      this.POST,
+      this.following});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.maxFinite,
+      height: 126,
+      color: backGround,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 25, right: 25),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: 90,
+              height: 82,
               decoration: BoxDecoration(
+                  color: primary, borderRadius: BorderRadius.circular(10)),
+              child: Center(
+                  child: Container(
+                height: 77.44,
+                width: 85,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.white)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      followers!,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: poppins_semibold,
+                        fontSize: 25,
+                      ),
+                    ),
+                    const Text(
+                      'Followers',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: poppins_regular,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+            ),
+            Container(
+              width: 90,
+              height: 82,
+              decoration: BoxDecoration(
+                  color: TabBG, borderRadius: BorderRadius.circular(10)),
+              child: Center(
+                  child: Container(
+                height: 77.44,
+                width: 85,
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.white)),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '6.3k',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: poppins_semibold,
-                      fontSize: 25,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      POST!,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontFamily: poppins_semibold,
+                        fontSize: 25,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Followers',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: poppins_regular,
-                      fontSize: 12,
+                    const Text(
+                      'Post',
+                      style: TextStyle(
+                        color: primaryTxt,
+                        fontFamily: poppins_regular,
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            )),
-          ),
-          Container(
-            width: 90,
-            height: 82,
-            decoration: BoxDecoration(
-                color: TabBG, borderRadius: BorderRadius.circular(10)),
-            child: Center(
-                child: Container(
-              height: 77.44,
-              width: 85,
+                  ],
+                ),
+              )),
+            ),
+            Container(
+              width: 90,
+              height: 82,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '572',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: poppins_semibold,
-                      fontSize: 25,
+                  color: TabBG, borderRadius: BorderRadius.circular(10)),
+              child: Center(
+                  child: Container(
+                height: 77.44,
+                width: 85,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      following!,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontFamily: poppins_semibold,
+                        fontSize: 25,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Post',
-                    style: TextStyle(
-                      color: primaryTxt,
-                      fontFamily: poppins_regular,
-                      fontSize: 12,
+                    const Text(
+                      'Following',
+                      style: TextStyle(
+                        color: primaryTxt,
+                        fontFamily: poppins_regular,
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            )),
-          ),
-          Container(
-            width: 90,
-            height: 82,
-            decoration: BoxDecoration(
-                color: TabBG, borderRadius: BorderRadius.circular(10)),
-            child: Center(
-                child: Container(
-              height: 77.44,
-              width: 85,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '2.5k',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: poppins_semibold,
-                      fontSize: 25,
-                    ),
-                  ),
-                  Text(
-                    'Following',
-                    style: TextStyle(
-                      color: primaryTxt,
-                      fontFamily: poppins_regular,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            )),
-          )
-        ],
+                  ],
+                ),
+              )),
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 Widget menuItem({
@@ -1354,8 +1372,9 @@ Widget menuItem({
                       var inboxscr = InboxScreen();
                       await inboxscr.GetUsers();
                       Get.to(() => inboxscr);
-                    }if(title=='Forums'){
-                      await Get.to(()=> const ForumsScreen());
+                    }
+                    if (title == 'Forums') {
+                      await Get.to(() => const ForumsScreen());
                     }
                   })
                 ],
@@ -1451,140 +1470,163 @@ Widget profileMassageButton() {
   );
 }
 
-Widget profilePosts() {
-  return Column(
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    profileAvatar(),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Anne Southern',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: poppins_semibold,
-                              color: Colors.black),
-                        ),
-                        Text(
-                          '03 Sept. At 04:21',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: poppins_regular,
-                              color: primaryTxt),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
-              style: TextStyle(
-                  fontFamily: poppins_regular, color: primaryTxt, fontSize: 12),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: double.maxFinite,
-              height: 271,
-              decoration: BoxDecoration(
-                  color: ContainerBG, borderRadius: BorderRadius.circular(10)),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    InkWell(
-                        onTap: () {},
-                        child: Image.asset(
-                          Share_ic_1,
-                        )),
-                    const SizedBox(
-                      width: 7,
-                    ),
-                    const Text(
-                      '36',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: poppins_regular,
-                          color: Colors.black),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(onTap: () {}, child: Image.asset(Heart_ic)),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        const Text(
-                          '36',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: poppins_regular,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    Row(
-                      children: [
-                        InkWell(onTap: () {}, child: Image.asset(Commen_ic_1)),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        const Text(
-                          '36',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: poppins_regular,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+class profilePosts extends StatelessWidget {
+  final String username;
+  final String caption;
+  final String content;
+  final String like;
+  final String comment;
+  final String share;
+  const profilePosts(
+      {super.key,
+      required this.username,
+      required this.caption,
+      required this.content,
+      required this.like,
+      required this.comment,
+      required this.share});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      profileAvatar(),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            username,
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontFamily: poppins_semibold,
+                                color: Colors.black),
+                          ),
+                          const Text(
+                            '03 Sept. At 04:21',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: poppins_regular,
+                                color: primaryTxt),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                caption,
+                style: const TextStyle(
+                    fontFamily: poppins_regular,
+                    color: primaryTxt,
+                    fontSize: 12),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              if(content == null)
+              Container(
+                width: double.maxFinite,
+                decoration: BoxDecoration(
+                    color: ContainerBG,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Image.network(content),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      InkWell(
+                          onTap: () {},
+                          child: Image.asset(
+                            Share_ic_1,
+                          )),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                       Text(
+                        share,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontFamily: poppins_regular,
+                            color: Colors.black),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(onTap: () {}, child: Image.asset(Heart_ic)),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Text(
+                            like,
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontFamily: poppins_regular,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 25,
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                              onTap: () {}, child: Image.asset(Commen_ic_1)),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Text(
+                            comment,
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontFamily: poppins_regular,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-      const Divider(
-        color: bordar,
-      ),
-      const SizedBox(
-        height: 20,
-      ),
-    ],
-  );
+        const SizedBox(
+          height: 20,
+        ),
+        const Divider(
+          color: bordar,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
 }
 
 Widget profileAvatar_1({double? height, double? width}) {
@@ -2319,16 +2361,21 @@ Widget seeAllButton({onTap}) {
 }
 
 class question extends StatelessWidget {
-
   final String username;
   final String content;
   final String contentType;
 
-  const question({super.key,required this.username,required this.content, required this.contentType});
+  const question(
+      {super.key,
+      required this.username,
+      required this.content,
+      required this.contentType});
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){Get.to(()=> const QuestionDetailScreen());},
+      onTap: () {
+        Get.to(() => const QuestionDetailScreen());
+      },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 15),
         child: Container(
@@ -2337,7 +2384,7 @@ class question extends StatelessWidget {
               color: Colors.white, borderRadius: BorderRadius.circular(26)),
           child: Padding(
             padding:
-            const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
+                const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 10),
             child: Column(
               children: [
                 Row(
@@ -2381,7 +2428,8 @@ class question extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                ReadMoreText(content,
+                ReadMoreText(
+                  content,
                   trimLength: 210,
                   style: const TextStyle(
                       fontSize: 10,
@@ -2405,11 +2453,16 @@ class question extends StatelessWidget {
     );
   }
 }
+
 class answer extends StatelessWidget {
   final String username;
   final String content;
   final String vote;
-   const answer({super.key,required this.username,required this.content,required this.vote});
+  const answer(
+      {super.key,
+      required this.username,
+      required this.content,
+      required this.vote});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -2437,7 +2490,9 @@ class answer extends StatelessWidget {
                       Text(
                         '{$vote} votes',
                         style: const TextStyle(
-                            fontSize: 8, color: red, fontWeight: FontWeight.w500),
+                            fontSize: 8,
+                            color: red,
+                            fontWeight: FontWeight.w500),
                       ),
                       Text(
                         username,
@@ -2492,6 +2547,7 @@ class answer extends StatelessWidget {
     );
   }
 }
+
 Widget avatar({double? height, double? width}) {
   return Container(
     height: height,
@@ -3243,7 +3299,7 @@ class ChatBubble extends StatelessWidget {
   }
 }
 
-Widget commentTextFiled({Context, controller, onTap,focusNode}) {
+Widget commentTextFiled({Context, controller, onTap, focusNode}) {
   return Container(
     height: 110,
     decoration: const BoxDecoration(color: Colors.white),
@@ -3271,32 +3327,32 @@ Widget commentTextFiled({Context, controller, onTap,focusNode}) {
     ),
   );
 }
-class dropdownItem extends StatelessWidget{
+
+class dropdownItem extends StatelessWidget {
   final DropdownController controller = Get.put(DropdownController());
   @override
   Widget build(BuildContext context) {
     return Obx(() => SizedBox(
-      child: DropdownButton<String>(
-        value: controller.selectedItem.value,
-        onChanged: (newValue) {
-          controller.setSelectedItem(newValue!);
-        },
-        items: [
-          DropdownMenuItem<String>(
-            value: 'Option 1',
-            child: Text('Option 1'),
+          child: DropdownButton<String>(
+            value: controller.selectedItem.value,
+            onChanged: (newValue) {
+              controller.setSelectedItem(newValue!);
+            },
+            items: [
+              DropdownMenuItem<String>(
+                value: 'Option 1',
+                child: Text('Option 1'),
+              ),
+              DropdownMenuItem<String>(
+                value: 'Option 2',
+                child: Text('Option 2'),
+              ),
+              DropdownMenuItem<String>(
+                value: 'Option 3',
+                child: Text('Option 3'),
+              ),
+            ],
           ),
-          DropdownMenuItem<String>(
-            value: 'Option 2',
-            child: Text('Option 2'),
-          ),
-          DropdownMenuItem<String>(
-            value: 'Option 3',
-            child: Text('Option 3'),
-          ),
-        ],
-      ),
-    ));
+        ));
   }
-
 }

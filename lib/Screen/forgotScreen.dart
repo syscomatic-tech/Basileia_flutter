@@ -1,11 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ReadBook extends StatelessWidget {  @override
+class ForgotPasswordScreen extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
-          
+
         ],
       ),
     );
