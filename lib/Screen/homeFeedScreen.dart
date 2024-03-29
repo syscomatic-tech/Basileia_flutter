@@ -50,7 +50,7 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
               if (post.post_type < 2) {
                 if (!post.file_content.toString().contains(
                     "https://api.zahedhasan.com/api/v1/uploads/users")) {
-                  feeds.add(Feeds(
+                  feeds.add(Feeds(context,
                       userName: post.usrName,
                       followers: post.followers.length.toString(),
                       likes: post.likes.length.toString(),
@@ -111,7 +111,8 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                                     children: [
                                       Profile(
                                           onPressed: () {
-                                            Get.to(() => ProfileScreen());
+                                            Get.to(() =>
+                                                ProfileScreen(usId: userId));
                                           },
                                           OutSidewidth: 47,
                                           OutSidehight: 47,
@@ -178,11 +179,11 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                             return feeds[index];
                           }),
                       InkWell(
-                        onTap: (){},
+                        onTap: () {},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                             const Text(
+                            const Text(
                               'Load more feeds',
                               style: TextStyle(
                                 color: fonts,
@@ -190,12 +191,16 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                                 fontSize: 12,
                               ),
                             ),
-                        const SizedBox(width: 5,),
-                        Image.asset(Button_Next)
-                        ],
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Image.asset(Button_Next)
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 ),

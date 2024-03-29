@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 var jwt_token = "";
 var userId = "";
 var userFullname = "";
+var userFollowings = [""];
 var userPass = "";
 var userEmail = "";
 
@@ -295,6 +296,7 @@ class SocialClient {
         }
 
         bool hasVerse = resp.containsKey('verse');
+        bool hasFileUrl = resp.containsKey('fileUrl');
         Post postt;
         var og_cmnt = resp["comments"];
         List<Comment> comments = [];
@@ -327,13 +329,14 @@ class SocialClient {
               file_content: resp["verse"],
               post_type: 0,
               caption: capt);
-        } else {
+        } else if (hasFileUrl) {
           var fl = resp["fileUrl"];
-          var extension = fl.toString().split(".").last;
+          print(fl);
+          var exten = fl.toString().split(".").last;
           int pst_tp = 1;
-          if (extension == "mp3") {
+          if (exten == "mp3") {
             pst_tp = 2;
-          } else if (extension == "mp4") {
+          } else if (exten == "mp4") {
             pst_tp = 3;
           }
           postt = Post(
@@ -343,8 +346,19 @@ class SocialClient {
               likes: resp['likes'].cast<String>(),
               followers: resp['followers'].cast<String>(),
               comments: comments,
-              file_content: fl,
+              file_content: resp["fileUrl"],
               post_type: pst_tp,
+              caption: capt);
+        } else {
+          postt = Post(
+              usrName: userInfo["firstName"] + " " + userInfo["lastName"],
+              userID: resp["userId"],
+              id: resp["_id"],
+              likes: resp['likes'].cast<String>(),
+              followers: resp['followers'].cast<String>(),
+              comments: comments,
+              file_content: "No Data Can be found",
+              post_type: 0,
               caption: capt);
         }
         posttt.add(postt);
@@ -480,7 +494,7 @@ Future<bool> uploadForumPost(post, category) async {
 
   http.StreamedResponse response = await request.send();
 
-  if (response.statusCode == 200) {
+  if (response.statusCode < 300) {
     var outp = jsonDecode(await response.stream.bytesToString());
     SuccessToast(outp["message"]);
     return true;
@@ -492,22 +506,108 @@ Future<bool> uploadForumPost(post, category) async {
   }
 }
 
-Future<bool> totalFollowers(String id) async {
+Future<String> Follow_user(String id) async {
   var headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer $jwt_token'
   };
-  var request = http.Request('GET',
-      Uri.parse('https://api.zahedhasan.com/api/v1//upload/$id/followers'));
+  var request = http.Request(
+      'POST', Uri.parse('https://api.zahedhasan.com/api/v1/upload/follow'));
+  request.body = json.encode({"followerId": userId, "followingId": id});
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();
 
   if (response.statusCode < 300) {
-    print(await response.stream.bytesToString());
-    return true;
+    var outp = jsonDecode(await response.stream.bytesToString());
+    return outp["message"];
   } else {
     print(response.reasonPhrase);
-    return false;
+    var outp = jsonDecode(await response.stream.bytesToString());
+    return outp["message"];
+  }
+}
+
+Future<String> Share_post(String postId) async {
+  var headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $jwt_token'
+  };
+  var request = http.Request('POST',
+      Uri.parse('https://api.zahedhasan.com/api/v1/upload/share/$postId'));
+  request.body = json.encode({"userId": userId});
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode < 300) {
+    var outp = jsonDecode(await response.stream.bytesToString());
+    return outp["message"];
+  } else {
+    var outp = jsonDecode(await response.stream.bytesToString());
+    return outp["message"];
+  }
+}
+
+Future<Map<String, dynamic>> GetUserProfile(String usId) async {
+  var headers = {'Authorization': 'Bearer $jwt_token'};
+  var request = http.Request(
+      'GET', Uri.parse('https://api.zahedhasan.com/api/v1/upload/$usId'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode < 300) {
+    var resp = json.decode(await response.stream.bytesToString());
+    var scl_client = SocialClient();
+
+    var resp_info = await scl_client.getUserInfo(usId);
+    resp_info = resp_info["user"];
+    var totalFols = await totalFollowers(usId);
+    var totalPosts = await totalPost(usId);
+    return {
+      "posts": resp,
+      "info": resp_info,
+      "followers": totalFols,
+      "posts": totalPosts,
+    };
+  } else {
+    print(response.reasonPhrase);
+    return json.decode(await response.stream.bytesToString());
+  }
+}
+
+Future<String> totalPost(String usId) async {
+  var headers = {'Authorization': 'Bearer $jwt_token'};
+  var request = http.Request('GET',
+      Uri.parse('https://api.zahedhasan.com/api/v1/upload/$usId/totalPost'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode < 300) {
+    return jsonDecode(await response.stream.bytesToString())["totalPosts"];
+  } else {
+    print(response.reasonPhrase);
+    return jsonDecode(await response.stream.bytesToString())["message"];
+  }
+}
+
+Future<String> totalFollowers(String usid) async {
+  var headers = {'Authorization': 'Bearer $jwt_token'};
+  var request = http.Request('GET',
+      Uri.parse('https://api.zahedhasan.com/api/v1/upload/$usid/followers'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode < 300) {
+    return json.decode(await response.stream.bytesToString())["totalFollowers"];
+  } else {
+    print(response.reasonPhrase);
+    return json.decode(await response.stream.bytesToString())["message"];
   }
 }

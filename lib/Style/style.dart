@@ -17,6 +17,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:readmore/readmore.dart';
+import 'package:basileia/Screen/inboxScreen.dart';
 import '../RestAPI/RestClient.dart';
 import '../Screen/chatScreen.dart';
 import '../Screen/inboxScreen.dart';
@@ -277,15 +278,17 @@ Widget FeedFollowButton({onTap}) {
 }
 
 Widget Feeds(
-    {String? userName,
-    String? followers,
-    String? likes,
-    String? comments,
-    String postID = "",
-    String capt = "",
-    postType,
-    content,
-    post}) {
+  BuildContext context, {
+  String? userName,
+  String? followers,
+  String? likes,
+  String? comments,
+  String postID = "",
+  String capt = "",
+  postType,
+  content,
+  post,
+}) {
   return Padding(
     padding: const EdgeInsets.only(right: 10, left: 10),
     child: Column(
@@ -297,7 +300,7 @@ Widget Feeds(
               children: [
                 Profile(
                     onPressed: () {
-                      Get.to(() => ProfileScreen());
+                      Get.to(() => ProfileScreen(usId: post.userID));
                     },
                     OutSidehight: 47,
                     OutSidewidth: 47,
@@ -329,7 +332,10 @@ Widget Feeds(
                 )
               ],
             ),
-            FeedFollowButton(onTap: () {})
+            FeedFollowButton(onTap: () async {
+              var outp = await Follow_user(post.userID);
+              SuccessToast(outp);
+            })
           ],
         ),
         const SizedBox(
@@ -363,7 +369,39 @@ Widget Feeds(
                 },
                 ic: Comment_ic,
                 text: '${comments.toString()} Comments'),
-            FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
+            FeedIcButton(
+                onTap: () async {
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Confirm'),
+                        content:
+                            Text('Are you sure you want to share this post?'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Dismiss the dialog
+                            },
+                          ),
+                          TextButton(
+                            child: Text('Share'),
+                            onPressed: () async {
+                              // Add your sharing logic here
+                              print('Post shared');
+                              var outp = await Share_post(postID);
+                              SuccessToast(outp);
+                              Navigator.of(context).pop(); // Dismiss the dialog
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                ic: Share_ic,
+                text: 'Share this post'),
           ],
         ),
         const SizedBox(
@@ -1439,7 +1477,9 @@ Widget profileButton({onTap, String? text, ic}) {
 
 Widget profileMassageButton() {
   return InkWell(
-    onTap: () {},
+    onTap: () async {
+      Get.to(() => InboxScreen());
+    },
     child: Container(
       width: 90,
       height: 28.55,
