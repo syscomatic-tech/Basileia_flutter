@@ -245,38 +245,46 @@ Widget FeedIcButton({onTap, ic, text, clr}) {
   );
 }
 
-Widget FeedFollowButton({onTap}) {
-  return InkWell(
-    onTap: onTap,
-    child: Container(
-      height: 30.8,
-      width: 86.05,
-      decoration: BoxDecoration(
-          color: primary, borderRadius: BorderRadius.circular(20)),
-      child: const Padding(
-        padding: EdgeInsets.only(right: 10, left: 7),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 15,
+class FeedFollowButton extends StatelessWidget {
+  final VoidCallback? onTap;
+   FeedFollowButton({super.key, this.onTap});
+final FollowController followController = FollowController();
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      ()=> InkWell(
+        onTap: onTap,
+        child: Container(
+          height: 30.8,
+          width: 86.05,
+          decoration: BoxDecoration(
+              color: primary, borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 10, left: 7),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if(followController.isFollowing.value==followController.isFollowing.value)
+                 Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 15,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                    followController.isFollowing.value ? 'Unfollow' : 'Follow',
+                  style: const TextStyle(color: Colors.white, fontSize: 13),
+                )
+              ],
             ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(
-              'Follow',
-              style: TextStyle(color: Colors.white, fontSize: 13),
-            )
-          ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
-
 Widget Feeds(
   BuildContext context, {
   String? userName,
@@ -382,17 +390,16 @@ Widget Feeds(
                           TextButton(
                             child: Text('Cancel'),
                             onPressed: () {
-                              Navigator.of(context).pop(); // Dismiss the dialog
+                              Navigator.of(context).pop();
                             },
                           ),
                           TextButton(
                             child: Text('Share'),
                             onPressed: () async {
-                              // Add your sharing logic here
                               print('Post shared');
                               var outp = await Share_post(postID);
                               SuccessToast(outp);
-                              Navigator.of(context).pop(); // Dismiss the dialog
+                              Navigator.of(context).pop();
                             },
                           ),
                         ],
