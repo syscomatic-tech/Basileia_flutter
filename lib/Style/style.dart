@@ -271,7 +271,7 @@ class FeedFollowButton extends StatelessWidget {
             () => Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (!nfollow || !followController.isFollowing.value)
+                if (!nfollow == true || !followController.isFollowing.value)
                   Icon(
                     Icons.add,
                     color: Colors.white,
