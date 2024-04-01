@@ -305,7 +305,6 @@ Widget Feeds(
   content,
   post,
 }) {
-  print(post.followers.contains(userId));
   return Padding(
     padding: const EdgeInsets.only(right: 10, left: 10),
     child: Column(
@@ -350,11 +349,12 @@ Widget Feeds(
               ],
             ),
             FeedFollowButton(
-                onTap: () async {
-                  var outp = await Follow_user(post.userID);
-                  SuccessToast(outp);
-                },
-                followed: false)
+              followed: post.followers.contains(userId),
+              onTap: () async {
+                var outp = await Follow_user(post.userID);
+                SuccessToast(outp);
+              },
+            )
           ],
         ),
         const SizedBox(
