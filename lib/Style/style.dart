@@ -270,7 +270,7 @@ class FeedFollowButton extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (followController.isFollowing.value)
+                      if (!followController.isFollowing.value)
                         Icon(
                           Icons.add,
                           color: Colors.white,
@@ -280,7 +280,7 @@ class FeedFollowButton extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        !followController.isFollowing.value
+                        followController.isFollowing.value
                             ? 'Unfollow'
                             : 'Follow',
                         style:
