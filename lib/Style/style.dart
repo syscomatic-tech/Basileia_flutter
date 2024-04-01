@@ -347,13 +347,14 @@ Widget Feeds(
                 )
               ],
             ),
-            FeedFollowButton(
-              fallaw: post.followers.contains(userId) ? "t" : "f",
-              onTap: () async {
-                var outp = await Follow_user(post.userID);
-                SuccessToast(outp);
-              },
-            )
+            if (post.userID != userId)
+              FeedFollowButton(
+                fallaw: post.followers.contains(userId) ? "t" : "f",
+                onTap: () async {
+                  var outp = await Follow_user(post.userID);
+                  SuccessToast(outp);
+                },
+              )
           ],
         ),
         const SizedBox(
