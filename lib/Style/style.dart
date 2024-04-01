@@ -354,7 +354,7 @@ Widget Feeds(
                   var outp = await Follow_user(post.userID);
                   SuccessToast(outp);
                 },
-                followed: post.followers.contains(userId))
+                followed: false)
           ],
         ),
         const SizedBox(
