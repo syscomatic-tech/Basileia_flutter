@@ -247,9 +247,9 @@ Widget FeedIcButton({onTap, ic, text, clr}) {
 
 class FeedFollowButton extends StatelessWidget {
   final VoidCallback onTap;
-  final String followed;
 
   FeedFollowButton({Key? key, required this.onTap, required this.followed});
+  late String followed;
   final FollowController followController = FollowController();
   @override
   Widget build(BuildContext context) {
