@@ -252,7 +252,6 @@ class FeedFollowButton extends StatelessWidget {
   final FollowController followController = FollowController();
   @override
   Widget build(BuildContext context) {
-    fallaw = "f";
     print(fallaw);
     return InkWell(
       onTap: () {
