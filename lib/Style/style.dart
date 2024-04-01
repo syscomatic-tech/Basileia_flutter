@@ -256,7 +256,7 @@ class FeedFollowButton extends StatelessWidget {
     return InkWell(
       onTap: () {
         onTap.call();
-        followController.isFollowing.toString();
+        followController.toggleFollow();
       },
       child: Container(
         height: 30.8,
@@ -269,7 +269,7 @@ class FeedFollowButton extends StatelessWidget {
             () => Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (!(fallaw == "t" || followController.isFollowing.value))
+                if (fallaw == "t" || followController.isFollowing.value)
                   Icon(
                     Icons.add,
                     color: Colors.white,
