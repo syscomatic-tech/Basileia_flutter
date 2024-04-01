@@ -247,12 +247,13 @@ Widget FeedIcButton({onTap, ic, text, clr}) {
 
 class FeedFollowButton extends StatelessWidget {
   final VoidCallback onTap;
-  FeedFollowButton({Key? key, required this.onTap, required this.followed});
-  late String followed;
+  FeedFollowButton({Key? key, required this.onTap, required this.fallaw});
+  late String fallaw;
   final FollowController followController = FollowController();
   @override
   Widget build(BuildContext context) {
-    print(followed);
+    fallaw = "f";
+    print(fallaw);
     return InkWell(
       onTap: () {
         onTap.call();
@@ -269,7 +270,7 @@ class FeedFollowButton extends StatelessWidget {
             () => Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (followed == "f" || !followController.isFollowing.value)
+                if (fallaw == "f" || !followController.isFollowing.value)
                   Icon(
                     Icons.add,
                     color: Colors.white,
@@ -347,7 +348,7 @@ Widget Feeds(
               ],
             ),
             FeedFollowButton(
-              followed: "f",
+              fallaw: "f",
               onTap: () async {
                 var outp = await Follow_user(post.userID);
                 SuccessToast(outp);
