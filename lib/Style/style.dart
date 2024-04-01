@@ -246,45 +246,47 @@ Widget FeedIcButton({onTap, ic, text, clr}) {
 }
 
 class FeedFollowButton extends StatelessWidget {
-  final VoidCallback? onTap;
-  FeedFollowButton({super.key, this.onTap});
+  late VoidCallback onTap;
+  late bool followed;
+  FeedFollowButton({super.key, required this.onTap, required this.followed});
   final FollowController followController = FollowController();
   @override
   Widget build(BuildContext context) {
-    return
-       InkWell(
-        onTap: onTap,
-        child: Container(
-          height: 30.8,
-          width: 86.05,
-          decoration: BoxDecoration(
-              color: primary, borderRadius: BorderRadius.circular(20)),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 10, left: 7),
-            child: Obx(
-              ()=> Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (followController.isFollowing.value ==
-                      followController.isFollowing.value)
-                    Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 15,
-                    ),
-                  const SizedBox(
-                    width: 5,
+    return InkWell(
+      onTap: () {
+        this.onTap.call();
+        followController.isFollowing.value = true;
+      },
+      child: Container(
+        height: 30.8,
+        width: 86.05,
+        decoration: BoxDecoration(
+            color: primary, borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10, left: 7),
+          child: Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (!followed || followController.isFollowing.value)
+                  Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 15,
                   ),
-                  Text(
-                    followController.isFollowing.value ? 'Unfollow' : 'Follow',
-                    style: const TextStyle(color: Colors.white, fontSize: 13),
-                  )
-                ],
-              ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  followController.isFollowing.value ? 'Unfollow' : 'Follow',
+                  style: const TextStyle(color: Colors.white, fontSize: 13),
+                )
+              ],
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 }
 
@@ -343,10 +345,12 @@ Widget Feeds(
                 )
               ],
             ),
-            FeedFollowButton(onTap: () async {
-              var outp = await Follow_user(post.userID);
-              SuccessToast(outp);
-            })
+            FeedFollowButton(
+                onTap: () async {
+                  var outp = await Follow_user(post.userID);
+                  SuccessToast(outp);
+                },
+                followed: post.followers.contains(userId))
           ],
         ),
         const SizedBox(
@@ -3439,8 +3443,8 @@ class profile_1 extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(outsideBorderRedius ?? 30),
-                border:
-                    Border.all(color: bordarColor ?? profileBorder, width: 1.8)),
+                border: Border.all(
+                    color: bordarColor ?? profileBorder, width: 1.8)),
             child: Center(
               child: Container(
                 height: insideBorder,
@@ -3461,7 +3465,11 @@ class profile_1 extends StatelessWidget {
               width: 20,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(30)),
-              child: const Icon(Icons.edit_outlined,color: Colors.grey,size: 15,),
+              child: const Icon(
+                Icons.edit_outlined,
+                color: Colors.grey,
+                size: 15,
+              ),
             ),
           )
         ],
