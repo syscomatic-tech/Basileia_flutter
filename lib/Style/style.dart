@@ -348,7 +348,7 @@ Widget Feeds(
               ],
             ),
             FeedFollowButton(
-              followed: post.followers.contains(userId) ? "t" : "f",
+              followed: "f",
               onTap: () async {
                 var outp = await Follow_user(post.userID);
                 SuccessToast(outp);
