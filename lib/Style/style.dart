@@ -246,8 +246,8 @@ Widget FeedIcButton({onTap, ic, text, clr}) {
 }
 
 class FeedFollowButton extends StatelessWidget {
-  late VoidCallback onTap;
-  late bool followed;
+  VoidCallback onTap = () => {};
+  bool followed = false;
   FeedFollowButton({super.key, required this.onTap, required this.followed});
   final FollowController followController = FollowController();
   @override
@@ -480,7 +480,6 @@ Widget AudioFeeds({
                   )
                 ],
               ),
-              FeedFollowButton(onTap: () {})
             ],
           ),
           const SizedBox(
