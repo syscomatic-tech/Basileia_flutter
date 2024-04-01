@@ -269,7 +269,7 @@ class FeedFollowButton extends StatelessWidget {
             () => Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (fallaw == "f" || !followController.isFollowing.value)
+                if (fallaw == "t" || followController.isFollowing.value)
                   Icon(
                     Icons.add,
                     color: Colors.white,
@@ -279,7 +279,9 @@ class FeedFollowButton extends StatelessWidget {
                   width: 5,
                 ),
                 Text(
-                  followController.isFollowing.value ? 'Unfollow' : 'Follow',
+                  fallaw == "t" || followController.isFollowing.value
+                      ? 'Unfollow'
+                      : 'Follow',
                   style: const TextStyle(color: Colors.white, fontSize: 13),
                 )
               ],
@@ -347,7 +349,7 @@ Widget Feeds(
               ],
             ),
             FeedFollowButton(
-              fallaw: "f",
+              fallaw: post.followers.contains(userId) ? "t" : "f",
               onTap: () async {
                 var outp = await Follow_user(post.userID);
                 SuccessToast(outp);
