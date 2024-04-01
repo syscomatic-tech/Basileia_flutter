@@ -247,7 +247,6 @@ Widget FeedIcButton({onTap, ic, text, clr}) {
 
 class FeedFollowButton extends StatelessWidget {
   final VoidCallback onTap;
-
   FeedFollowButton({Key? key, required this.onTap, required this.followed});
   late String followed;
   final FollowController followController = FollowController();
@@ -256,7 +255,7 @@ class FeedFollowButton extends StatelessWidget {
     print(followed);
     return InkWell(
       onTap: () {
-        this.onTap.call();
+        onTap.call();
         followController.isFollowing.toString();
       },
       child: Container(
