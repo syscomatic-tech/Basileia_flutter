@@ -254,42 +254,39 @@ class FeedFollowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     print(fallaw);
     return InkWell(
-      onTap: () {
-        onTap.call();
-        followController.toggleFollow();
-      },
-      child: Container(
-        height: 30.8,
-        width: 86.05,
-        decoration: BoxDecoration(
-            color: primary, borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: const EdgeInsets.only(right: 10, left: 7),
-          child: Obx(
-            () => Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (fallaw == "t" || followController.isFollowing.value)
-                  Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 15,
+        onTap: () {
+          onTap.call();
+          followController.toggleFollow();
+        },
+        child: Container(
+            height: 30.8,
+            width: 86.05,
+            decoration: BoxDecoration(
+                color: primary, borderRadius: BorderRadius.circular(20)),
+            child: Obx(() => Padding(
+                  padding: const EdgeInsets.only(right: 10, left: 7),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (fallaw == "t" || followController.isFollowing.value)
+                        Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        !(fallaw == "t" || followController.isFollowing.value)
+                            ? 'Unfollow'
+                            : 'Follow',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 13),
+                      )
+                    ],
                   ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  !(fallaw == "t" || followController.isFollowing.value)
-                      ? 'Unfollow'
-                      : 'Follow',
-                  style: const TextStyle(color: Colors.white, fontSize: 13),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+                ))));
   }
 }
 
