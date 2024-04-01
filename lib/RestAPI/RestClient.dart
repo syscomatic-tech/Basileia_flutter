@@ -339,6 +339,7 @@ class SocialClient {
           } else if (exten == "mp4") {
             pst_tp = 3;
           }
+          print(resp['followers']);
           postt = Post(
               usrName: userInfo["firstName"] + " " + userInfo["lastName"],
               userID: resp["userId"],
