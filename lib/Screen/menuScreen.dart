@@ -45,12 +45,7 @@ class MenuScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Profile(
-                              onPressed: () {},
-                              OutSidehight: 55,
-                              OutSidewidth: 55,
-                              InSideHight: 45,
-                              InsideWidth: 45),
+                          profile_1(outsideBorder: 55, outsideBorderRedius: 30, bordarColor: profileBorder, insideBorder: 45, insideBorderRedius: 30,ImageUrl: '',),
                           const SizedBox(
                             width: 10,
                           ),

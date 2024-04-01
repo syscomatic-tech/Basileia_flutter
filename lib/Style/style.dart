@@ -247,12 +247,12 @@ Widget FeedIcButton({onTap, ic, text, clr}) {
 
 class FeedFollowButton extends StatelessWidget {
   final VoidCallback? onTap;
-   FeedFollowButton({super.key, this.onTap});
-final FollowController followController = FollowController();
+  FeedFollowButton({super.key, this.onTap});
+  final FollowController followController = FollowController();
   @override
   Widget build(BuildContext context) {
     return Obx(
-      ()=> InkWell(
+      () => InkWell(
         onTap: onTap,
         child: Container(
           height: 30.8,
@@ -264,17 +264,18 @@ final FollowController followController = FollowController();
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if(followController.isFollowing.value==followController.isFollowing.value)
-                 Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 15,
-                ),
+                if (followController.isFollowing.value ==
+                    followController.isFollowing.value)
+                  Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 15,
+                  ),
                 const SizedBox(
                   width: 5,
                 ),
                 Text(
-                    followController.isFollowing.value ? 'Unfollow' : 'Follow',
+                  followController.isFollowing.value ? 'Unfollow' : 'Follow',
                   style: const TextStyle(color: Colors.white, fontSize: 13),
                 )
               ],
@@ -285,6 +286,7 @@ final FollowController followController = FollowController();
     );
   }
 }
+
 Widget Feeds(
   BuildContext context, {
   String? userName,
@@ -1765,7 +1767,6 @@ Widget chatItem({String? title, String? subTitle, msgCount, onTap}) {
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       '10.00 AM',
@@ -3404,5 +3405,65 @@ class dropdownItem extends StatelessWidget {
             ],
           ),
         ));
+  }
+}
+
+class profile_1 extends StatelessWidget {
+  final double? outsideBorder;
+  final double? insideBorder;
+  final double? outsideBorderRedius;
+  final double? insideBorderRedius;
+  final bordarColor;
+  final onPressed;
+  final ImageUrl;
+  const profile_1(
+      {super.key,
+      required this.outsideBorder,
+      required this.outsideBorderRedius,
+      required this.bordarColor,
+      required this.insideBorder,
+      required this.insideBorderRedius,
+      this.onPressed,
+      this.ImageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      child: Stack(
+        children: [
+          Container(
+            height: outsideBorder,
+            width: outsideBorder,
+            decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(outsideBorderRedius ?? 30),
+                border:
+                    Border.all(color: bordarColor ?? profileBorder, width: 1.8)),
+            child: Center(
+              child: Container(
+                height: insideBorder,
+                width: insideBorder,
+                decoration: BoxDecoration(
+                  color: bordar,
+                  borderRadius: BorderRadius.circular(insideBorderRedius ?? 30),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Container(
+              height: 20,
+              width: 20,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(30)),
+              child: const Icon(Icons.edit_outlined,color: Colors.grey,size: 15,),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
