@@ -251,8 +251,8 @@ class FeedFollowButton extends StatelessWidget {
   final FollowController followController = FollowController();
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => InkWell(
+    return
+       InkWell(
         onTap: onTap,
         child: Container(
           height: 30.8,
@@ -261,29 +261,30 @@ class FeedFollowButton extends StatelessWidget {
               color: primary, borderRadius: BorderRadius.circular(20)),
           child: Padding(
             padding: const EdgeInsets.only(right: 10, left: 7),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (followController.isFollowing.value ==
-                    followController.isFollowing.value)
-                  Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 15,
+            child: Obx(
+              ()=> Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (followController.isFollowing.value ==
+                      followController.isFollowing.value)
+                    Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 15,
+                    ),
+                  const SizedBox(
+                    width: 5,
                   ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  followController.isFollowing.value ? 'Unfollow' : 'Follow',
-                  style: const TextStyle(color: Colors.white, fontSize: 13),
-                )
-              ],
+                  Text(
+                    followController.isFollowing.value ? 'Unfollow' : 'Follow',
+                    style: const TextStyle(color: Colors.white, fontSize: 13),
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
@@ -3448,6 +3449,7 @@ class profile_1 extends StatelessWidget {
                   color: bordar,
                   borderRadius: BorderRadius.circular(insideBorderRedius ?? 30),
                 ),
+                child: Image.network(ImageUrl),
               ),
             ),
           ),
