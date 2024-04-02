@@ -1581,7 +1581,7 @@ class profilePosts extends StatelessWidget {
                           ),
                           Text(
                             time,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 12,
                                 fontFamily: poppins_regular,
                                 color: primaryTxt),
@@ -1605,7 +1605,6 @@ class profilePosts extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              if (content == null)
                 Container(
                   width: double.maxFinite,
                   decoration: BoxDecoration(

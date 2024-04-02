@@ -170,7 +170,7 @@ class ProfileScreen extends StatelessWidget {
                             ListView.builder(
                               shrinkWrap: true,
                               primary: false,
-                              itemCount: usprofile!.posts.length,
+                              itemCount: usprofile.posts.length,
                               itemBuilder: (context, index) {
                                 return profilePosts(
                                   post: usprofile!.posts[index],
