@@ -12,6 +12,7 @@ class ProfileScreen extends StatelessWidget {
   String bio = '';
   @override
   Widget build(BuildContext context) {
+    GetUserProfile(usId);
     return FutureBuilder(
         future: GetUserProfile(usId),
         builder: (context, AsyncSnapshot<UsrProfile> snapshot) {
