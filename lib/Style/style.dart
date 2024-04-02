@@ -1533,21 +1533,27 @@ Widget profileMassageButton() {
 class profilePosts extends StatelessWidget {
   final String username;
   final String caption;
-  final String content;
+  String? content;
   final String like;
-  final String comment;
   final String share;
-  const profilePosts(
+  final String time;
+  final List<Comment> comments;
+  final Post post;
+
+  profilePosts(
       {super.key,
+      required this.post,
       required this.username,
       required this.caption,
-      required this.content,
       required this.like,
-      required this.comment,
-      required this.share});
+      required this.comments,
+      required this.share,
+      required this.time,
+      this.content});
 
   @override
   Widget build(BuildContext context) {
+    String comment = comments.length.toString();
     return Column(
       children: [
         Padding(
@@ -1573,8 +1579,8 @@ class profilePosts extends StatelessWidget {
                                 fontFamily: poppins_semibold,
                                 color: Colors.black),
                           ),
-                          const Text(
-                            '03 Sept. At 04:21',
+                          Text(
+                            time,
                             style: TextStyle(
                                 fontSize: 12,
                                 fontFamily: poppins_regular,
@@ -1605,7 +1611,7 @@ class profilePosts extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: ContainerBG,
                       borderRadius: BorderRadius.circular(10)),
-                  child: Image.network(content),
+                  child: Image.network(content!),
                 ),
               const SizedBox(
                 height: 10,
@@ -1636,7 +1642,13 @@ class profilePosts extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          InkWell(onTap: () {}, child: Image.asset(Heart_ic)),
+                          InkWell(
+                              onTap: () {
+                                Get.to(() => CommentScreen(
+                                      post: post,
+                                    ));
+                              },
+                              child: Image.asset(Heart_ic)),
                           const SizedBox(
                             width: 7,
                           ),

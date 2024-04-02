@@ -550,7 +550,7 @@ Future<String> Share_post(String postId) async {
   }
 }
 
-Future<Map<String, dynamic>> GetUserProfile(String usId) async {
+Future<UsrProfile> GetUserProfile(String usId) async {
   var headers = {'Authorization': 'Bearer $jwt_token'};
   var request = http.Request(
       'GET', Uri.parse('https://api.zahedhasan.com/api/v1/upload/$usId'));
@@ -560,19 +560,112 @@ Future<Map<String, dynamic>> GetUserProfile(String usId) async {
   http.StreamedResponse response = await request.send();
 
   if (response.statusCode < 300) {
-    var resp = json.decode(await response.stream.bytesToString());
-    var scl_client = SocialClient();
-
-    var resp_info = await scl_client.getUserInfo(usId);
-    resp_info = resp_info["user"];
-    var totalFols = await totalFollowers(usId);
-    var totalPosts = await totalPost(usId);
-    return {
-      "posts": resp,
-      "info": resp_info,
-      "followers": totalFols,
-      "posts": totalPosts,
+    Map<String, dynamic> userInfo = {
+      "firstName": "Deleted",
+      "lastName": "user"
     };
+    List<Map<String, dynamic>> resps =
+        json.decode(await response.stream.bytesToString());
+    print(resps);
+    var scl_client = SocialClient();
+    List<Post> posts = [];
+    final resp_info = await scl_client.getUserInfo(usId);
+    if (resp_info["user"] != null) {
+      userInfo = resp_info["user"];
+    } else {
+      userInfo = {"firstName": "Deleted", "lastName": "user"};
+    }
+
+    var totalPosts = resps.length;
+    String totalFols = "0";
+    String totalFolls = "0"; //Total followings
+    List<String> times = [""];
+    if (totalPosts > 0) {
+      totalFols = resps[0]["followers"];
+      totalFolls = resps[0]["following"];
+      for (var resp in resps) {
+        var useid = resp["userId"];
+
+        bool hasVerse = resp.containsKey('verse');
+        bool hasFileUrl = resp.containsKey('fileUrl');
+        Post postt;
+        var og_cmnt = resp["comments"];
+        List<Comment> comments = [];
+        String capt = "";
+        for (var cmt in og_cmnt) {
+          final cInf = await scl_client.getUserInfo(cmt["userId"]);
+          Map<String, dynamic> cInfo;
+          if (cInf["user"] != null) {
+            cInfo = cInf["user"];
+          } else {
+            cInfo = {"firstName": "Deleted", "lastName": "user"};
+          }
+          comments.add(Comment(
+              userId: cmt["userId"].toString(),
+              id: cmt["_id"].toString(),
+              content: cmt["comment"].toString(),
+              usrname: cInfo["firstName"]! + " " + cInfo["lastName"]!));
+        }
+        if (resp.containsKey("caption")) {
+          capt = resp["caption"];
+        }
+        if (hasVerse) {
+          postt = Post(
+              usrName: userInfo["firstName"] + " " + userInfo["lastName"],
+              userID: resp["userId"],
+              id: resp["_id"],
+              likes: resp['likes'].cast<String>(),
+              followers: resp['followers'].cast<String>(),
+              comments: comments,
+              file_content: resp["verse"],
+              post_type: 0,
+              caption: capt);
+        } else if (hasFileUrl) {
+          var fl = resp["fileUrl"];
+          print(fl);
+          var exten = fl.toString().split(".").last;
+          int pst_tp = 1;
+          if (exten == "mp3") {
+            pst_tp = 2;
+          } else if (exten == "mp4") {
+            pst_tp = 3;
+          }
+          print(resp['followers']);
+          postt = Post(
+              usrName: userInfo["firstName"] + " " + userInfo["lastName"],
+              userID: resp["userId"],
+              id: resp["_id"],
+              likes: resp['likes'].cast<String>(),
+              followers: resp['followers'].cast<String>(),
+              comments: comments,
+              file_content: resp["fileUrl"],
+              post_type: pst_tp,
+              caption: capt);
+        } else {
+          postt = Post(
+              usrName: userInfo["firstName"] + " " + userInfo["lastName"],
+              userID: resp["userId"],
+              id: resp["_id"],
+              likes: resp['likes'].cast<String>(),
+              followers: resp['followers'].cast<String>(),
+              comments: comments,
+              file_content: "No Data Can be found",
+              post_type: 0,
+              caption: capt);
+        }
+        times.add(resp["createdAt"]);
+        posts.add(postt);
+      }
+    }
+    return UsrProfile(
+        userId: userInfo["_id"],
+        profilePic: "",
+        name: userInfo["firstName"]! + " " + userInfo["lastName"],
+        totFollowers: totalFols,
+        totFollowings: totalFolls,
+        totPosts: totalPosts.toString(),
+        times: times,
+        posts: posts);
   } else {
     print(response.reasonPhrase);
     return json.decode(await response.stream.bytesToString());

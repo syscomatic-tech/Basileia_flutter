@@ -2,7 +2,7 @@ import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:flutter/material.dart';
-
+import 'package:basileia/RestAPI/model.dart';
 import '../Style/fonts.dart';
 import '../Style/style.dart';
 
@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: GetUserProfile(usId),
-        builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+        builder: (context, AsyncSnapshot<UsrProfile> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const Scaffold(
                 body: Center(
@@ -23,12 +23,10 @@ class ProfileScreen extends StatelessWidget {
                         width: 50,
                         child: CircularProgressIndicator())));
           } else {
-            var usprofile;
+            UsrProfile? usprofile;
             if (snapshot.hasData) {
               usprofile = snapshot.data;
-              bio = usprofile["info"]["firstName"] +
-                  " " +
-                  usprofile["info"]["lastName"];
+              bio = "Ami bukachuda";
             } else {
               ErrorToast("Cant fetch data ");
               return const Scaffold(
@@ -164,29 +162,29 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             statistic(
                               backGround: TabBG,
-                              following: '0',
-                              POST: usprofile["posts"],
-                              followers: usprofile['followers'],
+                              following: usprofile!.totFollowings.toString(),
+                              POST: usprofile.totPosts.toString(),
+                              followers: usprofile.totFollowers.toString(),
                             ),
                             ListView.builder(
                               shrinkWrap: true,
                               primary: false,
-                              itemCount: usprofile["posts"].length,
+                              itemCount: usprofile!.posts.length,
                               itemBuilder: (context, index) {
                                 return profilePosts(
-                                  like: usprofile["posts"][index]["likes"]
-                                      .length
+                                  post: usprofile!.posts[index],
+                                  like: usprofile.posts[index].likes.length
                                       .toString(),
-                                  caption: usprofile["posts"][index]['caption'],
-                                  content: usprofile["posts"][index]
-                                          ["fileUrl"] ??
-                                      usprofile["posts"][index]["verse"],
-                                  comment: usprofile["posts"][index]["comments"]
-                                      .length,
-                                  share: usprofile["posts"][index]["shares"],
-                                  username: usprofile["info"]["firstName"] +
-                                      " " +
-                                      usprofile["info"]["lastName"],
+                                  caption: usprofile.posts[index].post_type > 0
+                                      ? usprofile.posts[index].caption
+                                      : usprofile.posts[index].file_content,
+                                  content: usprofile.posts[index].post_type > 0
+                                      ? usprofile.posts[index].file_content
+                                      : null,
+                                  comments: usprofile.posts[index].comments,
+                                  share: 0.toString(),
+                                  username: usprofile.name,
+                                  time: usprofile.times[index],
                                 );
                               },
                             )

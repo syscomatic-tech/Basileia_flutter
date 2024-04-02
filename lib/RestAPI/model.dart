@@ -55,3 +55,29 @@ class Question {
     required this.comments,
   });
 }
+
+class UsrProfile {
+  String profilePic; // Base64 encoded image
+  String name;
+  String totFollowers;
+  String totFollowings;
+  String totPosts = "";
+  String userId;
+  List<String> times;
+  late List<Post> posts;
+
+  // Constructor with required parameters
+  UsrProfile({
+    required this.userId,
+    required this.profilePic,
+    required this.name,
+    required this.totFollowers,
+    required this.totFollowings,
+    required this.totPosts,
+    required this.times,
+    required List<Post> posts,
+  }) {
+    // Initialize the 'posts' field with the provided 'posts' parameter
+    this.posts = posts;
+  }
+}
