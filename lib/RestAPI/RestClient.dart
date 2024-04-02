@@ -580,8 +580,8 @@ Future<UsrProfile> GetUserProfile(String usId) async {
     String totalFolls = "0"; //Total followings
     List<String> times = [""];
     if (totalPosts > 0) {
-      totalFols = resps[0]["followers"];
-      totalFolls = resps[0]["following"];
+      totalFols = resps[0]["followers"].length.toString();
+      totalFolls = resps[0]["following"].length.toString();
       for (var resp in resps) {
         var useid = resp["userId"];
 
