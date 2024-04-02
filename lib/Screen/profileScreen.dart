@@ -12,7 +12,6 @@ class ProfileScreen extends StatelessWidget {
   String bio = '';
   @override
   Widget build(BuildContext context) {
-    GetUserProfile(usId);
     return FutureBuilder(
         future: GetUserProfile(usId),
         builder: (context, AsyncSnapshot<UsrProfile> snapshot) {
@@ -106,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                               height: 15,
                             ),
                             Text(
-                              userFullname,
+                              usprofile!.name,
                               style: const TextStyle(
                                   fontSize: 16, fontFamily: poppins_semibold),
                             ),
