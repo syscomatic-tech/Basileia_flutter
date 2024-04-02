@@ -1605,14 +1605,16 @@ class profilePosts extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                    color: ContainerBG,
-                    borderRadius: BorderRadius.circular(10)),
-                child: Image.network(content ??
-                    "https://i.pinimg.com/736x/49/e5/8d/49e58d5922019b8ec4642a2e2b9291c2.jpg"),
-              ),
+              content == null
+                  ? const SizedBox
+                      .shrink() // Or simply Container() for no widget.
+                  : Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          color: ContainerBG,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Image.network(content!),
+                    ),
               const SizedBox(
                 height: 10,
               ),

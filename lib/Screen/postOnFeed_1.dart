@@ -42,8 +42,8 @@ class PostOnFeed_1 extends StatelessWidget {
                       Height: 45,
                       onTap: () async {
                         SocialClient scl_cl = SocialClient();
-
-                        if (count < 1) {
+                        count += 1;
+                        if (count <= 1) {
                           SuccessToast("uploading post please wait");
                           if (_controller.text.isNotEmpty) {
                             await scl_cl.upload_post(
@@ -56,13 +56,12 @@ class PostOnFeed_1 extends StatelessWidget {
                           SuccessToast("post uploaded");
 
                           Get.to(() => HomeFeedScreen());
-                        } else if (count > 5) {
+                        } else if (count <= 5) {
                           SuccessToast("be patient please");
                         } else {
                           SuccessToast(
                               "Post is being uploaded. Sit tight and wait please.");
                         }
-                        count += 1;
                       },
                       text: 'Post'),
                 ],

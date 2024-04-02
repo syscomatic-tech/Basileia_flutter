@@ -232,18 +232,23 @@ class SocialClient {
     }
   }
 
-  Future<bool> upload_verse(String text) async {
-    var request = http.MultipartRequest(
+  Future<String> upload_verse(String text) async {
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $jwt_token'
+    };
+    var request = http.Request(
         'POST', Uri.parse('https://api.zahedhasan.com/api/v1/upload/addVerse'));
-    request.fields.addAll({'userId': userId, "verse": text});
+    ;
+    request.body = json.encode({'userId': userId, "verse": text});
+    request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-
+    var outp = jsonDecode(await response.stream.bytesToString());
     if (response.statusCode < 300) {
-      print(await response.stream.bytesToString());
-      return true;
+      return outp["message"];
     } else {
       print(response.reasonPhrase);
-      return false;
+      return outp["message"];
     }
   }
 
@@ -262,6 +267,7 @@ class SocialClient {
       return true;
     } else {
       print(response.reasonPhrase);
+      ErrorToast(json.decode(await response.stream.bytesToString())["message"]);
       return false;
     }
   }

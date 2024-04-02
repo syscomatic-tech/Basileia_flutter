@@ -62,9 +62,9 @@ class PostOnFeed extends StatelessWidget {
                         } else if (_verseController.text
                             .toString()
                             .isNotEmpty) {
-                          await scl_cl
+                          var outp = await scl_cl
                               .upload_verse(_verseController.text.toString());
-                          SuccessToast('upload successful');
+                          SuccessToast(outp);
                           Get.to(() => HomeFeedScreen());
                         } else {
                           ErrorToast("No Post selected");
