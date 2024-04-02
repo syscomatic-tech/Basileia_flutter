@@ -564,8 +564,7 @@ Future<UsrProfile> GetUserProfile(String usId) async {
       "firstName": "Deleted",
       "lastName": "user"
     };
-    List<Map<String, dynamic>> resps =
-        json.decode(await response.stream.bytesToString());
+    List<dynamic> resps = json.decode(await response.stream.bytesToString());
     print(resps);
     var scl_client = SocialClient();
     List<Post> posts = [];
