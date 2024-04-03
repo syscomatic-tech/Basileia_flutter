@@ -199,9 +199,9 @@ class SocialClient {
       Map<String, dynamic> resp =
           json.decode(await response.stream.bytesToString());
       if (resp["user"].contains("profilePicture")) {
-        resp["hasPic"] = true;
+        resp["user"]["hasPic"] = true;
       } else {
-        resp["hasPic"] = false;
+        resp["user"]["hasPic"] = false;
       }
       return resp;
     } else {
