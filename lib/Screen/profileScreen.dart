@@ -12,8 +12,9 @@ class ProfileScreen extends StatelessWidget {
   String bio = '';
   @override
   Widget build(BuildContext context) {
+    var data = GetUserProfile(usId);
     return FutureBuilder(
-        future: GetUserProfile(usId),
+        future: data,
         builder: (context, AsyncSnapshot<UsrProfile> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const Scaffold(
