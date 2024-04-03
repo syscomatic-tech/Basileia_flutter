@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/images.dart';
@@ -103,7 +105,9 @@ class ProfileScreen extends StatelessWidget {
                                     InsideWidth: 110,
                                     InSideRadius: 60,
                                     OutSideRadius: 60)
-                                : Profile(
+                                : ProfileImage(
+                                    bimg: base64Decode(
+                                        usprofile.profilePic.split(',').last),
                                     OutSidehight: 120,
                                     OutSidewidth: 120,
                                     InSideHight: 110,

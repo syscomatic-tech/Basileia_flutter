@@ -63,6 +63,7 @@ class MenuScreen extends StatelessWidget {
                                 SuccessToast("Updating pic please wait");
                                 await scl_client.update_profile(userFullname,
                                     ".", imagePick_1.imagePath.toString());
+                                SuccessToast("Upload done");
                               } else {
                                 ErrorToast("Please select a valid image");
                               }
