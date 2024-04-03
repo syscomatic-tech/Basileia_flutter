@@ -302,7 +302,7 @@ class SocialClient {
         print(userInf["user"]);
         if (userInf["user"] != null) {
           if (userInf["user"].containsKey("profilePicture")) {
-            profPic = userInf["profilePicture"];
+            profPic = userInf["user"]["profilePicture"];
           }
 
           userInfo = userInf["user"];
