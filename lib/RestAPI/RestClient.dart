@@ -301,8 +301,8 @@ class SocialClient {
         final userInf = await getUserInfo(useid);
         print(userInf["user"]);
         if (userInf["user"] != null) {
-          if (userInf["user"].containsKey("profilePic")) {
-            profPic = userInf["profilePic"];
+          if (userInf["user"].containsKey("profilePicture")) {
+            profPic = userInf["profilePicture"];
           }
 
           userInfo = userInf["user"];
