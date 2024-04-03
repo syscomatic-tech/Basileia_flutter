@@ -174,7 +174,7 @@ Widget ProfileImage(
           height: InSideHight,
           width: InsideWidth,
           decoration: BoxDecoration(
-            image: DecorationImage(image: MemoryImage(bimg!),fit: BoxFit.fill),
+            image: DecorationImage(image: MemoryImage(bimg!), fit: BoxFit.fill),
             color: bordar,
             borderRadius: BorderRadius.circular(InSideRadius ?? 30),
           ),
@@ -350,14 +350,24 @@ Widget Feeds(
           children: [
             Row(
               children: [
-                Profile(
-                    onPressed: () {
-                      Get.to(() => ProfileScreen(usId: post.userID));
-                    },
-                    OutSidehight: 47,
-                    OutSidewidth: 47,
-                    InSideHight: 38,
-                    InsideWidth: 38),
+                post.profilePic.isEmpty
+                    ? Profile(
+                        onPressed: () {
+                          Get.to(() => ProfileScreen(usId: post.userID));
+                        },
+                        OutSidehight: 47,
+                        OutSidewidth: 47,
+                        InSideHight: 38,
+                        InsideWidth: 38)
+                    : ProfileImage(
+                        onPressed: () {
+                          Get.to(() => ProfileScreen(usId: post.userID));
+                        },
+                        OutSidehight: 47,
+                        OutSidewidth: 47,
+                        InSideHight: 38,
+                        InsideWidth: 38,
+                        bimg: base64Decode(post.profilePic.split(',').last)),
                 const SizedBox(
                   width: 10,
                 ),
@@ -988,7 +998,8 @@ Widget button_(
 }
 
 Widget Comments(
-    {String user = "",
+    {String profpic = "",
+    String user = "",
     String? content,
     String? like,
     String? reply,
@@ -1006,7 +1017,18 @@ Widget Comments(
               children: [
                 Row(
                   children: [
-                    profileAvatar(),
+                    profpic.isEmpty
+                        ? Profile(
+                            OutSidehight: 47,
+                            OutSidewidth: 47,
+                            InSideHight: 38,
+                            InsideWidth: 38)
+                        : ProfileImage(
+                            OutSidehight: 47,
+                            OutSidewidth: 47,
+                            InSideHight: 38,
+                            InsideWidth: 38,
+                            bimg: base64Decode(profpic.split(',').last)),
                     const SizedBox(
                       width: 12,
                     ),

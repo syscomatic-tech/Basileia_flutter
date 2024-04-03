@@ -1,4 +1,3 @@
-
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Style/controller.dart';
@@ -79,6 +78,7 @@ class CommentScreen extends StatelessWidget {
                             itemCount: cmnt.post.value.comments.length,
                             itemBuilder: (context, index) {
                               return Comments(
+                                  profpic: post.profilePic,
                                   user: cmnt.post.value.comments[index].usrname,
                                   content:
                                       cmnt.post.value.comments[index].content,
