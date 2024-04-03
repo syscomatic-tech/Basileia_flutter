@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:basileia/Screen/commentScreen.dart';
@@ -146,6 +147,40 @@ Widget OtpField({controller}) {
     length: 4,
     defaultPinTheme: defaultPinTheme,
     focusedPinTheme: defaultPinTheme,
+  );
+}
+
+Widget ProfileImage(
+    {VoidCallback? onPressed,
+    double? OutSidehight,
+    double? OutSidewidth,
+    double? InSideHight,
+    double? InsideWidth,
+    double? InSideRadius,
+    double? OutSideRadius,
+    Color? bordarColor,
+    Uint8List? bimg}) {
+  return InkWell(
+    onTap: onPressed,
+    child: Container(
+      height: OutSidehight,
+      width: OutSidewidth,
+      decoration: BoxDecoration(
+          image: DecorationImage(image: MemoryImage(bimg!)),
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(OutSideRadius ?? 30),
+          border: Border.all(color: bordarColor ?? profileBorder, width: 1.8)),
+      child: Center(
+        child: Container(
+          height: InSideHight,
+          width: InsideWidth,
+          decoration: BoxDecoration(
+            color: bordar,
+            borderRadius: BorderRadius.circular(InSideRadius ?? 30),
+          ),
+        ),
+      ),
+    ),
   );
 }
 
@@ -985,7 +1020,7 @@ Widget Comments(
                               fontFamily: poppins_semibold,
                               color: Colors.black),
                         ),
-                         Text(
+                        Text(
                           time,
                           style: const TextStyle(
                               fontSize: 12,
@@ -1606,8 +1641,7 @@ class profilePosts extends StatelessWidget {
                 height: 20,
               ),
               content == null
-                  ? const SizedBox
-                      .shrink()
+                  ? const SizedBox.shrink()
                   : Container(
                       width: double.maxFinite,
                       decoration: BoxDecoration(
@@ -1644,10 +1678,7 @@ class profilePosts extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          InkWell(
-                              onTap: () {
-                              },
-                              child: Image.asset(Heart_ic)),
+                          InkWell(onTap: () {}, child: Image.asset(Heart_ic)),
                           const SizedBox(
                             width: 7,
                           ),
@@ -1666,9 +1697,12 @@ class profilePosts extends StatelessWidget {
                       Row(
                         children: [
                           InkWell(
-                              onTap: () {Get.to(() => CommentScreen(
-                                post: post,
-                              ));}, child: Image.asset(Commen_ic_1)),
+                              onTap: () {
+                                Get.to(() => CommentScreen(
+                                      post: post,
+                                    ));
+                              },
+                              child: Image.asset(Commen_ic_1)),
                           const SizedBox(
                             width: 7,
                           ),
@@ -3436,19 +3470,20 @@ class profile_1 extends StatelessWidget {
   final double? insideBorderRedius;
   final bordarColor;
   final onPressed;
-  const profile_1(
-      {super.key,
-      required this.outsideBorder,
-      required this.outsideBorderRedius,
-      required this.bordarColor,
-      required this.insideBorder,
-      required this.insideBorderRedius,
-      this.onPressed,
-      });
+  final bimage;
+  const profile_1({
+    super.key,
+    required this.bimage,
+    required this.outsideBorder,
+    required this.outsideBorderRedius,
+    required this.bordarColor,
+    required this.insideBorder,
+    required this.insideBorderRedius,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
-     var bytes = base64.decode(baseImage);
     return InkWell(
       onTap: onPressed,
       child: Stack(
@@ -3466,7 +3501,9 @@ class profile_1 extends StatelessWidget {
                 height: insideBorder,
                 width: insideBorder,
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: MemoryImage(bytes),),
+                  image: DecorationImage(
+                    image: FileImage(File(_imagepick.imagePath.toString())),
+                  ),
                   color: bordar,
                   borderRadius: BorderRadius.circular(insideBorderRedius ?? 30),
                 ),

@@ -26,7 +26,7 @@ class ProfileScreen extends StatelessWidget {
             UsrProfile? usprofile;
             if (snapshot.hasData) {
               usprofile = snapshot.data;
-              bio = "Ami bukachuda";
+              bio = "Some bio";
             } else {
               ErrorToast("Cant fetch data ");
               return const Scaffold(
@@ -94,13 +94,21 @@ class ProfileScreen extends StatelessWidget {
                             const SizedBox(
                               height: 30,
                             ),
-                            Profile(
-                                OutSidehight: 120,
-                                OutSidewidth: 120,
-                                InSideHight: 110,
-                                InsideWidth: 110,
-                                InSideRadius: 60,
-                                OutSideRadius: 60),
+                            usprofile!.profilePic.isEmpty
+                                ? Profile(
+                                    OutSidehight: 120,
+                                    OutSidewidth: 120,
+                                    InSideHight: 110,
+                                    InsideWidth: 110,
+                                    InSideRadius: 60,
+                                    OutSideRadius: 60)
+                                : Profile(
+                                    OutSidehight: 120,
+                                    OutSidewidth: 120,
+                                    InSideHight: 110,
+                                    InsideWidth: 110,
+                                    InSideRadius: 60,
+                                    OutSideRadius: 60),
                             const SizedBox(
                               height: 15,
                             ),

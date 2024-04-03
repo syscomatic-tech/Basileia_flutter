@@ -115,6 +115,7 @@ class PostLikeController extends GetxController {
 
 class PostCommentController extends GetxController {
   var post = Rx<Post>(Post(
+    profilePic: "",
     usrName: '',
     userID: '',
     id: '',
@@ -140,6 +141,7 @@ class DropdownController extends GetxController {
     selectedItem.value = value;
   }
 }
+
 class FollowController extends GetxController {
   var isFollowing = false.obs;
 
@@ -147,6 +149,7 @@ class FollowController extends GetxController {
     isFollowing.value = !isFollowing.value;
   }
 }
+
 class ImagePick_1 extends GetxController {
   RxString imagePath = ''.obs;
   final ImagePicker picker = ImagePicker();

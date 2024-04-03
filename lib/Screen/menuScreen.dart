@@ -50,13 +50,22 @@ class MenuScreen extends StatelessWidget {
                       Row(
                         children: [
                           profile_1(
+                            bimage: imagePick_1.imagePath.toString(),
                             outsideBorder: 55,
                             outsideBorderRedius: 30,
                             bordarColor: profileBorder,
                             insideBorder: 45,
                             insideBorderRedius: 30,
-                            onPressed: ()async {
-                              imagePick_1.pickImage();
+                            onPressed: () async {
+                              await imagePick_1.pickImage();
+                              SocialClient scl_client = SocialClient();
+                              if (imagePick_1.imagePath.toString().isNotEmpty) {
+                                SuccessToast("Updating pic please wait");
+                                await scl_client.update_profile(userFullname,
+                                    ".", imagePick_1.imagePath.toString());
+                              } else {
+                                ErrorToast("Please select a valid image");
+                              }
                             },
                           ),
                           const SizedBox(

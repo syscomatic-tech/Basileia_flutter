@@ -14,6 +14,7 @@ class Comment {
 }
 
 class Post {
+  var profilePic = "";
   var usrName = "";
   var userID = "";
   var id = "";
@@ -27,6 +28,7 @@ class Post {
 
   Post(
       {required this.usrName,
+      required this.profilePic,
       required this.userID,
       required this.id,
       required this.likes,
