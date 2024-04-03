@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/menuScreen.dart';
 import 'package:basileia/Screen/postOnFeed.dart';
@@ -109,15 +111,24 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                                   ),
                                   Row(
                                     children: [
-                                      Profile(
+                                      userProfile.isEmpty
+                                          ? Profile(
                                           onPressed: () {
-                                            Get.to(() =>
-                                                ProfileScreen(usId: userId));
+                                            Get.to(() => ProfileScreen(usId: userId));
                                           },
-                                          OutSidewidth: 47,
                                           OutSidehight: 47,
+                                          OutSidewidth: 47,
+                                          InSideHight: 38,
+                                          InsideWidth: 38)
+                                          : ProfileImage(
+                                          onPressed: () {
+                                            Get.to(() => ProfileScreen(usId: userId));
+                                          },
+                                          OutSidehight: 47,
+                                          OutSidewidth: 47,
+                                          InSideHight: 38,
                                           InsideWidth: 38,
-                                          InSideHight: 38),
+                                          bimg: base64Decode(userProfile.split(',').last)),
                                       const SizedBox(
                                         width: 5,
                                       ),

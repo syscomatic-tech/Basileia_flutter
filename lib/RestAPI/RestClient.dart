@@ -30,7 +30,7 @@ class AuthClient {
       Map<String, dynamic> resp =
           json.decode(await response.stream.bytesToString());
       if (resp["user"].containsKey("profilePicture")) {
-        userProfile =resp["user"]["profilePicture"]
+        userProfile =resp["user"]["profilePicture"];
       }
       return resp;
     } else {
