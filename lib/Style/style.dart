@@ -166,7 +166,6 @@ Widget ProfileImage(
       height: OutSidehight,
       width: OutSidewidth,
       decoration: BoxDecoration(
-          image: DecorationImage(image: MemoryImage(bimg!)),
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(OutSideRadius ?? 30),
           border: Border.all(color: bordarColor ?? profileBorder, width: 1.8)),
@@ -175,6 +174,7 @@ Widget ProfileImage(
           height: InSideHight,
           width: InsideWidth,
           decoration: BoxDecoration(
+            image: DecorationImage(image: MemoryImage(bimg!),fit: BoxFit.fill),
             color: bordar,
             borderRadius: BorderRadius.circular(InSideRadius ?? 30),
           ),
