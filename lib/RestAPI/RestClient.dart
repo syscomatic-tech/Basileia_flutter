@@ -197,7 +197,7 @@ class SocialClient {
 
     if (response.statusCode < 300) {
       final resp = json.decode(await response.stream.bytesToString());
-      if (resp["user"].contains("profilePicture")) {
+      if (resp["user"].containsKey("profilePicture")) {
         resp["user"]["hasPic"] = true;
       } else {
         resp["user"]["hasPic"] = false;
