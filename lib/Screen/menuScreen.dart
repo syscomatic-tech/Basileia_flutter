@@ -35,7 +35,6 @@ class MenuScreen extends StatelessWidget {
   ImagePick_1 imagePick_1 = ImagePick_1();
   @override
   Widget build(BuildContext context) {
-    totalFollowers(userId);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
