@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
@@ -8,6 +9,7 @@ import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Screen/profileScreen.dart';
 import 'package:basileia/Screen/questionDetailsScreen.dart';
 import 'package:basileia/Style/likeiconwidget.dart';
+import 'package:basileia/base64Image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -955,7 +957,8 @@ Widget Comments(
     String? content,
     String? like,
     String? reply,
-    String? share}) {
+    String? share,
+    String time = ""}) {
   final userr = user;
   return Column(
     children: [
@@ -977,14 +980,14 @@ Widget Comments(
                       children: [
                         Text(
                           userr,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               fontFamily: poppins_semibold,
                               color: Colors.black),
                         ),
-                        Text(
-                          '03 Sept. At 04:21',
-                          style: TextStyle(
+                         Text(
+                          time,
+                          style: const TextStyle(
                               fontSize: 12,
                               fontFamily: poppins_regular,
                               color: primaryTxt),
@@ -1001,7 +1004,7 @@ Widget Comments(
             ),
             Text(
               content!,
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: poppins_regular, color: primaryTxt, fontSize: 12),
             ),
             const SizedBox(
@@ -1011,47 +1014,44 @@ Widget Comments(
               height: 10,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Row(
+                //   children: [
+                //     InkWell(
+                //         onTap: () {},
+                //         child: Image.asset(
+                //           Share_ic_1,
+                //         )),
+                //     const SizedBox(
+                //       width: 7,
+                //     ),
+                //     Text(
+                //       like!,
+                //       style: TextStyle(
+                //           fontSize: 12,
+                //           fontFamily: poppins_regular,
+                //           color: Colors.black),
+                //     ),
+                //   ],
+                // ),
                 Row(
                   children: [
-                    InkWell(
-                        onTap: () {},
-                        child: Image.asset(
-                          Share_ic_1,
-                        )),
-                    const SizedBox(
-                      width: 7,
-                    ),
-                    Text(
-                      like!,
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: poppins_regular,
-                          color: Colors.black),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(onTap: () {}, child: Image.asset(Heart_ic)),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        const Text(
-                          '36',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: poppins_regular,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 25,
-                    ),
+                    // Row(
+                    //   children: [
+                    //     InkWell(onTap: () {}, child: Image.asset(Heart_ic)),
+                    //     const SizedBox(
+                    //       width: 7,
+                    //     ),
+                    //     const Text(
+                    //       '36',
+                    //       style: TextStyle(
+                    //           fontSize: 12,
+                    //           fontFamily: poppins_regular,
+                    //           color: Colors.black),
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       children: [
                         InkWell(onTap: () {}, child: Image.asset(Commen_ic_1)),
@@ -1059,7 +1059,7 @@ Widget Comments(
                           width: 7,
                         ),
                         const Text(
-                          '36',
+                          '0',
                           style: TextStyle(
                               fontSize: 12,
                               fontFamily: poppins_regular,
@@ -1607,7 +1607,7 @@ class profilePosts extends StatelessWidget {
               ),
               content == null
                   ? const SizedBox
-                      .shrink() // Or simply Container() for no widget.
+                      .shrink()
                   : Container(
                       width: double.maxFinite,
                       decoration: BoxDecoration(
@@ -1646,9 +1646,6 @@ class profilePosts extends StatelessWidget {
                         children: [
                           InkWell(
                               onTap: () {
-                                Get.to(() => CommentScreen(
-                                      post: post,
-                                    ));
                               },
                               child: Image.asset(Heart_ic)),
                           const SizedBox(
@@ -1669,7 +1666,9 @@ class profilePosts extends StatelessWidget {
                       Row(
                         children: [
                           InkWell(
-                              onTap: () {}, child: Image.asset(Commen_ic_1)),
+                              onTap: () {Get.to(() => CommentScreen(
+                                post: post,
+                              ));}, child: Image.asset(Commen_ic_1)),
                           const SizedBox(
                             width: 7,
                           ),
@@ -3437,7 +3436,6 @@ class profile_1 extends StatelessWidget {
   final double? insideBorderRedius;
   final bordarColor;
   final onPressed;
-  final ImageUrl;
   const profile_1(
       {super.key,
       required this.outsideBorder,
@@ -3446,10 +3444,11 @@ class profile_1 extends StatelessWidget {
       required this.insideBorder,
       required this.insideBorderRedius,
       this.onPressed,
-      this.ImageUrl});
+      });
 
   @override
   Widget build(BuildContext context) {
+     var bytes = base64.decode(baseImage);
     return InkWell(
       onTap: onPressed,
       child: Stack(
@@ -3467,10 +3466,10 @@ class profile_1 extends StatelessWidget {
                 height: insideBorder,
                 width: insideBorder,
                 decoration: BoxDecoration(
+                  image: DecorationImage(image: MemoryImage(bytes),),
                   color: bordar,
                   borderRadius: BorderRadius.circular(insideBorderRedius ?? 30),
                 ),
-                child: Image.network(ImageUrl),
               ),
             ),
           ),

@@ -147,3 +147,20 @@ class FollowController extends GetxController {
     isFollowing.value = !isFollowing.value;
   }
 }
+class ImagePick_1 extends GetxController {
+  RxString imagePath = ''.obs;
+  final ImagePicker picker = ImagePicker();
+
+  Future pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imagePath.value = pickedFile.path.toString();
+    } else {
+      print('No image selected');
+    }
+  }
+
+  void clearImagePath() {
+    imagePath = ''.obs;
+  }
+}

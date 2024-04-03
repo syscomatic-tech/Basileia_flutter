@@ -3,6 +3,9 @@ import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../Style/controller.dart';
 
 class MenuScreen extends StatelessWidget {
   MenuScreen({super.key});
@@ -27,8 +30,9 @@ class MenuScreen extends StatelessWidget {
     'Change your language from here',
   ];
   final menuCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var followers=[''];
+  var followers = [''];
   var postID = "";
+  ImagePick_1 imagePick_1 = ImagePick_1();
   @override
   Widget build(BuildContext context) {
     totalFollowers(userId);
@@ -45,7 +49,16 @@ class MenuScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          profile_1(outsideBorder: 55, outsideBorderRedius: 30, bordarColor: profileBorder, insideBorder: 45, insideBorderRedius: 30,ImageUrl: '',),
+                          profile_1(
+                            outsideBorder: 55,
+                            outsideBorderRedius: 30,
+                            bordarColor: profileBorder,
+                            insideBorder: 45,
+                            insideBorderRedius: 30,
+                            onPressed: ()async {
+                              imagePick_1.pickImage();
+                            },
+                          ),
                           const SizedBox(
                             width: 10,
                           ),
@@ -79,7 +92,12 @@ class MenuScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            statistic(backGround: primary_1,followers: '',following: '',POST: '',),
+            statistic(
+              backGround: primary_1,
+              followers: '',
+              following: '',
+              POST: '',
+            ),
             ListView.builder(
               itemCount: menuTitle.length,
               itemBuilder: (context, index) {
