@@ -296,12 +296,15 @@ class SocialClient {
         "lastName": "user"
       };
       for (var resp in respp["postAll"]) {
-        var haspic = false;
+        var profPic = "";
         var useid = resp["userId"];
         final userInf = await getUserInfo(useid);
         print(userInf["user"]);
         if (userInf["user"] != null) {
-          haspic = userInf["hasPic"];
+          if (userInf["user"].containsKey("profilePic")) {
+            profPic = userInf["profilePic"];
+          }
+
           userInfo = userInf["user"];
         } else {
           userInfo = {"firstName": "Deleted", "lastName": "user"};
@@ -332,7 +335,7 @@ class SocialClient {
         }
         if (hasVerse) {
           postt = Post(
-              profilePic: haspic ? userInfo["profilePicture"] : "",
+              profilePic: profPic,
               usrName: userInfo["firstName"] + " " + userInfo["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
@@ -354,7 +357,7 @@ class SocialClient {
           }
           print(resp['followers']);
           postt = Post(
-              profilePic: haspic ? userInfo["profilePicture"] : "",
+              profilePic: profPic,
               usrName: userInfo["firstName"] + " " + userInfo["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
@@ -581,6 +584,7 @@ Future<UsrProfile> GetUserProfile(String usId) async {
       "lastName": "user"
     };
     List<dynamic> resps = json.decode(await response.stream.bytesToString());
+    var profPic = "";
     print(resps);
     var scl_client = SocialClient();
     List<Post> posts = [];
@@ -588,7 +592,9 @@ Future<UsrProfile> GetUserProfile(String usId) async {
     final resp_info = await scl_client.getUserInfo(usId);
     if (resp_info["user"] != null) {
       userInfo = resp_info["user"];
-      haspic = userInfo["hasPic"];
+      if (userInfo.containsKey("profilePicture")) {
+        profPic = userInfo["profilePicture"];
+      }
     } else {
       userInfo = {"firstName": "Deleted", "lastName": "user"};
     }
@@ -629,7 +635,7 @@ Future<UsrProfile> GetUserProfile(String usId) async {
         }
         if (hasVerse) {
           postt = Post(
-              profilePic: haspic ? userInfo["profilePicture"] : "",
+              profilePic: profPic,
               usrName: userInfo["firstName"] + " " + userInfo["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
@@ -651,7 +657,7 @@ Future<UsrProfile> GetUserProfile(String usId) async {
           }
           print(resp['followers']);
           postt = Post(
-              profilePic: haspic ? userInfo["profilePicture"] : "",
+              profilePic: profPic,
               usrName: userInfo["firstName"] + " " + userInfo["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
@@ -663,7 +669,7 @@ Future<UsrProfile> GetUserProfile(String usId) async {
               caption: capt);
         } else {
           postt = Post(
-              profilePic: haspic ? userInfo["profilePicture"] : "",
+              profilePic: profPic,
               usrName: userInfo["firstName"] + " " + userInfo["lastName"],
               userID: resp["userId"],
               id: resp["_id"],
