@@ -686,7 +686,7 @@ Future<UsrProfile> GetUserProfile(String usId) async {
     }
     return UsrProfile(
         userId: userInfo["_id"],
-        profilePic: "",
+        profilePic: profPic,
         name: userInfo["firstName"]! + " " + userInfo["lastName"],
         totFollowers: totalFols,
         totFollowings: totalFolls,
