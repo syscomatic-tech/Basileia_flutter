@@ -196,8 +196,7 @@ class SocialClient {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode < 300) {
-      Map<String, dynamic> resp =
-          json.decode(await response.stream.bytesToString());
+      final resp = json.decode(await response.stream.bytesToString());
       if (resp["user"].contains("profilePicture")) {
         resp["user"]["hasPic"] = true;
       } else {
