@@ -12,15 +12,15 @@ import '../Style/images.dart';
 class CommentRepliesScreen extends StatelessWidget {
   final FocusNode _focusNode = FocusNode();
   final TextEditingController commentController = TextEditingController();
-  List<Replies> replies;
-  String commentId = "";
-  String postId = "";
+  final List<Replies> replies;
+  final String commentId;
+  final String postId;
   CommentRepliesScreen(
       {super.key,
       required this.replies,
       required this.commentId,
       required this.postId});
-  var scl = SocialClient();
+  final scl = SocialClient();
   late CommentRepliesController cmnt = CommentRepliesController(replies);
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class CommentRepliesScreen extends StatelessWidget {
                         const Padding(
                           padding: EdgeInsets.only(left: 100),
                           child: Text(
-                            'Comments',
+                            'Comment Replies',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -87,7 +87,7 @@ class CommentRepliesScreen extends StatelessWidget {
                                     ErrorToast("You cant reply to a reply");
                                   },
                                   like: 0.toString(),
-                                  reply: 0.toString(),
+                                  reply: cmnt.replies.value.length.toString(),
                                   share: 0.toString());
                             },
                           )),

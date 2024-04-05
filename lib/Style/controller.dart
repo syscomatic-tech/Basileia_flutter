@@ -136,9 +136,10 @@ class PostCommentController extends GetxController {
 }
 
 class CommentRepliesController extends GetxController {
-  late Rx<List<Replies>> replies;
+  var replies = Rx<List<Replies>>([]);
   CommentRepliesController(List<Replies> repl) {
     replies.value = repl;
+    print(replies.value);
   }
 
   void AddComment(comnt) {

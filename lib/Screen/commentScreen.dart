@@ -85,15 +85,13 @@ class CommentScreen extends StatelessWidget {
                                   content:
                                       cmnt.post.value.comments[index].content,
                                   ontap: () {
-                                    Get.to(() => {
-                                          CommentRepliesScreen(
-                                            commentId: cmnt
-                                                .post.value.comments[index].id,
-                                            postId: cmnt.post.value.id,
-                                            replies: cmnt.post.value
-                                                .comments[index].replies,
-                                          )
-                                        });
+                                    Get.to(() => CommentRepliesScreen(
+                                          commentId: cmnt
+                                              .post.value.comments[index].id,
+                                          postId: cmnt.post.value.id,
+                                          replies: cmnt.post.value
+                                              .comments[index].replies,
+                                        ));
                                   },
                                   like: 0.toString(),
                                   reply: 0.toString(),
