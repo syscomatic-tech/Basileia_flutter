@@ -31,7 +31,7 @@ class AuthClient {
     if (response.statusCode < 300) {
       Map<String, dynamic> resp =
           json.decode(await response.stream.bytesToString());
-      cachedUsers[userId] = resp["user"];
+      cachedUsers[userId] = json.encode(resp["user"]);
       if (resp["user"].containsKey("profilePicture")) {
         userProfile = resp["user"]["profilePicture"];
       }
