@@ -1,7 +1,8 @@
-
 import 'package:basileia/RestAPI/RestClient.dart';
+import 'package:basileia/Screen/SignUpOtpScreen.dart';
 import 'package:basileia/Screen/SignUpScreen.dart';
 import 'package:basileia/Screen/forgotScreen.dart';
+import 'package:basileia/Screen/FpassOtpScreen.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,7 +76,7 @@ class SignInScreen extends StatelessWidget {
         ),
         Obx(
           () => textField(
-            obscureText: controller.isObscured.value,
+              obscureText: controller.isObscured.value,
               width: 272,
               hight: 48,
               lebelText: 'Password',
@@ -95,7 +96,16 @@ class SignInScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 20, right: 160),
           child: InkWell(
-              onTap: () {Get.to(()=>ForgotPasswordScreen());},
+              onTap: () async {
+                if (email.text.toString().isNotEmpty) {
+                  userEmail = email.text.toString();
+                  SuccessToast("Processing please wait");
+                  await auth.OTPResend(email.text.toString());
+                  Get.to(() => FpassOtpScreen(email: email.text.toString()));
+                } else {
+                  ErrorToast("Please Enter your email");
+                }
+              },
               child: const Text(
                 'Forgot password?',
                 style: TextStyle(

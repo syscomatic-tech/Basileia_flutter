@@ -1,5 +1,6 @@
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
+import 'package:basileia/Screen/cmnReplies.dart';
 import 'package:basileia/Style/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -78,10 +79,22 @@ class CommentScreen extends StatelessWidget {
                             itemCount: cmnt.post.value.comments.length,
                             itemBuilder: (context, index) {
                               return Comments(
-                                  profpic: post.profilePic,
+                                  profpic: cmnt
+                                      .post.value.comments[index].profilePic,
                                   user: cmnt.post.value.comments[index].usrname,
                                   content:
                                       cmnt.post.value.comments[index].content,
+                                  ontap: () {
+                                    Get.to(() => {
+                                          CommentRepliesScreen(
+                                            commentId: cmnt
+                                                .post.value.comments[index].id,
+                                            postId: cmnt.post.value.id,
+                                            replies: cmnt.post.value
+                                                .comments[index].replies,
+                                          )
+                                        });
+                                  },
                                   like: 0.toString(),
                                   reply: 0.toString(),
                                   share: 0.toString());
@@ -102,10 +115,13 @@ class CommentScreen extends StatelessWidget {
                     final out =
                         await scl.comment_post(commentController.text, post.id);
                     cmnt.AddComment(Comment(
+                        profilePic: userProfile,
                         userId: userId,
                         id: post.id,
                         content: commentController.text,
-                        usrname: userFullname));
+                        usrname: userFullname,
+                        time: "",
+                        replies: []));
                     if (out) {
                       SuccessToast("Comment Added");
                     } else {

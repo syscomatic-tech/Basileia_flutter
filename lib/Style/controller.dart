@@ -135,6 +135,17 @@ class PostCommentController extends GetxController {
   }
 }
 
+class CommentRepliesController extends GetxController {
+  late Rx<List<Replies>> replies;
+  CommentRepliesController(List<Replies> repl) {
+    replies.value = repl;
+  }
+
+  void AddComment(comnt) {
+    replies.value.add(comnt);
+  }
+}
+
 class DropdownController extends GetxController {
   var selectedItem = 'Option 1'.obs;
   void setSelectedItem(String value) {

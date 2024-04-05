@@ -1004,6 +1004,7 @@ Widget Comments(
     String? like,
     String? reply,
     String? share,
+    VoidCallback? ontap,
     String time = ""}) {
   final userr = user;
   return Column(
@@ -1111,7 +1112,7 @@ Widget Comments(
                     // ),
                     Row(
                       children: [
-                        InkWell(onTap: () {}, child: Image.asset(Commen_ic_1)),
+                        InkWell(onTap: ontap, child: Image.asset(Commen_ic_1)),
                         const SizedBox(
                           width: 7,
                         ),
@@ -1549,10 +1550,13 @@ Widget profileButton({onTap, String? text, ic}) {
   );
 }
 
-Widget profileMassageButton() {
+Widget profileMassageButton(name, userid) {
   return InkWell(
     onTap: () async {
-      Get.to(() => InboxScreen());
+      Get.to(() => ChatScreen(
+            recevierEmail: name,
+            receVierId: userid,
+          ));
     },
     child: Container(
       width: 90,

@@ -31,8 +31,9 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
   @override
   Widget build(BuildContext context) {
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
+    var data = scl_client.get_all_posts();
     return FutureBuilder(
-        future: controller.call_posts(),
+        future: data,
         builder: (context, AsyncSnapshot<List<Post>> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const Scaffold(
@@ -113,22 +114,25 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                                     children: [
                                       userProfile.isEmpty
                                           ? Profile(
-                                          onPressed: () {
-                                            Get.to(() => ProfileScreen(usId: userId));
-                                          },
-                                          OutSidehight: 47,
-                                          OutSidewidth: 47,
-                                          InSideHight: 38,
-                                          InsideWidth: 38)
+                                              onPressed: () {
+                                                Get.to(() => ProfileScreen(
+                                                    usId: userId));
+                                              },
+                                              OutSidehight: 47,
+                                              OutSidewidth: 47,
+                                              InSideHight: 38,
+                                              InsideWidth: 38)
                                           : ProfileImage(
-                                          onPressed: () {
-                                            Get.to(() => ProfileScreen(usId: userId));
-                                          },
-                                          OutSidehight: 47,
-                                          OutSidewidth: 47,
-                                          InSideHight: 38,
-                                          InsideWidth: 38,
-                                          bimg: base64Decode(userProfile.split(',').last)),
+                                              onPressed: () {
+                                                Get.to(() => ProfileScreen(
+                                                    usId: userId));
+                                              },
+                                              OutSidehight: 47,
+                                              OutSidewidth: 47,
+                                              InSideHight: 38,
+                                              InsideWidth: 38,
+                                              bimg: base64Decode(
+                                                  userProfile.split(',').last)),
                                       const SizedBox(
                                         width: 5,
                                       ),

@@ -13,6 +13,8 @@ var userPass = "";
 var userEmail = "";
 var userProfile = "";
 
+Map<String, dynamic> cachedUsers = {};
+
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
@@ -30,7 +32,7 @@ class AuthClient {
       Map<String, dynamic> resp =
           json.decode(await response.stream.bytesToString());
       if (resp["user"].containsKey("profilePicture")) {
-        userProfile =resp["user"]["profilePicture"];
+        userProfile = resp["user"]["profilePicture"];
       }
       return resp;
     } else {
@@ -137,7 +139,30 @@ class AuthClient {
       return true;
     } else {
       print(response.reasonPhrase);
+      ErrorToast(json.decode(await response.stream.bytesToString())["message"]);
       return false;
+    }
+  }
+
+  Future<String> ResetPassword(String newpassword, String otp) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var request = http.Request('POST',
+        Uri.parse('https://api.zahedhasan.com/api/v1/auth/reset-password'));
+    request.body = json
+        .encode({"email": userEmail, "otp": otp, "newPassword": newpassword});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode < 300) {
+      var outp = json.decode(await response.stream.bytesToString());
+      return outp["message"];
+    } else {
+      print(response.reasonPhrase);
+      var outp = json.decode(await response.stream.bytesToString());
+      return outp["message"];
     }
   }
 
@@ -191,28 +216,35 @@ class SocialClient {
   }
 
   Future<Map<String, dynamic>> getUserInfo(String usrid) async {
-    var headers = {'Authorization': 'Bearer $jwt_token'};
-    var request = http.Request(
-        'GET', Uri.parse('https://api.zahedhasan.com/api/v1/auth/$usrid'));
+    if (!cachedUsers.containsKey(usrid)) {
+      var headers = {'Authorization': 'Bearer $jwt_token'};
+      var request = http.Request(
+          'GET', Uri.parse('https://api.zahedhasan.com/api/v1/auth/$usrid'));
 
-    request.headers.addAll(headers);
+      request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send();
 
-    if (response.statusCode < 300) {
-      final resp = json.decode(await response.stream.bytesToString());
-      if (resp["user"].containsKey("profilePicture")) {
-        resp["user"]["hasPic"] = true;
+      if (response.statusCode < 300) {
+        final resp = json.decode(await response.stream.bytesToString());
+        if (resp["user"] != null) {
+          cachedUsers[userId] = resp["user"];
+          if (resp["user"].containsKey("profilePicture")) {
+            resp["user"]["hasPic"] = true;
+          } else {
+            resp["user"]["hasPic"] = false;
+          }
+        }
+        return resp;
       } else {
-        resp["user"]["hasPic"] = false;
+        print(response.reasonPhrase);
+        Map<String, dynamic> resp =
+            json.decode(await response.stream.bytesToString());
+        print(resp);
+        return resp;
       }
-      return resp;
     } else {
-      print(response.reasonPhrase);
-      Map<String, dynamic> resp =
-          json.decode(await response.stream.bytesToString());
-      print(resp);
-      return resp;
+      return cachedUsers[userId];
     }
   }
 
@@ -294,22 +326,21 @@ class SocialClient {
       Map<String, dynamic> respp =
           jsonDecode(await response.stream.bytesToString());
       print("Number of posts fetched");
-      print(respp["postAll"].length);
+      print(respp["randomPosts"].length);
       Map<String, dynamic> userInfo = {
         "firstName": "Deleted",
         "lastName": "user"
       };
-      for (var resp in respp["postAll"]) {
+      for (var resp in respp["randomPosts"]) {
         var profPic = "";
         var useid = resp["userId"];
         final userInf = await getUserInfo(useid);
         print(userInf["user"]);
         if (userInf["user"] != null) {
-          if (userInf["user"].containsKey("profilePicture")) {
-            profPic = userInf["user"]["profilePicture"];
-          }
-
           userInfo = userInf["user"];
+          if (userInfo.containsKey("profilePicture")) {
+            profPic = userInfo["profilePicture"];
+          }
         } else {
           userInfo = {"firstName": "Deleted", "lastName": "user"};
         }
@@ -321,18 +352,41 @@ class SocialClient {
         List<Comment> comments = [];
         String capt = "";
         for (var cmt in og_cmnt) {
-          final cInf = await getUserInfo(cmt["userId"]);
+          var cInf = await getUserInfo(cmt["userId"]);
           Map<String, dynamic> cInfo;
+          var hspic = false;
           if (cInf["user"] != null) {
             cInfo = cInf["user"];
+            if (cInfo.containsKey("profilePicture")) {
+              hspic = true;
+            }
           } else {
             cInfo = {"firstName": "Deleted", "lastName": "user"};
           }
+          List<Replies> repls = [];
+          for (var reppl in cmt["replies"]) {
+            var cInf = await getUserInfo(cmt["userId"]);
+            Map<String, dynamic> cInfo;
+            if (cInf["user"] != null) {
+              cInfo = cInf["user"];
+            } else {
+              cInfo = {"firstName": "Deleted", "lastName": "user"};
+            }
+            repls.add(Replies(
+                userId: reppl["userId"].toString(),
+                id: reppl["_id"].toString(),
+                content: reppl["comment"].toString(),
+                usrname: cInfo["firstName"]! + " " + cInfo["lastName"]!,
+                time: reppl["createdAt"]));
+          }
           comments.add(Comment(
+              profilePic: hspic ? cInfo["profilePicture"] : "",
               userId: cmt["userId"].toString(),
               id: cmt["_id"].toString(),
               content: cmt["comment"].toString(),
-              usrname: cInfo["firstName"]! + " " + cInfo["lastName"]!));
+              usrname: cInfo["firstName"]! + " " + cInfo["lastName"]!,
+              time: cmt["createdAt"],
+              replies: repls));
         }
         if (resp.containsKey("caption")) {
           capt = resp["caption"];
@@ -474,10 +528,13 @@ Future<List<Question>> getForumPosts() async {
           userinf["lastName"] = "User";
         }
         cmments.add(Comment(
+            profilePic: "",
             userId: cmnt["userId"],
             id: cmnt["_id"],
             content: cmnt["comment"],
-            usrname: userinf["firstName"] + " " + userinf["lastName"]));
+            usrname: userinf["firstName"] + " " + userinf["lastName"],
+            time: cmnt["createdAt"],
+            replies: []));
       }
       if (forum["userId"] == null) {
         forum["userId"] = {
@@ -549,6 +606,32 @@ Future<String> Follow_user(String id) async {
     print(response.reasonPhrase);
     var outp = jsonDecode(await response.stream.bytesToString());
     return outp["message"];
+  }
+}
+
+Future<String> reply_comment(
+    String content, String postId, String commentId) async {
+  var headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $jwt_token'
+  };
+  var request = http.Request(
+      'POST',
+      Uri.parse(
+          'https://api.zahedhasan.com/api/v1/upload/reply/$postId/$commentId'));
+  request.body = json.encode({"userId": userId, "reply": content});
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode < 300) {
+    var outp = jsonDecode(await response.stream.bytesToString());
+    return outp;
+  } else {
+    var outp = jsonDecode(await response.stream.bytesToString());
+    ErrorToast(outp["message"]);
+    print(response.reasonPhrase);
+    return "Error";
   }
 }
 
@@ -628,11 +711,32 @@ Future<UsrProfile> GetUserProfile(String usId) async {
           } else {
             cInfo = {"firstName": "Deleted", "lastName": "user"};
           }
+          List<Replies> repls = [];
+          for (var reppl in cmt["replies"]) {
+            var cInf = await scl_client.getUserInfo(cmt["userId"]);
+            Map<String, dynamic> cInfo;
+            if (cInf["user"] != null) {
+              cInfo = cInf["user"];
+            } else {
+              cInfo = {"firstName": "Deleted", "lastName": "user"};
+            }
+            repls.add(Replies(
+                userId: reppl["userId"].toString(),
+                id: reppl["_id"].toString(),
+                content: reppl["comment"].toString(),
+                usrname: cInfo["firstName"]! + " " + cInfo["lastName"]!,
+                time: reppl["createdAt"]));
+          }
           comments.add(Comment(
+              profilePic: cInfo.containsKey("profilePicture")
+                  ? cInfo["profilePicture"]
+                  : "",
               userId: cmt["userId"].toString(),
               id: cmt["_id"].toString(),
               content: cmt["comment"].toString(),
-              usrname: cInfo["firstName"]! + " " + cInfo["lastName"]!));
+              usrname: cInfo["firstName"]! + " " + cInfo["lastName"]!,
+              time: cmt["createdAt"],
+              replies: repls));
         }
         if (resp.containsKey("caption")) {
           capt = resp["caption"];

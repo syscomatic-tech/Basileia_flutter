@@ -1,15 +1,36 @@
 class Comment {
+  String profilePic;
   String userId;
   String id;
   String content;
   String usrname;
-  List<Comment> replies = [];
+  String time;
+  List<Replies> replies = [];
 
   // Constructor
   Comment(
       {required this.userId,
+      required this.profilePic,
       required this.id,
       required this.content,
+      required this.usrname,
+      required this.time,
+      required this.replies});
+}
+
+class Replies {
+  String userId;
+  String id;
+  String content;
+  String usrname;
+  String time;
+
+  // Constructor
+  Replies(
+      {required this.userId,
+      required this.id,
+      required this.content,
+      required this.time,
       required this.usrname});
 }
 
