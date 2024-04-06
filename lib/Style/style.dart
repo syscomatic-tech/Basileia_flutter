@@ -1625,19 +1625,20 @@ class profilePosts extends StatelessWidget {
   final String time;
   final List<Comment> comments;
   final Post post;
-  final propic;
+  final String propic;
 
-  profilePosts(
-      {super.key,
-      required this.post,
-      required this.username,
-      required this.caption,
-      required this.like,
-      required this.comments,
-      required this.share,
-      required this.time,
-      this.content,
-      required this.propic});
+  profilePosts({
+    super.key,
+    required this.post,
+    required this.username,
+    required this.caption,
+    required this.like,
+    required this.comments,
+    required this.share,
+    required this.time,
+    required this.propic,
+    this.content,
+  });
 
   @override
   Widget build(BuildContext context) {
