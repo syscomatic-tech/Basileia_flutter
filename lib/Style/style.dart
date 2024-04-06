@@ -1824,7 +1824,7 @@ Widget profileAvatar_1({double? height, double? width}) {
   );
 }
 
-Widget chatItem({String? title, String? subTitle, msgCount, onTap}) {
+Widget chatItem({String? title, String? subTitle, msgCount, onTap, image}) {
   return Column(
     children: [
       InkWell(
@@ -1846,7 +1846,7 @@ Widget chatItem({String? title, String? subTitle, msgCount, onTap}) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                profileAvatar_1(),
+                profileAvatar(image: image),
                 const SizedBox(
                   width: 15,
                 ),

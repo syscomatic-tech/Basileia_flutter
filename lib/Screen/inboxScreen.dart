@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/chatScreen.dart';
 import 'package:basileia/Style/colors.dart';
@@ -20,8 +22,8 @@ class InboxScreen extends StatelessWidget {
     var users = await sex_client.get_users();
     if (users is List) {
       for (var user in users) {
-        UserList.add(
-            User(
+        UserList.add(User(
+            profpic: user["profilePicture"],
             name: user['firstName'] + " " + user['lastName'],
             id: user["_id"],
             email: user["email"]));
@@ -116,6 +118,11 @@ class InboxScreen extends StatelessWidget {
                                         )
                                       ]),
                                   child: chatItem(
+                                      image: MemoryImage(base64Decode(
+                                          UserList[index]
+                                              .profpic
+                                              .split(",")
+                                              .last)),
                                       title: UserList[index].name,
                                       subTitle: UserList[index].email,
                                       msgCount: 0,

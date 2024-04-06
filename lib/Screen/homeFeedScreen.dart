@@ -194,7 +194,9 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                             return feeds[index];
                           }),
                       InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          Get.to(() => HomeFeedScreen());
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

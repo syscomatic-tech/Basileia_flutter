@@ -6,7 +6,12 @@ class User {
   var name = "";
   var email = "";
   var id = "";
-  User({required this.name, required this.email, required this.id});
+  var profpic = "";
+  User(
+      {required this.name,
+      required this.email,
+      required this.id,
+      required this.profpic});
 }
 
 class MessageService {
