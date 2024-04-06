@@ -126,7 +126,7 @@ class InboxScreen extends StatelessWidget {
                                                   .profpic
                                                   .split(",")
                                                   .last))
-                                          : "",
+                                          : null,
                                       title: UserList[index].name,
                                       subTitle: UserList[index].email,
                                       msgCount: 0,
