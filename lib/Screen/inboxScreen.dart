@@ -26,7 +26,8 @@ class InboxScreen extends StatelessWidget {
           name: user['firstName'] + " " + user['lastName'],
           id: user["_id"],
           email: user["email"],
-          profpic: user["profilePicture"],
+          profpic:
+              user.containsKey("profilePicture") ? user["profilePicture"] : "",
         ));
       }
       return true;
@@ -119,11 +120,13 @@ class InboxScreen extends StatelessWidget {
                                         )
                                       ]),
                                   child: chatItem(
-                                      image: MemoryImage(base64Decode(
-                                          UserList[index]
-                                              .profpic
-                                              .split(",")
-                                              .last)),
+                                      image: UserList[index].profpic.isNotEmpty
+                                          ? MemoryImage(base64Decode(
+                                              UserList[index]
+                                                  .profpic
+                                                  .split(",")
+                                                  .last))
+                                          : "",
                                       title: UserList[index].name,
                                       subTitle: UserList[index].email,
                                       msgCount: 0,
