@@ -52,7 +52,7 @@ class religionsPageController extends GetxController
 }
 
 class CheckboxController extends GetxController {
-  var isChecked = true.obs;
+  var isChecked = false.obs;
   void acceptPrivacyPolicy() {
     isChecked.value = true;
   }

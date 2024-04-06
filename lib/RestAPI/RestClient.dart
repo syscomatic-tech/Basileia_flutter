@@ -125,6 +125,8 @@ class AuthClient {
       return true;
     } else {
       print(response.reasonPhrase);
+      var outp = json.decode(await response.stream.bytesToString());
+      ErrorToast(outp["message"]);
       return false;
     }
   }

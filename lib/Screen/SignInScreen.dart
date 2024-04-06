@@ -15,7 +15,7 @@ class SignInScreen extends StatelessWidget {
   final AuthClient auth = AuthClient();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
-
+  int cnt = 0;
   final PasswordController controller = Get.put(PasswordController());
   @override
   Widget build(BuildContext context) {
@@ -98,10 +98,15 @@ class SignInScreen extends StatelessWidget {
           child: InkWell(
               onTap: () async {
                 if (email.text.toString().isNotEmpty) {
-                  userEmail = email.text.toString();
-                  SuccessToast("Processing please wait");
-                  await auth.OTPResend(email.text.toString());
-                  Get.to(() => FpassOtpScreen(email: email.text.toString()));
+                  cnt += 1;
+                  if (cnt < 2) {
+                    userEmail = email.text.toString();
+                    SuccessToast("Processing please wait");
+                    await auth.OTPResend(email.text.toString());
+                    Get.to(() => FpassOtpScreen(email: email.text.toString()));
+                  } else if (cnt < 5) {
+                    ErrorToast("please wait its processing");
+                  }
                 } else {
                   ErrorToast("Please Enter your email");
                 }
