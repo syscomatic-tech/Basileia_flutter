@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/groupChatScreen.dart';
 import 'package:basileia/Style/colors.dart';
@@ -12,6 +14,7 @@ import 'package:get/get.dart';
 class ChatScreen extends StatelessWidget {
   final String recevierEmail;
   final String receVierId;
+
   ChatScreen(
       {super.key, required this.recevierEmail, required this.receVierId});
 
@@ -27,6 +30,7 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profilePic = cachedUsers[receVierId];
     return Scaffold(
       body: Column(
         children: [
@@ -52,7 +56,13 @@ class ChatScreen extends StatelessWidget {
                       const SizedBox(
                         width: 20,
                       ),
-                      profileAvatar_1(),
+                      !cachedUsers.containsKey(receVierId)
+                          ? profileAvatar_1()
+                          : profileAvatar(
+                              image: MemoryImage(base64Decode(
+                                  jsonDecode(profilePic!)["profilePicture"]
+                                      .split(',')
+                                      .last))),
                       const SizedBox(
                         width: 15,
                       ),
@@ -102,7 +112,9 @@ class ChatScreen extends StatelessWidget {
               micOnTap: () {
                 Get.bottomSheet(chatBottomSheet(context: context));
               },
-              sentOnTap: () {sendMessage();},
+              sentOnTap: () {
+                sendMessage();
+              },
               controller: sentMsgController)
         ],
       ),
@@ -114,24 +126,30 @@ class ChatScreen extends StatelessWidget {
     return StreamBuilder(
       stream: messageService.getMessages(receVierId, senderID),
       builder: (BuildContext context, snapshot) {
-        if(snapshot.hasError){
+        if (snapshot.hasError) {
           return const Text('Error');
         }
-        if(snapshot.connectionState ==ConnectionState.waiting){
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Text('Loading..');
         }
         return ListView(
-          children: snapshot.data!.docs.map((doc)=> _buildMessageItem(doc)).toList(),
+          children:
+              snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList(),
         );
       },
     );
   }
 
-  Widget _buildMessageItem(DocumentSnapshot doc){
-    Map<String,dynamic> data = doc.data() as Map<String,dynamic>;
+  Widget _buildMessageItem(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     bool isCurrentUser = data['senderID'] == userId;
-    var alignment = isCurrentUser?Alignment.centerRight:Alignment.centerLeft;
-    return Container(alignment: alignment,
-        child: ChatBubble(message: data["message"],isCurrentUser: isCurrentUser,));
+    var alignment =
+        isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+    return Container(
+        alignment: alignment,
+        child: ChatBubble(
+          message: data["message"],
+          isCurrentUser: isCurrentUser,
+        ));
   }
 }
