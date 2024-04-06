@@ -23,10 +23,11 @@ class InboxScreen extends StatelessWidget {
     if (users is List) {
       for (var user in users) {
         UserList.add(User(
-            profpic: user["profilePicture"],
-            name: user['firstName'] + " " + user['lastName'],
-            id: user["_id"],
-            email: user["email"]));
+          name: user['firstName'] + " " + user['lastName'],
+          id: user["_id"],
+          email: user["email"],
+          profpic: user["profilePicture"],
+        ));
       }
       return true;
     }

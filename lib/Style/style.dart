@@ -1456,6 +1456,7 @@ Widget menuItem({
   String? subtitle,
   count,
 }) {
+  var cnt = 0;
   return Column(
     children: [
       SizedBox(
@@ -1510,9 +1511,19 @@ Widget menuItem({
                   ),
                   listTielButton(onTap: () async {
                     if (title == "Messages") {
-                      var inboxscr = InboxScreen();
-                      await inboxscr.GetUsers();
-                      Get.to(() => inboxscr);
+                      cnt += 1;
+                      if (cnt < 2) {
+                        var inboxscr = InboxScreen();
+                        SuccessToast("Loading Please wait");
+                        await inboxscr.GetUsers();
+                        Get.to(() => inboxscr);
+                      } else if (cnt < 5) {
+                        ErrorToast("Please Please wait");
+                      } else if (cnt < 15) {
+                        ErrorToast(
+                            "U motherfucking piece of shit gang banging cock sucker.");
+                        ErrorToast("Dont you have any patience");
+                      }
                     }
                     if (title == 'Forums') {
                       await Get.to(() => const ForumsScreen());
