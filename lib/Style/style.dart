@@ -1636,8 +1636,8 @@ class profilePosts extends StatelessWidget {
     required this.comments,
     required this.share,
     required this.time,
-    required this.propic,
     this.content,
+    required this.propic,
   });
 
   @override
