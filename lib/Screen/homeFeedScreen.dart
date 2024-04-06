@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:basileia/Screen/homefeed2Screen.dart';
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/menuScreen.dart';
 import 'package:basileia/Screen/postOnFeed.dart';
@@ -195,7 +195,7 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                           }),
                       InkWell(
                         onTap: () async {
-                          Get.reset();
+                          Get.to(() => HomeFeedScreen2());
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
