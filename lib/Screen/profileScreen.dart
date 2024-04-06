@@ -186,6 +186,7 @@ class ProfileScreen extends StatelessWidget {
                               itemCount: usprofile.posts.length,
                               itemBuilder: (context, index) {
                                 return profilePosts(
+                                  propic: usprofile!.profilePic,
                                   post: usprofile!.posts[index],
                                   like: usprofile.posts[index].likes.length
                                       .toString(),

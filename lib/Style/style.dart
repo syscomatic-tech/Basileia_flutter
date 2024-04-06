@@ -945,7 +945,32 @@ Widget postPhoto_1({imagepick}) {
   );
 }
 
-Widget profileAvatar() {
+Widget profileAvatar({image}) {
+  return Stack(
+    children: [
+      Container(
+        height: 50,
+        width: 50,
+        decoration: BoxDecoration(
+            image: DecorationImage(image: image),
+            color: bordar,
+            borderRadius: BorderRadius.circular(30)),
+      ),
+      Positioned(
+        bottom: 2,
+        right: 0,
+        child: Container(
+          height: 14,
+          width: 14,
+          decoration: BoxDecoration(
+              color: Colors.green, borderRadius: BorderRadius.circular(30)),
+        ),
+      )
+    ],
+  );
+}
+
+Widget profileAvatar_0() {
   return Stack(
     children: [
       Container(
@@ -1600,6 +1625,7 @@ class profilePosts extends StatelessWidget {
   final String time;
   final List<Comment> comments;
   final Post post;
+  final propic;
 
   profilePosts(
       {super.key,
@@ -1610,7 +1636,8 @@ class profilePosts extends StatelessWidget {
       required this.comments,
       required this.share,
       required this.time,
-      this.content});
+      this.content,
+      required this.propic});
 
   @override
   Widget build(BuildContext context) {
@@ -1626,7 +1653,11 @@ class profilePosts extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      profileAvatar(),
+                      propic!.profilePic.isEmpty
+                          ? profileAvatar_0()
+                          : profileAvatar(
+                              image: base64Decode(
+                                  propic.profilePic.split(',').last)),
                       const SizedBox(
                         width: 12,
                       ),
