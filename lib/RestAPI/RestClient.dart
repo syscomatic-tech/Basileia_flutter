@@ -13,8 +13,6 @@ var userPass = "";
 var userEmail = "";
 var userProfile = "";
 
-Map<String, String> cachedUsers = {"": ""};
-
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
@@ -31,7 +29,7 @@ class AuthClient {
     if (response.statusCode < 300) {
       Map<String, dynamic> resp =
           json.decode(await response.stream.bytesToString());
-      cachedUsers[userId] = json.encode(resp["user"]);
+
       if (resp["user"].containsKey("profilePicture")) {
         userProfile = resp["user"]["profilePicture"];
       }
@@ -220,7 +218,7 @@ class SocialClient {
   }
 
   Future<Map<String, dynamic>> getUserInfo(String usrid) async {
-    if (!cachedUsers.containsKey(usrid)) {
+    if (true) {
       var headers = {'Authorization': 'Bearer $jwt_token'};
       var request = http.Request(
           'GET', Uri.parse('https://api.zahedhasan.com/api/v1/auth/$usrid'));
@@ -233,7 +231,6 @@ class SocialClient {
         final resp = json.decode(await response.stream.bytesToString());
 
         if (resp["user"] != null) {
-          cachedUsers[usrid] = json.encode(resp["user"]);
           if (resp["user"].containsKey("profilePicture")) {
             resp["user"]["hasPic"] = true;
           } else {
@@ -248,10 +245,6 @@ class SocialClient {
         print(resp);
         return resp;
       }
-    } else {
-      print(json.decode(cachedUsers[usrid]!));
-      return Future<Map<String, dynamic>>.value(
-          {"user": json.decode(cachedUsers[usrid]!)});
     }
   }
 

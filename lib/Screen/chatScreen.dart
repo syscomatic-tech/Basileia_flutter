@@ -59,10 +59,8 @@ class ChatScreen extends StatelessWidget {
                       !cachedUsers.containsKey(receVierId)
                           ? profileAvatar_1()
                           : profileAvatar(
-                              image: MemoryImage(base64Decode(
-                                  jsonDecode(profilePic!)["profilePicture"]
-                                      .split(',')
-                                      .last))),
+                              image: NetworkImage(
+                                  jsonDecode(profilePic!)["profilePicture"])),
                       const SizedBox(
                         width: 15,
                       ),
