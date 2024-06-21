@@ -131,8 +131,7 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                                               OutSidewidth: 47,
                                               InSideHight: 38,
                                               InsideWidth: 38,
-                                              bimg: base64Decode(
-                                                  userProfile.split(',').last)),
+                                              bimg: userProfile),
                                       const SizedBox(
                                         width: 5,
                                       ),

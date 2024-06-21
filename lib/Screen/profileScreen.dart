@@ -106,8 +106,7 @@ class ProfileScreen extends StatelessWidget {
                                     InSideRadius: 60,
                                     OutSideRadius: 60)
                                 : ProfileImage(
-                                    bimg: base64Decode(
-                                        usprofile.profilePic.split(',').last),
+                                    bimg: usprofile.profilePic,
                                     OutSidehight: 120,
                                     OutSidewidth: 120,
                                     InSideHight: 110,
