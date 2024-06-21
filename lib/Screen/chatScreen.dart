@@ -14,9 +14,13 @@ import 'package:get/get.dart';
 class ChatScreen extends StatelessWidget {
   final String recevierEmail;
   final String receVierId;
+  final String profilePic;
 
   ChatScreen(
-      {super.key, required this.recevierEmail, required this.receVierId});
+      {super.key,
+      required this.recevierEmail,
+      required this.receVierId,
+      required this.profilePic});
 
   final TextEditingController sentMsgController = TextEditingController();
   final MessageService messageService = MessageService();
@@ -30,7 +34,6 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profilePic = cachedUsers[receVierId];
     return Scaffold(
       body: Column(
         children: [
@@ -56,11 +59,9 @@ class ChatScreen extends StatelessWidget {
                       const SizedBox(
                         width: 20,
                       ),
-                      !cachedUsers.containsKey(receVierId)
+                      !profilePic.isEmpty
                           ? profileAvatar_1()
-                          : profileAvatar(
-                              image: NetworkImage(
-                                  jsonDecode(profilePic!)["profilePicture"])),
+                          : profileAvatar(image: NetworkImage(profilePic)),
                       const SizedBox(
                         width: 15,
                       ),

@@ -1587,12 +1587,13 @@ Widget profileButton({onTap, String? text, ic}) {
   );
 }
 
-Widget profileMassageButton(name, userid) {
+Widget profileMassageButton(name, userid, profpic) {
   return InkWell(
     onTap: () async {
       Get.to(() => ChatScreen(
             recevierEmail: name,
             receVierId: userid,
+            profilePic: profpic,
           ));
     },
     child: Container(
@@ -3434,6 +3435,7 @@ Widget user_tile() {
               Get.to(() => ChatScreen(
                     recevierEmail: userFullname,
                     receVierId: userId,
+                    profilePic: userProfile,
                   ));
             })),
   );

@@ -135,6 +135,8 @@ class InboxScreen extends StatelessWidget {
                                               recevierEmail:
                                                   UserList[index].name,
                                               receVierId: UserList[index].id,
+                                              profilePic:
+                                                  UserList[index].profpic,
                                             ));
                                       })),
                             );

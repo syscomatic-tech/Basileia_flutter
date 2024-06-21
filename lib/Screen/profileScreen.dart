@@ -159,8 +159,8 @@ class ProfileScreen extends StatelessWidget {
                                 const SizedBox(
                                   width: 15,
                                 ),
-                                profileMassageButton(
-                                    usprofile.name, usprofile.userId),
+                                profileMassageButton(usprofile.name,
+                                    usprofile.userId, usprofile.profilePic),
                                 const SizedBox(
                                   width: 10,
                                 ),
