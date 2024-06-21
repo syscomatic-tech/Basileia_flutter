@@ -61,7 +61,7 @@ class ChatScreen extends StatelessWidget {
                       const SizedBox(
                         width: 20,
                       ),
-                      !profilePic.isEmpty
+                      !profilePic.isNotEmpty
                           ? profileAvatar_1()
                           : profileAvatar(image: NetworkImage(profilePic)),
                       const SizedBox(
