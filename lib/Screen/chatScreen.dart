@@ -34,6 +34,8 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("the pic is");
+    print(profilePic);
     return Scaffold(
       body: Column(
         children: [
