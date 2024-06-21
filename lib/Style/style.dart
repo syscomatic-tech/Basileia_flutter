@@ -159,7 +159,7 @@ Widget ProfileImage(
     double? InSideRadius,
     double? OutSideRadius,
     Color? bordarColor,
-    Uint8List? bimg}) {
+    String? bimg}) {
   return InkWell(
     onTap: onPressed,
     child: Container(
@@ -174,7 +174,8 @@ Widget ProfileImage(
           height: InSideHight,
           width: InsideWidth,
           decoration: BoxDecoration(
-            image: DecorationImage(image: MemoryImage(bimg!), fit: BoxFit.fill),
+            image:
+                DecorationImage(image: NetworkImage(bimg!), fit: BoxFit.fill),
             color: bordar,
             borderRadius: BorderRadius.circular(InSideRadius ?? 30),
           ),
@@ -367,7 +368,7 @@ Widget Feeds(
                         OutSidewidth: 47,
                         InSideHight: 38,
                         InsideWidth: 38,
-                        bimg: base64Decode(post.profilePic.split(',').last)),
+                        bimg: post.profilePic),
                 const SizedBox(
                   width: 10,
                 ),
@@ -1054,7 +1055,7 @@ Widget Comments(
                             OutSidewidth: 47,
                             InSideHight: 38,
                             InsideWidth: 38,
-                            bimg: base64Decode(profpic.split(',').last)),
+                            bimg: profpic),
                     const SizedBox(
                       width: 12,
                     ),

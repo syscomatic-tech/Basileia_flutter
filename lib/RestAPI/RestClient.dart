@@ -196,16 +196,16 @@ class SocialClient {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $jwt_token'
     };
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://api.zahedhasan.com/api/v1/auth/updateUserProfiler/$userId'));
+    var request = http.MultipartRequest(
+        'PATCH', Uri.parse('https://api.zahedhasan.com/api/v1/auth/$userId'));
     final bytes = await File(path).readAsBytes();
-    request.body = json.encode({
+    request.fields.addAll({
       "firstName": Fname,
       "lastName": Lname,
-      "profilePicture": "data:image/jpeg;base64," + base64Encode(bytes)
+      "email": userEmail,
     });
+    request.files
+        .add(await http.MultipartFile.fromPath('profilePicture', path));
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
