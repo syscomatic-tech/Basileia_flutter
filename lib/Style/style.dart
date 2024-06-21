@@ -1668,9 +1668,7 @@ class profilePosts extends StatelessWidget {
                     children: [
                       propic!.isEmpty
                           ? profileAvatar_0()
-                          : profileAvatar(
-                              image: MemoryImage(
-                                  base64Decode(propic.split(',').last))),
+                          : profileAvatar(image: NetworkImage(propic)),
                       const SizedBox(
                         width: 12,
                       ),
