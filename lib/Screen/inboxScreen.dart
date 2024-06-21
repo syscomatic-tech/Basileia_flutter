@@ -121,11 +121,8 @@ class InboxScreen extends StatelessWidget {
                                       ]),
                                   child: chatItem(
                                       image: UserList[index].profpic.isNotEmpty
-                                          ? MemoryImage(base64Decode(
-                                              UserList[index]
-                                                  .profpic
-                                                  .split(",")
-                                                  .last))
+                                          ? NetworkImage(
+                                              UserList[index].profpic)
                                           : null,
                                       title: UserList[index].name,
                                       subTitle: UserList[index].email,
