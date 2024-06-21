@@ -953,7 +953,7 @@ Widget profileAvatar({image}) {
         height: 50,
         width: 50,
         decoration: BoxDecoration(
-            image: image != null ? DecorationImage(image: image) : null,
+            image: image != null ? DecorationImage(image: image,fit: BoxFit.fill) : null,
             color: bordar,
             borderRadius: BorderRadius.circular(30)),
       ),
