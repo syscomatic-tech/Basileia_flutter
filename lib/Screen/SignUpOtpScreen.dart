@@ -9,6 +9,7 @@ import '../RestAPI/RestClient.dart';
 import '../Style/images.dart';
 
 class SignUpOtpScreen extends StatelessWidget {
+  int count =0;
   String email = "";
   AuthClient cln = AuthClient();
   TextEditingController contr = TextEditingController();
@@ -62,14 +63,19 @@ class SignUpOtpScreen extends StatelessWidget {
             ),
             Primary_Button(
                 onTap: () async {
-                  final req_outp = await cln.VerifyOTPRequest(
-                      this.email, contr.text.toString());
-                  print(req_outp);
-                  if (req_outp == true) {
-                    SuccessToast("Sucsexfully logged in");
-                    Get.to(() => HomeFeedScreen());
-                  } else {
-                    ErrorToast("Error occured please check logs");
+                  count +=1;
+                  if(count<=1){
+                    final req_outp = await cln.VerifyOTPRequest(
+                        this.email, contr.text.toString());
+                    print(req_outp);
+                    if (req_outp == true) {
+                      SuccessToast("Successfully logged in");
+                      Get.to(() => HomeFeedScreen());
+                    } else {
+                      ErrorToast("Error occured please check logs");
+                    }
+                  }else if(count<=5){
+                    ErrorToast(' please wait');
                   }
                 },
                 text: 'Jump To Home',
