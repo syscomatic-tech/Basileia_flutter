@@ -1,14 +1,19 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:basileia/Screen/CreateGroupScreen.dart';
+import 'package:basileia/Screen/addUserScreen.dart';
 import 'package:basileia/Screen/commentScreen.dart';
 import 'package:basileia/RestAPI/model.dart';
+import 'package:basileia/Screen/donateHome.dart';
+import 'package:basileia/Screen/donateScreen.dart';
 import 'package:basileia/Screen/forumsScreen.dart';
+import 'package:basileia/Screen/groupChatScreen.dart';
+import 'package:basileia/Screen/groupsScreen.dart';
 import 'package:basileia/Screen/homeFeedScreen.dart';
 import 'package:basileia/Screen/profileScreen.dart';
 import 'package:basileia/Screen/questionDetailsScreen.dart';
+import 'package:basileia/Screen/religionsScreen.dart';
 import 'package:basileia/Style/likeiconwidget.dart';
 import 'package:basileia/base64Image.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -953,7 +958,9 @@ Widget profileAvatar({image}) {
         height: 50,
         width: 50,
         decoration: BoxDecoration(
-            image: image != null ? DecorationImage(image: image,fit: BoxFit.fill) : null,
+            image: image != null
+                ? DecorationImage(image: image, fit: BoxFit.fill)
+                : null,
             color: bordar,
             borderRadius: BorderRadius.circular(30)),
       ),
@@ -1529,6 +1536,15 @@ Widget menuItem({
                     if (title == 'Forums') {
                       await Get.to(() => const ForumsScreen());
                     }
+                    if (title == "Donation History") {
+                      Get.to(() => DonateHome());
+                    }
+                    if (title == 'Church Page') {
+                      Get.to(() => ReligionsScreen());
+                    }
+                    if (title == 'Groups') {
+                      Get.to(() => GroupsScreen());
+                    }
                   })
                 ],
               ),
@@ -1805,7 +1821,10 @@ class profilePosts extends StatelessWidget {
   }
 }
 
-Widget profileAvatar_1({double? height, double? width}) {
+Widget profileAvatar_1({
+  double? height,
+  double? width,
+}) {
   return Stack(
     children: [
       Container(
@@ -1944,6 +1963,7 @@ Widget chatItem({String? title, String? subTitle, msgCount, onTap, image}) {
 }
 
 Widget inboxTopItem() {
+  var cnt =0;
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -1972,23 +1992,42 @@ Widget inboxTopItem() {
                   fontFamily: poppins_regular)),
         ),
       ),
-      Container(
-        width: 70,
-        height: 46,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  blurRadius: 40,
-                  offset: const Offset(0, 16)),
-            ]),
-        child: Image.asset(addFriend_ic),
+      InkWell(
+        onTap: () async {
+          cnt += 1;
+          if (cnt < 2) {
+            var createGroup = CreateGroupScreen();
+             SuccessToast("Loading Please wait");
+           await createGroup.GetUser();
+             Get.to(() => createGroup);
+          } else if (cnt < 5) {
+            ErrorToast("Please Please wait");
+          } else if (cnt < 15) {
+            ErrorToast(
+                "U motherfucking piece of shit gang banging cock sucker.");
+            ErrorToast("Dont you have any patience");
+          }
+        },
+        child: Container(
+          width: 70,
+          height: 46,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 40,
+                    offset: const Offset(0, 16)),
+              ]),
+          child: Image.asset(addFriend_ic),
+        ),
       ),
     ],
   );
 }
+
+
 
 Widget chatScreenTextField(
     {VoidCallback? micOnTap, VoidCallback? sentOnTap, controller}) {
@@ -2196,106 +2235,117 @@ Widget AddgroupList({String? text, VoidCallback? onTab}) {
   );
 }
 
-Widget createGroupList(
-    {String? title,
-    String? subTitle,
-    String? alphabet,
-    icIndex,
-    VoidCallback? onTap}) {
-  return InkWell(
-    onTap: onTap,
-    child: Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                alphabet!,
-                style: const TextStyle(
-                    fontSize: 14,
-                    fontFamily: poppins_regular,
-                    color: primaryTxt),
-              ),
-              if (icIndex == 0)
-                InkWell(onTap: () {}, child: Image.asset(createGroup_ic))
-            ],
-          ),
-          const Divider(
-            color: bordar,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    profileAvatar_1(height: 56, width: 56),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title!,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontFamily: poppins_semibold),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          subTitle!,
-                          style: const TextStyle(
-                              fontSize: 14,
-                              color: primaryTxt,
-                              fontFamily: poppins_regular),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 25,
-                  width: 25,
-                  decoration: BoxDecoration(
-                      color: chatContent,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Center(
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      decoration: BoxDecoration(
-                          color: primary,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Center(
-                        child: Image.asset(vector),
+class createGroup extends StatelessWidget {
+  final String title;
+  final String subTitle;
+  final image;
+  createGroup(
+      {super.key,
+      required this.title,
+      required this.subTitle,
+      required this.image});
+  final ToggleController toggleController = ToggleController();
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        toggleController.toggleImage();
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      profileAvatar(image: image),
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title!,
+                            style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontFamily: poppins_semibold),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            subTitle!,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: primaryTxt,
+                                fontFamily: poppins_regular),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                )
-              ],
+                  Obx(
+                    () => toggleController.showImage.value
+                        ? Container(
+                            height: 25,
+                            width: 25,
+                            decoration: BoxDecoration(
+                                color: chatContent,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(
+                              child: Container(
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                    color: primary,
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Center(
+                                  child: Image.asset(vector),
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(
+                            height: 25,
+                            width: 25,
+                            decoration: BoxDecoration(
+                                color: chatContent,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(
+                              child: Container(
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30)),
+                              ),
+                            ),
+                          ),
+                  )
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Divider(
-            color: bordar,
-          ),
-          const SizedBox(
-            height: 10,
-          )
-        ],
+            const SizedBox(
+              height: 5,
+            ),
+            const Divider(
+              color: bordar,
+            ),
+            const SizedBox(
+              height: 10,
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 Widget AddUserButton({onTap}) {
@@ -3120,7 +3170,11 @@ Widget donateContent(
     Color? textColor,
     Color? sudTitleColor}) {
   return InkWell(
-    onTap: () {},
+    onTap: () {
+      if (title == 'Donation') {
+        Get.to(() => DonateScreen());
+      }
+    },
     child: Container(
       height: 106,
       width: 151,

@@ -1,40 +1,58 @@
-import 'package:basileia/Screen/addUserScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../RestAPI/RestClient.dart';
 import '../Style/colors.dart';
 import '../Style/fonts.dart';
 import '../Style/images.dart';
 import '../Style/style.dart';
+import '../firebase/chat_service.dart';
 
 class CreateGroupScreen extends StatelessWidget {
-  CreateGroupScreen({super.key});
+   CreateGroupScreen({super.key});
+
+  final SocialClient sex_client = SocialClient();
+
+  List<User> UserList = [];
+
+  Future<bool> GetUser() async {
+    var users = await sex_client.get_users();
+    if (users is List) {
+      for (var user in users) {
+        UserList.add(User(
+          name: user['firstName'] + " " + user['lastName'],
+          id: user["_id"],
+          email: user["email"],
+          profpic:
+              user.containsKey("profilePicture") ? user["profilePicture"] : "",
+        ));
+      }
+      return true;
+    }
+    return false;
+  }
 
   final name = [
     'Alexander',
     'Abraham',
     'Adi',
   ];
-  final List<String> items = [
-    'Apple',
-    'Banana',
-    'Cherry',
-    'Date',
-    'Fig',
-    'Grapes',
-    'Kiwi',
-    'Lemon',
-    'Mango',
-    'Orange',
-    'Peach',
-    'Quince',
-    'Raspberry',
-    'Strawberry',
-  ];
+
+  List<Map<String, dynamic>> memberList = [];
+
   @override
   Widget build(BuildContext context) {
-    items.sort();
+    print(UserList);
+
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        backgroundColor: primary,
+        label: const Text(
+          'Create group',
+          style: TextStyle(color: Colors.white, fontFamily: poppins_regular),
+        ),
+      ),
       body: Stack(
         children: [
           Column(
@@ -78,7 +96,8 @@ class CreateGroupScreen extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: name.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return AddgroupList(text: name[index],onTab: (){Get.to(()=>AddUserScreen());});
+                            return AddgroupList(
+                                text: name[index], onTab: () {});
                           },
                         ),
                       )
@@ -98,15 +117,16 @@ class CreateGroupScreen extends StatelessWidget {
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30))),
               child: ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  if (index == 0 || items[index][0] != items[index - 1][0]) {
-                    return createGroupList(onTap: (){},
-                        alphabet: items[index][0],
-                        title: items[index],
-                        subTitle: items[index],
-                    icIndex: index);
-                  }
+                itemCount: UserList.length,
+                shrinkWrap: true,
+                primary: false,
+                itemBuilder: (BuildContext context, int index) {
+                  return createGroup(
+                      title: UserList[index].name,
+                      subTitle: UserList[index].email,
+                      image: UserList[index].profpic.isNotEmpty
+                          ? NetworkImage(UserList[index].profpic)
+                          : null);
                 },
               ),
             ),

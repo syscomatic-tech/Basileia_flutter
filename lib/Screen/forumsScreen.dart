@@ -120,7 +120,7 @@ class ForumsScreen extends StatelessWidget {
                           children: [
                             categories(onTap: () {}, text: 'General'),
                             categories(onTap: () {}, text: 'Bible'),
-                            categories(onTap: () {}, text: 'Question'),
+                            categories(onTap: () {Get.to(()=>QuestionDetailScreen());}, text: 'Question'),
                             categories(onTap: () {}, text: 'Motivation'),
                           ],
                         ),

@@ -179,3 +179,12 @@ class ImagePick_1 extends GetxController {
     imagePath = ''.obs;
   }
 }
+
+
+class ToggleController extends GetxController {
+  var showImage = false.obs;
+
+  void toggleImage() {
+    showImage.value = !showImage.value;
+  }
+}

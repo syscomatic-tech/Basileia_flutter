@@ -108,7 +108,7 @@ class DonateHome extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              primaryButton_1(onTap: () {Get.to(()=>ReligionsScreen());})
+              primaryButton_1(onTap: () {})
             ],
           ),
         ),

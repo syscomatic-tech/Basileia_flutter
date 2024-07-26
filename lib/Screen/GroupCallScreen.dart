@@ -1,3 +1,4 @@
+import 'package:basileia/Screen/addUserScreen.dart';
 import 'package:basileia/Screen/forumsScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/images.dart';
@@ -92,7 +93,7 @@ class GroupCallScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        AddUserButton(onTap: () {Get.to(()=>ForumsScreen());}),
+                        AddUserButton(onTap: () {Get.to(()=>AddUserScreen());}),
                         endCall(onTap: () {
                           Get.bottomSheet(
                               CallScreenBottomSheet(context: context));

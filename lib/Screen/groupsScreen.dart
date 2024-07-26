@@ -102,7 +102,7 @@ class GroupsScreen extends StatelessWidget {  @override
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
-                    onTap: (){Get.to(()=>DonateHome());},
+                    onTap: (){},
                       child: GroupsIManage(context: context)),
                 );
               },)

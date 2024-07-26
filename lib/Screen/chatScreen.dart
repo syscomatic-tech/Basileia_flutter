@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:basileia/RestAPI/RestClient.dart';
+import 'package:basileia/Screen/GroupCallScreen.dart';
 import 'package:basileia/Screen/groupChatScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
@@ -97,7 +98,7 @@ class ChatScreen extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(GroupChatScreen());
+                      Get.to(GroupCallScreen());
                     },
                     child: const Icon(
                       Icons.call,
