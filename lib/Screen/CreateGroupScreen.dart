@@ -1,3 +1,5 @@
+import 'package:basileia/Screen/groupChatScreen.dart';
+import 'package:basileia/Style/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +12,7 @@ import '../firebase/chat_service.dart';
 
 class CreateGroupScreen extends StatelessWidget {
    CreateGroupScreen({super.key});
-
+   ToggleController toggleController = ToggleController();
   final SocialClient sex_client = SocialClient();
 
   List<User> UserList = [];
@@ -33,20 +35,20 @@ class CreateGroupScreen extends StatelessWidget {
   }
 
   final name = [
-    'Alexander',
+    'alexanderoucaocaocouascb',
     'Abraham',
     'Adi',
   ];
 
-  List<Map<String, dynamic>> memberList = [];
-
+ List<ToggleController> memberList = [];
+   String  useid = '';
   @override
   Widget build(BuildContext context) {
     print(UserList);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {Get.to(()=>GroupChatScreen());},
         backgroundColor: primary,
         label: const Text(
           'Create group',
@@ -94,10 +96,10 @@ class CreateGroupScreen extends StatelessWidget {
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                          itemCount: name.length,
+                          itemCount: UserList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return AddgroupList(
-                                text: name[index], onTab: () {});
+                                text: UserList[index].name, onTab: () {});
                           },
                         ),
                       )

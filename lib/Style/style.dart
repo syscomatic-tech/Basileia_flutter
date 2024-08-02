@@ -2213,21 +2213,55 @@ Widget chatBottomSheet({context}) {
   );
 }
 
-Widget AddgroupList({String? text, VoidCallback? onTab}) {
+Widget AddgroupList({String? text, VoidCallback? onTab,String? image}) {
   return InkWell(
     onTap: onTab,
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          profileAvatar_1(height: 56, width: 56),
+          image!=null?
+          Stack(
+            children: [
+              Container(
+                height: 48,
+                width:  48,
+                decoration: BoxDecoration(
+                    color: bordar, borderRadius: BorderRadius.circular(30)),
+                child: Image.network(image!),
+              ),
+              Positioned(
+                bottom: 2,
+                right: 0,
+                child: Container(
+                  height: 12,
+                  width: 12,
+                  decoration: BoxDecoration(
+                      color: Colors.white, borderRadius: BorderRadius.circular(30)
+                  ),
+                  child: Center(
+                      child: Container(
+                          height: 8,
+                          width: 8,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(30)))),
+                ),
+              )
+            ],
+          ):profileAvatar_1(height: 56, width: 56),
           const SizedBox(
             height: 5,
           ),
-          Text(
-            text!,
-            style: const TextStyle(
-                fontSize: 16, color: Colors.white, fontFamily: poppins_regular),
+          SizedBox(
+            width: 85,
+            child: Center(
+              child: Text(
+                text!,
+                style: const TextStyle(
+                    fontSize: 16, color: Colors.white, fontFamily: poppins_regular, overflow: TextOverflow.ellipsis),
+              ),
+            ),
           )
         ],
       ),
@@ -2245,6 +2279,7 @@ class createGroup extends StatelessWidget {
       required this.subTitle,
       required this.image});
   final ToggleController toggleController = ToggleController();
+  String userid ='';
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -2293,7 +2328,8 @@ class createGroup extends StatelessWidget {
                   ),
                   Obx(
                     () => toggleController.showImage.value
-                        ? Container(
+                        ?
+                    Container(
                             height: 25,
                             width: 25,
                             decoration: BoxDecoration(
