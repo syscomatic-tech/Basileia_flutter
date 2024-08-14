@@ -1,4 +1,3 @@
-
 import 'package:basileia/Screen/createGroup2.0bottomSheet.dart';
 import 'package:basileia/Style/controller.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +11,8 @@ import '../Style/style.dart';
 import '../firebase/chat_service.dart';
 
 class CreateGroupScreen extends StatelessWidget {
-   CreateGroupScreen({super.key});
-   ToggleController toggleController = ToggleController();
+  CreateGroupScreen({super.key});
+
   final SocialClient sex_client = SocialClient();
 
   List<User> UserList = [];
@@ -41,18 +40,31 @@ class CreateGroupScreen extends StatelessWidget {
     'Adi',
   ];
 
- List<ToggleController> memberList = [];
-   String  useid = '';
+  List<ToggleController> memberList = [];
+  String useid = '';
+
   @override
   Widget build(BuildContext context) {
     print(UserList);
-
+    for (var user in UserList) {
+      memberList.add(ToggleController(user.id.obs, user.name.obs));
+    }
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          showModalBottomSheet(context: context, builder: (context){
-            return createGroupBottomSheet(onTap: (){});
-          });
+          showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                List<String> grp_members = [];
+                for (var member in memberList) {
+                  if (member.showImage.value) {
+                    grp_members.add(member.userId.value);
+                  }
+                }
+                return createGroupBottomSheet(
+                  userids: grp_members,
+                );
+              });
         },
         backgroundColor: primary,
         label: const Text(
@@ -95,19 +107,20 @@ class CreateGroupScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      SizedBox(
-                        width: double.maxFinite,
-                        height: 100,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: UserList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return AddgroupList(
-                                text: UserList[index].name, onTab: () {});
-                          },
-                        ),
-                      )
+                      Obx(() => SizedBox(
+                            width: double.maxFinite,
+                            height: 100,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: memberList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return AddgroupList(
+                                    text: memberList[index].name.value,
+                                    onTab: () {});
+                              },
+                            ),
+                          ))
                     ],
                   )),
             ],
@@ -129,6 +142,7 @@ class CreateGroupScreen extends StatelessWidget {
                 primary: false,
                 itemBuilder: (BuildContext context, int index) {
                   return createGroup(
+                      toggleController: memberList[index],
                       title: UserList[index].name,
                       subTitle: UserList[index].email,
                       image: UserList[index].profpic.isNotEmpty

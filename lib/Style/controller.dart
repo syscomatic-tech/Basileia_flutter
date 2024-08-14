@@ -180,10 +180,11 @@ class ImagePick_1 extends GetxController {
   }
 }
 
-
 class ToggleController extends GetxController {
   var showImage = false.obs;
-
+  var userId = "".obs;
+  var name = "".obs;
+  ToggleController(this.userId, this.name);
   void toggleImage() {
     showImage.value = !showImage.value;
   }

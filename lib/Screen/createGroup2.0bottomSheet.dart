@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import '../Style/style.dart';
 
 class createGroupBottomSheet extends StatelessWidget {
-  const createGroupBottomSheet({super.key, required this.onTap});
-  final onTap;
+  final List<String> userids;
+  const createGroupBottomSheet({super.key, required this.userids});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +26,7 @@ class createGroupBottomSheet extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.70),
           ),
           button(
-              onTap: onTap,
+              onTap: () {},
               text: "Create Group",
               Width: MediaQuery.of(context).size.width * 0.70,
               Height: 50)
