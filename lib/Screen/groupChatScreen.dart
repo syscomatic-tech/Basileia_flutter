@@ -88,32 +88,36 @@ class GroupChatScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-              child:
-                  StreamBuilder<QuerySnapshot>(
-                    stream: _groupbal.getGroupMessages(GroupId),
-                    builder: (context,snapshot){
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
+              child: StreamBuilder<QuerySnapshot>(
+            stream: _groupbal.getGroupMessages(GroupId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
 
-                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return Center(child: Text('No groups found.'));
-                      }
-                      return  ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemCount: 2,
-                        itemBuilder: (BuildContext context, int index) {
-                          var alignment =
-                          isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
-                          return Container(
-                              alignment: alignment,
-                              child: ChatBubble(message: usecon.text, isCurrentUser: true));
-                        },
-                      );
-                    },
-                  )),
-
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return Center(child: Text('No groups found.'));
+              }
+              var messages = snapshot.data!.docs;
+              return ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                itemCount: messages.length,
+                itemBuilder: (BuildContext context, int index) {
+                  isCurrentUser =
+                      messages[index]["senderId"].toString() == userId;
+                  var alignment = isCurrentUser
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft;
+                  return Container(
+                      alignment: alignment,
+                      child: ChatBubble(
+                          message: messages[index]["message"].toString(),
+                          isCurrentUser: true));
+                },
+              );
+            },
+          )),
           chatScreenTextField(
               controller: usecon,
               micOnTap: () {},
