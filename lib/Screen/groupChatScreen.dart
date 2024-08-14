@@ -1,6 +1,7 @@
 import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/CreateGroupScreen.dart';
 import 'package:basileia/firebase/groupChat.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
@@ -87,18 +88,32 @@ class GroupChatScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            itemCount: 2,
-            itemBuilder: (BuildContext context, int index) {
-              var alignment =
-                  isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
-              return Container(
-                  alignment: alignment,
-                  child: ChatBubble(message: 'message', isCurrentUser: true));
-            },
-          )),
+              child:
+                  StreamBuilder<QuerySnapshot>(
+                    stream: _groupbal.getGroupMessages(GroupId),
+                    builder: (context,snapshot){
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return Center(child: Text('No groups found.'));
+                      }
+                      return  ListView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: 2,
+                        itemBuilder: (BuildContext context, int index) {
+                          var alignment =
+                          isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+                          return Container(
+                              alignment: alignment,
+                              child: ChatBubble(message: usecon.text, isCurrentUser: true));
+                        },
+                      );
+                    },
+                  )),
+
           chatScreenTextField(
               controller: usecon,
               micOnTap: () {},
@@ -107,6 +122,7 @@ class GroupChatScreen extends StatelessWidget {
                   return SuccessToast('msg lek babachudi');
                 }
                 await _groupbal.sendGroupMessage(userId, usecon.text);
+                usecon.clear();
               })
         ],
       ),
