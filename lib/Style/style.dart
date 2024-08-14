@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:basileia/Screen/CreateGroupScreen.dart';
+import 'package:basileia/Screen/GroupMassage.dart';
 import 'package:basileia/Screen/addUserScreen.dart';
 import 'package:basileia/Screen/commentScreen.dart';
 import 'package:basileia/RestAPI/model.dart';
@@ -1524,6 +1525,20 @@ Widget menuItem({
                         var inboxscr = InboxScreen();
                         SuccessToast("Loading Please wait");
                         await inboxscr.GetUsers();
+                        Get.to(() => inboxscr);
+                      } else if (cnt < 5) {
+                        ErrorToast("Please Please wait");
+                      } else if (cnt < 15) {
+                        ErrorToast(
+                            "U motherfucking piece of shit gang banging cock sucker.");
+                        ErrorToast("Dont you have any patience");
+                      }
+                    }
+                    if (title == 'Group message') {
+                      cnt += 1;
+                      if (cnt < 2) {
+                        var inboxscr = GroupMassage();
+                        SuccessToast("Loading Please wait");
                         Get.to(() => inboxscr);
                       } else if (cnt < 5) {
                         ErrorToast("Please Please wait");

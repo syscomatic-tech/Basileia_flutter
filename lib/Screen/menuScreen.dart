@@ -12,6 +12,7 @@ class MenuScreen extends StatelessWidget {
   final menuTitle = [
     'Connections',
     'Messages',
+    'Group message',
     'Church Page',
     'Forums',
     'Groups',
@@ -21,6 +22,7 @@ class MenuScreen extends StatelessWidget {
   ];
   final menuSubTitle = [
     'Friendlist totals',
+    'Message your friends',
     'Message your friends',
     'Message your friends',
     'See your recent activity',

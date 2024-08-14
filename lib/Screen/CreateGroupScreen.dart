@@ -1,3 +1,4 @@
+import 'package:basileia/Screen/createGroup2.0bottomSheet.dart';
 import 'package:basileia/Screen/groupChatScreen.dart';
 import 'package:basileia/Style/controller.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,11 @@ class CreateGroupScreen extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {Get.to(()=>GroupChatScreen());},
+        onPressed: () {
+          showModalBottomSheet(context: context, builder: (context){
+            return createGroupBottomSheet(onTap: (){});
+          });
+        },
         backgroundColor: primary,
         label: const Text(
           'Create group',
