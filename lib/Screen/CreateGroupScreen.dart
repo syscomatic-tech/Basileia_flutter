@@ -107,20 +107,20 @@ class CreateGroupScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Obx(() => SizedBox(
-                            width: double.maxFinite,
-                            height: 100,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount: memberList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return AddgroupList(
-                                    text: memberList[index].name.value,
-                                    onTab: () {});
-                              },
-                            ),
-                          ))
+                      SizedBox(
+                        width: double.maxFinite,
+                        height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: memberList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Obx(() => AddgroupList(
+                                text: memberList[index].name.value,
+                                onTab: () {}));
+                          },
+                        ),
+                      )
                     ],
                   )),
             ],
