@@ -16,10 +16,11 @@ class GroupChatScreen extends StatelessWidget {
   final TextEditingController usecon = TextEditingController();
   final String Groupname;
   final String GroupId;
-  GroupChatScreen({super.key,required this.Groupname,required this.GroupId});
+  GroupChatScreen({super.key, required this.Groupname, required this.GroupId});
 
   @override
   Widget build(BuildContext context) {
+    _groupbal.setCurrentGroup(GroupId);
     return Scaffold(
       body: Column(
         children: [
@@ -55,7 +56,7 @@ class GroupChatScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Group Name',
+                              Groupname,
                               style: TextStyle(
                                   fontFamily: poppins_regular,
                                   fontSize: 14,
@@ -91,21 +92,21 @@ class GroupChatScreen extends StatelessWidget {
             shrinkWrap: true,
             itemCount: 2,
             itemBuilder: (BuildContext context, int index) {
-
               var alignment =
-              isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
-              return Container(alignment: alignment,
-              child: ChatBubble(message: 'message', isCurrentUser: true));
+                  isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+              return Container(
+                  alignment: alignment,
+                  child: ChatBubble(message: 'message', isCurrentUser: true));
             },
           )),
           chatScreenTextField(
-            controller: usecon,
+              controller: usecon,
               micOnTap: () {},
-              sentOnTap: () async{
-              if(usecon.text.isEmpty){
-                return  SuccessToast('msg lek babachudi');
-              }
-                await  _groupbal.sendGroupMessage(userId,usecon.text);
+              sentOnTap: () async {
+                if (usecon.text.isEmpty) {
+                  return SuccessToast('msg lek babachudi');
+                }
+                await _groupbal.sendGroupMessage(userId, usecon.text);
               })
         ],
       ),
