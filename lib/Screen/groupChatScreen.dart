@@ -50,20 +50,20 @@ class GroupChatScreen extends StatelessWidget {
                       const SizedBox(
                         width: 15,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 30),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               Groupname,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: poppins_regular,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
