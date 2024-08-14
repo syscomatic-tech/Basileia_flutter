@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
-
 import '../Style/colors.dart';
 import '../Style/fonts.dart';
 import '../Style/images.dart';
@@ -104,15 +103,15 @@ class GroupChatScreen extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: messages.length,
                 itemBuilder: (BuildContext context, int index) {
-                  isCurrentUser =
-                      messages[index]["senderId"].toString() == userId;
+                  var message = messages[index].data() as Map<String, dynamic>;
+                  isCurrentUser = message["senderId"].toString() == userId;
                   var alignment = isCurrentUser
                       ? Alignment.centerRight
                       : Alignment.centerLeft;
                   return Container(
                       alignment: alignment,
                       child: ChatBubble(
-                          message: messages[index]["message"].toString(),
+                          message: message["message"].toString(),
                           isCurrentUser: true));
                 },
               );
