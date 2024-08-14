@@ -115,9 +115,13 @@ class CreateGroupScreen extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: memberList.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return Obx(() => AddgroupList(
-                                text: memberList[index].name.value,
-                                onTab: () {}));
+                            if (memberList[index].showImage.value) {
+                              return Obx(() => AddgroupList(
+                                  text: memberList[index].name.value,
+                                  onTab: () {}));
+                            } else {
+                              return SizedBox.shrink();
+                            }
                           },
                         ),
                       )
