@@ -2226,65 +2226,134 @@ Widget chatBottomSheet({context}) {
   );
 }
 
-Widget AddgroupList({String? text, VoidCallback? onTab, String? image}) {
-  return InkWell(
-    onTap: onTab,
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          image != null
-              ? Stack(
-                  children: [
-                    Container(
-                      height: 48,
-                      width: 48,
-                      decoration: BoxDecoration(
-                          color: bordar,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Image.network(image!),
-                    ),
-                    Positioned(
-                      bottom: 2,
-                      right: 0,
-                      child: Container(
-                        height: 12,
-                        width: 12,
+Widget AddgroupList(
+    {ToggleController? cntrl,
+    String? text,
+    VoidCallback? onTab,
+    String? image}) {
+  if (cntrl == null) {
+    return InkWell(
+      onTap: onTab,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            image != null
+                ? Stack(
+                    children: [
+                      Container(
+                        height: 48,
+                        width: 48,
                         decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: bordar,
                             borderRadius: BorderRadius.circular(30)),
-                        child: Center(
-                            child: Container(
-                                height: 8,
-                                width: 8,
-                                decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(30)))),
+                        child: Image.network(image!),
                       ),
-                    )
-                  ],
-                )
-              : profileAvatar_1(height: 56, width: 56),
-          const SizedBox(
-            height: 5,
-          ),
-          SizedBox(
-            width: 85,
-            child: Center(
-              child: Text(
-                text!,
-                style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontFamily: poppins_regular,
-                    overflow: TextOverflow.ellipsis),
-              ),
+                      Positioned(
+                        bottom: 2,
+                        right: 0,
+                        child: Container(
+                          height: 12,
+                          width: 12,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Center(
+                              child: Container(
+                                  height: 8,
+                                  width: 8,
+                                  decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius:
+                                          BorderRadius.circular(30)))),
+                        ),
+                      )
+                    ],
+                  )
+                : profileAvatar_1(height: 56, width: 56),
+            const SizedBox(
+              height: 5,
             ),
-          )
-        ],
+            SizedBox(
+              width: 85,
+              child: Center(
+                child: Text(
+                  text!,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontFamily: poppins_regular,
+                      overflow: TextOverflow.ellipsis),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  } else if (cntrl.showImage.value) {
+    return InkWell(
+      onTap: onTab,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            image != null
+                ? Stack(
+                    children: [
+                      Container(
+                        height: 48,
+                        width: 48,
+                        decoration: BoxDecoration(
+                            color: bordar,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Image.network(image!),
+                      ),
+                      Positioned(
+                        bottom: 2,
+                        right: 0,
+                        child: Container(
+                          height: 12,
+                          width: 12,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Center(
+                              child: Container(
+                                  height: 8,
+                                  width: 8,
+                                  decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius:
+                                          BorderRadius.circular(30)))),
+                        ),
+                      )
+                    ],
+                  )
+                : profileAvatar_1(height: 56, width: 56),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              width: 85,
+              child: Center(
+                child: Text(
+                  cntrl.name.value,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontFamily: poppins_regular,
+                      overflow: TextOverflow.ellipsis),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  } else {
+    return SizedBox.shrink();
+  }
 }
 
 class createGroup extends StatelessWidget {
