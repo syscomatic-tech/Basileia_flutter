@@ -47,8 +47,8 @@ class CreateGroupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print(UserList);
     for (var user in UserList) {
-      var controller = ToggleController(user.id.obs, user.name.obs)
-      
+      var controller = ToggleController(user.id.obs, user.name.obs);
+
       if (user.id == userId) {
         controller.toggleImage();
       }
