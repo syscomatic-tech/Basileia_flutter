@@ -1,7 +1,8 @@
-
-
+import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/groupChatScreen.dart';
 import 'package:basileia/Style/colors.dart';
+import 'package:basileia/firebase/groupChat.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,13 @@ import '../Style/fonts.dart';
 import '../Style/images.dart';
 import '../Style/style.dart';
 
-class GroupMassage extends StatelessWidget {   @override
+class GroupMassage extends StatelessWidget {
+  final _groupsev = GroupChatService();
+  final String userId; // Pass userId here
+
+  GroupMassage({required this.userId});
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -61,57 +68,71 @@ class GroupMassage extends StatelessWidget {   @override
                       ),
                     ),
                     Expanded(
-                      child: SingleChildScrollView(
-                        child: ListView.builder(
-                          primary: false,
-                          shrinkWrap: true,
-                          itemCount: 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding:
-                              const EdgeInsets.symmetric(horizontal: 2),
-                              child: Slidable(
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: _groupsev.getUserGroups(userId),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+
+                          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                            return Center(child: Text('No groups found.'));
+                          }
+
+                          var groups = snapshot.data!.docs;
+
+                          return ListView.builder(
+                            itemCount: groups.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              var group = groups[index];
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 2),
+                                child: Slidable(
                                   endActionPane: ActionPane(
-                                      extentRatio: 0.30,
-                                      motion: const ScrollMotion(),
-                                      children: [
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 23, left: 10),
-                                            child: Container(
-                                              height: 80,
-                                              width: 85,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      10)),
-                                              child: Image.asset(delete),
-                                            ),
+                                    extentRatio: 0.30,
+                                    motion: const ScrollMotion(),
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          // Add your delete action here
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 23, left: 10),
+                                          child: Container(
+                                            height: 80,
+                                            width: 85,
+                                            decoration: BoxDecoration(
+                                                color: Colors.red,
+                                                borderRadius:
+                                                BorderRadius.circular(10)),
+                                            child: Image.asset(delete),
                                           ),
-                                        )
-                                      ]),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   child: chatItem(
-                                      image:  null,
-                                      title: 'bara',
-                                      subTitle: 'bara',
-                                      msgCount: 0,
-                                      onTap: () {
-                                        Get.to(() => GroupChatScreen(
-                                        ));
-                                      })),
-                            );
-                          },
-                        ),
+                                    image: null,
+                                    title: group['groupName'].toString(),
+                                    subTitle: 'not ',
+                                    msgCount: 0,
+                                    onTap: () {
+                                      Get.to(() => GroupChatScreen(Groupname:group['groupName'].toString() ,GroupId: group['GroupId'].toString(),));
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

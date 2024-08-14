@@ -1,4 +1,6 @@
+import 'package:basileia/RestAPI/RestClient.dart';
 import 'package:basileia/Screen/CreateGroupScreen.dart';
+import 'package:basileia/firebase/groupChat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
@@ -10,6 +12,12 @@ import '../Style/style.dart';
 
 class GroupChatScreen extends StatelessWidget {
   bool isCurrentUser = true;
+  final _groupbal = GroupChatService();
+  final TextEditingController usecon = TextEditingController();
+  final String Groupname;
+  final String GroupId;
+  GroupChatScreen({super.key,required this.Groupname,required this.GroupId});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,9 +99,13 @@ class GroupChatScreen extends StatelessWidget {
             },
           )),
           chatScreenTextField(
+            controller: usecon,
               micOnTap: () {},
-              sentOnTap: () {
-                Get.to(() => CreateGroupScreen());
+              sentOnTap: () async{
+              if(usecon.text.isEmpty){
+                return  SuccessToast('msg lek babachudi');
+              }
+                await  _groupbal.sendGroupMessage(userId,usecon.text);
               })
         ],
       ),

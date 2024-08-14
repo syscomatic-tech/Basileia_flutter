@@ -1537,7 +1537,7 @@ Widget menuItem({
                     if (title == 'Group message') {
                       cnt += 1;
                       if (cnt < 2) {
-                        var inboxscr = GroupMassage();
+                        var inboxscr = GroupMassage(userId: userId,);
                         SuccessToast("Loading Please wait");
                         Get.to(() => inboxscr);
                       } else if (cnt < 5) {
