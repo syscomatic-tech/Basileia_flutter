@@ -97,7 +97,7 @@ class GroupChatScreen extends StatelessWidget {
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                 return Center(child: Text('No groups found.'));
               }
-              var messages = snapshot.data!.docs;
+              var messages = snapshot.data!.docs.toList();
               return ListView.builder(
                 primary: false,
                 shrinkWrap: true,
@@ -122,7 +122,7 @@ class GroupChatScreen extends StatelessWidget {
               micOnTap: () {},
               sentOnTap: () async {
                 if (usecon.text.isEmpty) {
-                  return SuccessToast('msg lek babachudi');
+                  return SuccessToast('text is null');
                 }
                 await _groupbal.sendGroupMessage(userId, usecon.text);
                 usecon.clear();

@@ -1468,102 +1468,147 @@ Widget menuItem({
   var cnt = 0;
   return Column(
     children: [
-      SizedBox(
-        height: 50,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 20, left: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title!,
-                    style: const TextStyle(
-                        fontFamily: poppins_semibold,
-                        fontSize: 15,
-                        color: Colors.black),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    subtitle!,
-                    style: const TextStyle(
-                        fontFamily: poppins_regular,
-                        fontSize: 12,
-                        color: primaryTxt),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  if (count > 0)
-                    Container(
-                      height: 24,
-                      width: 24,
-                      decoration: BoxDecoration(
-                          color: primary_1,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Center(
-                          child: Text(
-                        count!.toString(),
-                        style: const TextStyle(
-                            color: primary,
-                            fontFamily: poppins_regular,
-                            fontSize: 12),
-                      )),
+      InkWell(
+        onTap: () async {
+          if (title == "Messages") {
+            cnt += 1;
+            if (cnt < 2) {
+              var inboxscr = InboxScreen();
+              SuccessToast("Loading Please wait");
+              await inboxscr.GetUsers();
+              Get.to(() => inboxscr);
+            } else if (cnt < 5) {
+              ErrorToast("Please Please wait");
+            } else if (cnt < 15) {
+              ErrorToast(
+                  "U motherfucking piece of shit gang banging cock sucker.");
+              ErrorToast("Dont you have any patience");
+            }
+          }
+          if (title == 'Group message') {
+            cnt += 1;
+            if (cnt < 2) {
+              var inboxscr = GroupMassage(userId: userId,);
+              SuccessToast("Loading Please wait");
+              Get.to(() => inboxscr);
+            } else if (cnt < 5) {
+              ErrorToast("Please Please wait");
+            } else if (cnt < 15) {
+              ErrorToast(
+                  "U motherfucking piece of shit gang banging cock sucker.");
+              ErrorToast("Dont you have any patience");
+            }
+          }
+          if (title == 'Forums') {
+            await Get.to(() => const ForumsScreen());
+          }
+          if (title == "Donation History") {
+            Get.to(() => DonateHome());
+          }
+          if (title == 'Church Page') {
+            Get.to(() => ReligionsScreen());
+          }
+          if (title == 'Groups') {
+            Get.to(() => GroupsScreen());
+          }
+        },
+        child: SizedBox(
+          height: 50,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20, left: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title!,
+                      style: const TextStyle(
+                          fontFamily: poppins_semibold,
+                          fontSize: 15,
+                          color: Colors.black),
                     ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  listTielButton(onTap: () async {
-                    if (title == "Messages") {
-                      cnt += 1;
-                      if (cnt < 2) {
-                        var inboxscr = InboxScreen();
-                        SuccessToast("Loading Please wait");
-                        await inboxscr.GetUsers();
-                        Get.to(() => inboxscr);
-                      } else if (cnt < 5) {
-                        ErrorToast("Please Please wait");
-                      } else if (cnt < 15) {
-                        ErrorToast(
-                            "U motherfucking piece of shit gang banging cock sucker.");
-                        ErrorToast("Dont you have any patience");
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      subtitle!,
+                      style: const TextStyle(
+                          fontFamily: poppins_regular,
+                          fontSize: 12,
+                          color: primaryTxt),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    if (count > 0)
+                      Container(
+                        height: 24,
+                        width: 24,
+                        decoration: BoxDecoration(
+                            color: primary_1,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Center(
+                            child: Text(
+                          count!.toString(),
+                          style: const TextStyle(
+                              color: primary,
+                              fontFamily: poppins_regular,
+                              fontSize: 12),
+                        )),
+                      ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    listTielButton(onTap: () async {
+                      if (title == "Messages") {
+                        cnt += 1;
+                        if (cnt < 2) {
+                          var inboxscr = InboxScreen();
+                          SuccessToast("Loading Please wait");
+                          await inboxscr.GetUsers();
+                          Get.to(() => inboxscr);
+                        } else if (cnt < 5) {
+                          ErrorToast("Please Please wait");
+                        } else if (cnt < 15) {
+                          ErrorToast(
+                              "U motherfucking piece of shit gang banging cock sucker.");
+                          ErrorToast("Dont you have any patience");
+                        }
                       }
-                    }
-                    if (title == 'Group message') {
-                      cnt += 1;
-                      if (cnt < 2) {
-                        var inboxscr = GroupMassage(userId: userId,);
-                        SuccessToast("Loading Please wait");
-                        Get.to(() => inboxscr);
-                      } else if (cnt < 5) {
-                        ErrorToast("Please Please wait");
-                      } else if (cnt < 15) {
-                        ErrorToast(
-                            "U motherfucking piece of shit gang banging cock sucker.");
-                        ErrorToast("Dont you have any patience");
+                      if (title == 'Group message') {
+                        cnt += 1;
+                        if (cnt < 2) {
+                          var inboxscr = GroupMassage(userId: userId,);
+                          SuccessToast("Loading Please wait");
+                          Get.to(() => inboxscr);
+                        } else if (cnt < 5) {
+                          ErrorToast("Please Please wait");
+                        } else if (cnt < 15) {
+                          ErrorToast(
+                              "U motherfucking piece of shit gang banging cock sucker.");
+                          ErrorToast("Dont you have any patience");
+                        }
                       }
-                    }
-                    if (title == 'Forums') {
-                      await Get.to(() => const ForumsScreen());
-                    }
-                    if (title == "Donation History") {
-                      Get.to(() => DonateHome());
-                    }
-                    if (title == 'Church Page') {
-                      Get.to(() => ReligionsScreen());
-                    }
-                    if (title == 'Groups') {
-                      Get.to(() => GroupsScreen());
-                    }
-                  })
-                ],
-              ),
-            ],
+                      if (title == 'Forums') {
+                        await Get.to(() => const ForumsScreen());
+                      }
+                      if (title == "Donation History") {
+                        Get.to(() => DonateHome());
+                      }
+                      if (title == 'Church Page') {
+                        Get.to(() => ReligionsScreen());
+                      }
+                      if (title == 'Groups') {
+                        Get.to(() => GroupsScreen());
+                      }
+                    })
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -3749,7 +3794,7 @@ class profile_1 extends StatelessWidget {
                 width: insideBorder,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: FileImage(File(_imagepick.imagePath.toString())),
+                    image: NetworkImage(bimage),
                   ),
                   color: bordar,
                   borderRadius: BorderRadius.circular(insideBorderRedius ?? 30),
@@ -3757,21 +3802,7 @@ class profile_1 extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              height: 20,
-              width: 20,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(30)),
-              child: const Icon(
-                Icons.edit_outlined,
-                color: Colors.grey,
-                size: 15,
-              ),
-            ),
-          )
+
         ],
       ),
     );
