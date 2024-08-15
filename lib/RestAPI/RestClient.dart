@@ -1,5 +1,6 @@
 import 'dart:async';
 import "dart:convert";
+import 'dart:ffi';
 import 'dart:io';
 import 'package:basileia/Style/style.dart';
 import 'package:basileia/RestAPI/model.dart';
@@ -60,10 +61,10 @@ class AuthClient {
       userId = resp["user"]["_id"];
       print(userId);
       final userInfo = await getUserInfo(userId);
-      final usPost = json.decode(await totalPost(userId));
-      final usFollowers = json.decode(await totalFollowers(userId));
-      userFollowers = usFollowers["totalFollowers"];
-      userPoststotal = usPost["totalPosts"];
+      final usPost = await totalPost(userId);
+      final usFollowers = await totalFollowers(userId);
+      userFollowers = usFollowers;
+      userPoststotal = usPost;
       print(userInfo);
       if (userInfo["user"] != null) {
         userFullname =
@@ -817,7 +818,7 @@ Future<UsrProfile> GetUserProfile(String usId) async {
   }
 }
 
-Future<String> totalPost(String usId) async {
+Future<int> totalPost(String usId) async {
   var headers = {'Authorization': 'Bearer $jwt_token'};
   var request = http.Request('GET',
       Uri.parse('https://api.zahedhasan.com/api/v1/upload/$usId/totalPost'));
@@ -830,11 +831,11 @@ Future<String> totalPost(String usId) async {
     return jsonDecode(await response.stream.bytesToString())["totalPosts"];
   } else {
     print(response.reasonPhrase);
-    return await response.stream.bytesToString();
+    return jsonDecode(await response.stream.bytesToString())["message"];
   }
 }
 
-Future<String> totalFollowers(String usid) async {
+Future<int> totalFollowers(String usid) async {
   var headers = {'Authorization': 'Bearer $jwt_token'};
   var request = http.Request('GET',
       Uri.parse('https://api.zahedhasan.com/api/v1/upload/$usid/followers'));
@@ -847,6 +848,6 @@ Future<String> totalFollowers(String usid) async {
     return json.decode(await response.stream.bytesToString())["totalFollowers"];
   } else {
     print(response.reasonPhrase);
-    return await response.stream.bytesToString();
+    return json.decode(await response.stream.bytesToString())["message"];
   }
 }
