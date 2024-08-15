@@ -48,7 +48,7 @@ class MenuScreen extends StatelessWidget {
           }
           UsrProfile? usprofile;
           if (snapshot.hasData) {
-            usprofile == snapshot.data;
+            usprofile = snapshot.data;
           } else {
             ErrorToast("Cant fetch data ");
             return const Scaffold(
