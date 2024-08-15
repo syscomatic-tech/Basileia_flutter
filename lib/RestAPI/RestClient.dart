@@ -12,8 +12,8 @@ var userFollowings = [""];
 var userPass = "";
 var userEmail = "";
 var userProfile = "";
-var userFollowers = "";
-var userPoststotal = "";
+int userFollowers = 0;
+int userPoststotal = 0;
 
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";
@@ -62,8 +62,8 @@ class AuthClient {
       final userInfo = await getUserInfo(userId);
       final usPost = json.decode(await totalPost(userId));
       final usFollowers = json.decode(await totalFollowers(userId));
-      userFollowers = usFollowers["totalFollowers"].toString();
-      userPoststotal = usPost["totalPosts"].toString();
+      userFollowers = usFollowers["totalFollowers"];
+      userPoststotal = usPost["totalPosts"];
       print(userInfo);
       if (userInfo["user"] != null) {
         userFullname =
