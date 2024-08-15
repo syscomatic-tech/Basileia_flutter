@@ -105,9 +105,9 @@ class MenuScreen extends StatelessWidget {
             ),
             statistic(
               backGround: primary_1,
-              followers: '',
+              followers: userFollowers,
               following: userFollowings.length.toString(),
-              POST: '',
+              POST: userPoststotal,
             ),
             ListView.builder(
               itemCount: menuTitle.length,
