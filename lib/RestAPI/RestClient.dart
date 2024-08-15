@@ -12,6 +12,7 @@ var userFollowings = [""];
 var userPass = "";
 var userEmail = "";
 var userProfile = "";
+var userFollowers = "";
 
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";

@@ -138,7 +138,7 @@ class HomeFeedScreen2 extends GetView<HomeFeedController2> {
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          Get.to(() => MenuScreen(UserId: userId,));
+                                          Get.to(() => MenuScreen());
                                         },
                                         icon: Image.asset(menu),
                                       )
