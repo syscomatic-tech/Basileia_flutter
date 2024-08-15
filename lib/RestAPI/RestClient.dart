@@ -830,7 +830,7 @@ Future<String> totalPost(String usId) async {
     return jsonDecode(await response.stream.bytesToString())["totalPosts"];
   } else {
     print(response.reasonPhrase);
-    return jsonDecode(await response.stream.bytesToString())["message"];
+    return await response.stream.bytesToString();
   }
 }
 
@@ -847,6 +847,6 @@ Future<String> totalFollowers(String usid) async {
     return json.decode(await response.stream.bytesToString())["totalFollowers"];
   } else {
     print(response.reasonPhrase);
-    return json.decode(await response.stream.bytesToString())["message"];
+    return await response.stream.bytesToString();
   }
 }
