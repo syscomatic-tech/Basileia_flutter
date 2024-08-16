@@ -126,6 +126,7 @@ class SignUpScreen_1 extends StatelessWidget {
                       email.text.toString(),
                       role,
                       password.text.toString());
+                  signup.saveUserSession(jwt_token, userId, userFullname);
                   if(!checkboxController.isChecked.value){
                    return ErrorToast(
                         'your not agree with our Privacy Policy and Terms of Service.');

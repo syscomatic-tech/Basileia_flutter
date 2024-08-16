@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:basileia/Style/style.dart';
 import 'package:basileia/RestAPI/model.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 var jwt_token = "";
 var userId = "";
@@ -19,6 +20,26 @@ int userPoststotal = 0;
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
+
+
+  // Saving JWT Token, User ID, and User Name
+  Future<void> saveUserSession(String token, String userId, String userName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('jwt_token', token);
+    await prefs.setString('user_id', userId);
+    await prefs.setString('user_name', userName);
+  }
+
+  // load user session
+  Future<Map<String, String?>> loadUserSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return {
+      'jwt_token': prefs.getString('jwt_token'),
+      'user_id': prefs.getString('user_id'),
+      'user_name': prefs.getString('user_name'),
+    };
+  }
+
 //Login API calling
   Future<Map<String, dynamic>> getUserInfo(String usrid) async {
     var headers = {'Authorization': 'Bearer $jwt_token'};

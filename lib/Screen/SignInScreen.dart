@@ -128,6 +128,7 @@ class SignInScreen extends StatelessWidget {
                 if (!req_outp.contains("Error")) {
                   SuccessToast(req_outp);
                   final hm_screen = HomeFeedScreen();
+                  auth.saveUserSession(jwt_token, userId, userFullname);
                   Get.to(() => hm_screen);
                 } else {
                   ErrorToast("Please Login with accurate credentials. ");

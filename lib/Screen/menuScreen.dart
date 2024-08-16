@@ -1,4 +1,5 @@
 import 'package:basileia/RestAPI/RestClient.dart';
+import 'package:basileia/Screen/profileScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/style.dart';
@@ -10,26 +11,20 @@ import '../Style/controller.dart';
 class MenuScreen extends StatelessWidget {
   MenuScreen({super.key});
   final menuTitle = [
-    'Connections',
     'Messages',
     'Group message',
     'Church Page',
     'Forums',
     'Groups',
-    'Delate Account',
     'Donation History',
-    'Language',
   ];
   final menuSubTitle = [
-    'Friendlist totals',
     'Message your friends',
     'Message your friends',
     'Message your friends',
     'See your recent activity',
     'Message your friends',
-    'Message your friends',
     'Checkout your previous donation history',
-    'Change your language from here',
   ];
   final menuCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   var followers = [''];
@@ -58,6 +53,7 @@ class MenuScreen extends StatelessWidget {
                             insideBorder: 45,
                             insideBorderRedius: 30,
                             onPressed: () async {
+                              Get.to(()=> ProfileScreen(usId: userId));
                               // await imagePick_1.pickImage();
                               // SocialClient scl_client = SocialClient();
                               // if (imagePick_1.imagePath.toString().isNotEmpty) {
@@ -94,7 +90,7 @@ class MenuScreen extends StatelessWidget {
                           )
                         ],
                       ),
-                      listTielButton(onTap: () {})
+                      listTielButton(onTap: () {Get.to(()=>ProfileScreen(usId: userId));})
                     ],
                   )
                 ],
