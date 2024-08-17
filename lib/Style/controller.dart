@@ -114,7 +114,7 @@ class ImagePick extends GetxController {
 
   Future pickImage() async {
     final result = await FilePicker.platform
-        .pickFiles()!; // await picker.pickImage(source: ImageSource.gallery);
+        .pickFiles(); // await picker.pickImage(source: ImageSource.gallery);
     if (result != null) {
       String pickedFile = result.files.single.path!;
       imagePath.value = pickedFile;
