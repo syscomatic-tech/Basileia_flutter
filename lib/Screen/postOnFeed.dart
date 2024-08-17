@@ -12,8 +12,10 @@ import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
+import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path_provider/path_provider.dart';
 import '../Style/controller.dart';
+import 'dart:io';
 
 class PostOnFeed extends StatelessWidget {
   final MyTabsController controller = Get.put(MyTabsController());
@@ -167,6 +169,7 @@ class PostOnFeed extends StatelessWidget {
                                                 Width: 151,
                                                 onTap: () async {
                                                   await _imagepick.pickImage();
+
                                                   SuccessToast("File chosen " +
                                                       _imagepick.imagePath
                                                           .toString());
@@ -193,8 +196,11 @@ class PostOnFeed extends StatelessWidget {
                                         decoration: BoxDecoration(
                                             image: DecorationImage(
                                                 image: FileImage(File(_imagepick
-                                                    .imagePath
-                                                    .toString())))),
+                                                        .video_selected.value
+                                                    ? _imagepick.thumbnail_pth
+                                                        .toString()
+                                                    : _imagepick.imagePath
+                                                        .toString())))),
                                       ),
                                     ),
                             )),

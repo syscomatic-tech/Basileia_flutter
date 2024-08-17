@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:basileia/RestAPI/model.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path_provider/path_provider.dart';
+import '../Style/controller.dart';
+import 'dart:io';
 
 class MyTabsController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -86,14 +90,40 @@ class LeadersController extends GetxController
   }
 }
 
+Future<String?> getVideoThumbnail(String videoUrl) async {
+  final directory = await getTemporaryDirectory();
+  final thumbnailPath = await VideoThumbnail.thumbnailFile(
+    video: videoUrl,
+    thumbnailPath: directory.path,
+    imageFormat: ImageFormat.PNG,
+    maxHeight: 200, // specify the height of the thumbnail
+    quality: 75, // specify the quality of the thumbnail
+  );
+
+  if (thumbnailPath != null) {
+    return thumbnailPath;
+  }
+  return null;
+}
+
 class ImagePick extends GetxController {
   RxString imagePath = ''.obs;
   final ImagePicker picker = ImagePicker();
+  var video_selected = false.obs;
+  var thumbnail_pth = "".obs;
 
   Future pickImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       imagePath.value = pickedFile.path.toString();
+      if (imagePath.split(".")[-1] == "mkv" ||
+          imagePath.split(".")[-1] == "mp4") {
+        var thumbnail_pt = await getVideoThumbnail(pickedFile.path.toString());
+        if (thumbnail_pt != null) {
+          video_selected.value = true;
+          thumbnail_pth.value = thumbnail_pt;
+        }
+      }
     } else {
       print('No image selected');
     }
