@@ -21,23 +21,35 @@ class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
 
-
   // Saving JWT Token, User ID, and User Name
-  Future<void> saveUserSession(String token, String userId, String userName) async {
+  Future<void> saveUserSession() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('jwt_token', token);
+    await prefs.setString('jwt_token', jwt_token);
     await prefs.setString('user_id', userId);
-    await prefs.setString('user_name', userName);
+    await prefs.setString('user_name', userFullname);
+    await prefs.setString('userEmail', userEmail);
+    await prefs.setStringList('userFollowings', userFollowings);
+    await prefs.setInt('userFollowers', userFollowers);
+    await prefs.setInt('userPoststotal', userPoststotal);
+    await prefs.setString('userProfile', userProfile);
   }
 
   // load user session
-  Future<Map<String, String?>> loadUserSession() async {
+  Future<bool> loadUserSession() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return {
-      'jwt_token': prefs.getString('jwt_token'),
-      'user_id': prefs.getString('user_id'),
-      'user_name': prefs.getString('user_name'),
-    };
+    var jwt_tokenn = prefs.getString('jwt_token');
+    if (jwt_tokenn == null) {
+      return false;
+    }
+    jwt_token = prefs.getString('jwt_token')!;
+    userId = prefs.getString('user_id')!;
+    userFullname = prefs.getString('user_name')!;
+    userFollowings = prefs.getStringList("userFollowings")!;
+    userEmail = prefs.getString('userEmail')!;
+    userProfile = prefs.getString('userProfile')!;
+    userFollowers = prefs.getInt('userFollowers')!;
+    userPoststotal = prefs.getInt('userPoststotal')!;
+    return true;
   }
 
 //Login API calling
@@ -57,6 +69,7 @@ class AuthClient {
       if (resp["user"].containsKey("profilePicture")) {
         userProfile = resp["user"]["profilePicture"];
       }
+      await saveUserSession();
       return resp;
     } else {
       print(response.reasonPhrase);
@@ -94,6 +107,7 @@ class AuthClient {
         userFullname = "Deleted User";
       }
       userEmail = resp["user"]["email"];
+      await saveUserSession();
       return "Login Successful";
     } else {
       print(response.reasonPhrase);
@@ -125,6 +139,7 @@ class AuthClient {
     http.StreamedResponse response = await request.send();
     print(response.statusCode);
     if (response.statusCode < 300) {
+      await saveUserSession();
       return true;
     } else {
       final out = json.decode(await response.stream.bytesToString());
@@ -237,6 +252,7 @@ class SocialClient {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode < 300) {
+      await AuthClient().saveUserSession();
       print(await response.stream.bytesToString());
       return true;
     } else {
@@ -265,6 +281,7 @@ class SocialClient {
             resp["user"]["hasPic"] = false;
           }
         }
+        await AuthClient().saveUserSession();
         return resp;
       } else {
         print(response.reasonPhrase);

@@ -47,9 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> checkLoginStatus() async {
-    Map<String, String?> sessionData = await authClient.loadUserSession();
+    var sessionData = await authClient.loadUserSession();
 
-    if (sessionData['jwt_token'] != null) {
+    if (sessionData) {
       // User is logged in, navigate to home screen
       Get.offAll(() => HomeFeedScreen());
     } else {

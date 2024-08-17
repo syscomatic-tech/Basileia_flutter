@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:basileia/RestAPI/model.dart';
 import 'package:get/get.dart';
 import 'dart:async';
+import 'package:basileia/Screen/SignInScreen.dart';
 
 class HomeFeedController extends GetxController {
   List<Post>? posts = [];
@@ -46,6 +47,8 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
             if (snapshot.hasData) {
               posts = snapshot.data;
             } else {
+              SuccessToast("token expired. login again");
+              Get.offAll(() => SignInScreen());
               print(snapshot);
               posts = [];
             }
