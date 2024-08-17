@@ -69,8 +69,6 @@ class PostOnFeed extends StatelessWidget {
                         } else {
                           ErrorToast("No Post selected");
                         }
-                        //
-                        //
                       },
                       text: 'Next')
                 ],
