@@ -120,7 +120,7 @@ class ImagePick extends GetxController {
       imagePath.value = pickedFile;
       if (imagePath.split(".")[-1] == "mkv" ||
           imagePath.split(".")[-1] == "mp4") {
-        var thumbnail_pt = await getVideoThumbnail(pickedFile.path.toString());
+        var thumbnail_pt = await getVideoThumbnail(pickedFile);
         if (thumbnail_pt != null) {
           video_selected.value = true;
           thumbnail_pth.value = thumbnail_pt;
