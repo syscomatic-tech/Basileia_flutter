@@ -6,6 +6,7 @@ import 'package:basileia/Style/style.dart';
 import 'package:basileia/RestAPI/model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:file_picker/file_picker.dart';
 
 var jwt_token = "";
 var userId = "";
@@ -16,6 +17,24 @@ var userEmail = "";
 var userProfile = "";
 int userFollowers = 0;
 int userPoststotal = 0;
+
+
+
+Future<File?> pickFile() async {
+  // Use the FilePicker to select a single file
+  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+  if (result != null && result.files.isNotEmpty) {
+    // Get the selected file path
+    String filePath = result.files.single.path!;
+
+    // Return the selected file as a File object
+    return File(filePath);
+  } else {
+    // User canceled the picker or no file was selected
+    return null;
+  }
+}
 
 class AuthClient {
   var BaseURL = "https://api.zahedhasan.com/api/v1";

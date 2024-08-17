@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -108,7 +109,7 @@ Future<String?> getVideoThumbnail(String videoUrl) async {
 
 class ImagePick extends GetxController {
   RxString imagePath = ''.obs;
-  final ImagePicker picker = ImagePicker();
+  final ImagePicker picker = FilePicker.platform.pickFiles();
   var video_selected = false.obs;
   var thumbnail_pth = "".obs;
 

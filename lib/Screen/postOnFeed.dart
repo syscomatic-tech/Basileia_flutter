@@ -173,6 +173,7 @@ class PostOnFeed extends StatelessWidget {
                                                   SuccessToast("File chosen " +
                                                       _imagepick.imagePath
                                                           .toString());
+                                                  pickFile();
                                                 },
                                                 text: 'Select Files'),
                                             const SizedBox(
