@@ -109,14 +109,15 @@ Future<String?> getVideoThumbnail(String videoUrl) async {
 
 class ImagePick extends GetxController {
   RxString imagePath = ''.obs;
-  final ImagePicker picker = FilePicker.platform.pickFiles();
   var video_selected = false.obs;
   var thumbnail_pth = "".obs;
 
   Future pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      imagePath.value = pickedFile.path.toString();
+    final result = await FilePicker.platform
+        .pickFiles()!; // await picker.pickImage(source: ImageSource.gallery);
+    if (result != null) {
+      String pickedFile = result.files.single.path!;
+      imagePath.value = pickedFile;
       if (imagePath.split(".")[-1] == "mkv" ||
           imagePath.split(".")[-1] == "mp4") {
         var thumbnail_pt = await getVideoThumbnail(pickedFile.path.toString());
