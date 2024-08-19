@@ -1,8 +1,10 @@
+import 'dart:typed_data';
+
+import 'package:basileia/Style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
-import 'dart:typed_data';
-import 'package:http/http.dart' as http;
+import 'package:basileia/RestAPI/RestClient.dart';
 
 class AudioPlayerWithWaveform extends StatefulWidget {
   final String audioUrl;
@@ -17,19 +19,24 @@ class AudioPlayerWithWaveform extends StatefulWidget {
 class _AudioPlayerWithWaveformState extends State<AudioPlayerWithWaveform> {
   late final AudioPlayer _audioPlayer;
   final PlayerController _waveformController = PlayerController();
+  Uint8List? audio_data;
   bool _isPlaying = false;
-  List<double> _waveformData = [];
+  List<double> _generateWaveformData(Uint8List audioData) {
+    // Implement actual logic to generate waveform data from audio bytes.
+    // The following is placeholder logic, you'll need a proper method here.
+    return List.generate(100, (index) => (index % 10 + 1) * 0.1);
+  }
 
   @override
   void initState() {
     super.initState();
     _audioPlayer = AudioPlayer();
-
-    _fetchAndProcessAudioData(widget.audioUrl);
-
-    _audioPlayer.setUrl(widget.audioUrl).then((_) {
-      _audioPlayer.positionStream.listen((position) {
-        _waveformController.onPlayerStateChanged.listen((_) {});
+    fetchAudioData(widget.audioUrl).then((data) {
+      audio_data = data;
+      _audioPlayer.setUrl(widget.audioUrl).then((_) {
+        _audioPlayer.positionStream.listen((position) {
+          _waveformController.onPlayerStateChanged.listen((_) {});
+        });
       });
     });
 
@@ -40,32 +47,6 @@ class _AudioPlayerWithWaveformState extends State<AudioPlayerWithWaveform> {
         });
       }
     });
-  }
-
-  Future<void> _fetchAndProcessAudioData(String audioUrl) async {
-    try {
-      // Fetch the audio data from the URL
-      final response = await http.get(Uri.parse(audioUrl));
-      if (response.statusCode == 200) {
-        Uint8List audioData = response.bodyBytes;
-
-        // Generate waveform data (this is a simplified placeholder logic)
-        // You would need an actual waveform generation process here.
-        _waveformData = _generateWaveformData(audioData);
-
-        // Update the waveform controller
-        _waveformController.updateWaveformData(_waveformData);
-        setState(() {});
-      }
-    } catch (e) {
-      print('Error fetching audio data: $e');
-    }
-  }
-
-  List<double> _generateWaveformData(Uint8List audioData) {
-    // Implement actual logic to generate waveform data from audio bytes.
-    // The following is placeholder logic, you'll need a proper method here.
-    return List.generate(100, (index) => (index % 10 + 1) * 0.1);
   }
 
   @override
@@ -107,19 +88,18 @@ class _AudioPlayerWithWaveformState extends State<AudioPlayerWithWaveform> {
                 ),
                 SizedBox(width: 10),
                 Expanded(
-                  child: AudioFileWaveforms(
-                    size: Size(MediaQuery.of(context).size.width, 100.0),
-                    playerController: _waveformController,
-                    enableSeekGesture: true,
-                    waveformType: WaveformType.long,
-                    waveformData: _waveformData,
-                    playerWaveStyle: const PlayerWaveStyle(
-                      fixedWaveColor: Colors.white54,
-                      liveWaveColor: Colors.blueAccent,
-                      spacing: 6,
-                    ),
+                    child: AudioFileWaveforms(
+                  size: Size(MediaQuery.of(context).size.width, 100.0),
+                  playerController: _waveformController,
+                  enableSeekGesture: true,
+                  waveformType: WaveformType.long,
+                  waveformData: _generateWaveformData(audio_data!),
+                  playerWaveStyle: const PlayerWaveStyle(
+                    fixedWaveColor: Colors.white54,
+                    liveWaveColor: Colors.blueAccent,
+                    spacing: 6,
                   ),
-                ),
+                )),
               ],
             ),
           ),
