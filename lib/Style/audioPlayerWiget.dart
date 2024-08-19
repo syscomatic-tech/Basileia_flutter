@@ -93,7 +93,9 @@ class _AudioPlayerWithWaveformState extends State<AudioPlayerWithWaveform> {
                   playerController: _waveformController,
                   enableSeekGesture: true,
                   waveformType: WaveformType.long,
-                  waveformData: _generateWaveformData(audio_data!),
+                  waveformData: audio_data == null
+                      ? []
+                      : _generateWaveformData(audio_data!),
                   playerWaveStyle: const PlayerWaveStyle(
                     fixedWaveColor: Colors.white54,
                     liveWaveColor: Colors.blueAccent,
