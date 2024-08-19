@@ -2,6 +2,7 @@ import 'dart:async';
 import "dart:convert";
 import 'dart:ffi';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:basileia/Style/style.dart';
 import 'package:basileia/RestAPI/model.dart';
 import 'package:http/http.dart' as http;
@@ -18,6 +19,24 @@ var userProfile = "";
 int userFollowers = 0;
 int userPoststotal = 0;
 
+Future<Uint8List?> fetchAudioData(String audioUrl) async {
+  try {
+    // Send a GET request to fetch the audio data
+    final response = await http.get(Uri.parse(audioUrl));
+
+    // Check if the response is successful
+    if (response.statusCode == 200) {
+      // Return the audio data as a Uint8List
+      return response.bodyBytes;
+    } else {
+      print('Failed to load audio data: ${response.statusCode}');
+      return null;
+    }
+  } catch (e) {
+    print('Error fetching audio data: $e');
+    return null;
+  }
+}
 Future<File?> pickFile() async {
   // Use the FilePicker to select a single file
   FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -37,6 +56,7 @@ Future<File?> pickFile() async {
 class AuthClient {
   var BaseURL = "https://backend.mdtamiz.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
+
 
   // Saving JWT Token, User ID, and User Name
   Future<void> saveUserSession() async {

@@ -1,8 +1,8 @@
 import 'package:basileia/Screen/SignInScreen.dart';
+import 'package:basileia/Style/audioPlayerWiget.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:io';
 
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: primary),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: AudioPlayerWithWaveform(audioUrl: 'https://nyc3.digitaloceanspaces.com/shardmind.ai/users/657ca801a0fce699ae0279c7/They%20Lied%20to%20You%20About%20Pain%20Andrew%20Tate%20%5BTubeRipper.com%5D.m4a?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00LXP3EKNLZWTA9XCG%2F20240819%2Fnyc3%2Fs3%2Faws4_request&X-Amz-Date=20240819T142334Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=074eb3249f15b0db3de49f0c3ea2c9c3c841c38237b332645b88f35e7652f247'),
     );
   }
 }
