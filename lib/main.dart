@@ -1,6 +1,7 @@
 import 'package:basileia/Screen/SignInScreen.dart';
 import 'package:basileia/Style/audioPlayerWiget.dart';
 import 'package:basileia/Style/colors.dart';
+import 'package:basileia/Style/videoPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: primary),
         useMaterial3: true,
       ),
-      home: AudioPlayerWithWaveform(audioUrl: 'https://nyc3.digitaloceanspaces.com/shardmind.ai/Dua%20Lipa%20-%20Levitating%20%28Lyrics%29.mp3'),
+      home: SplashScreen(),
+
     );
   }
 }

@@ -21,6 +21,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     _initializeVideoPlayerFuture = _videoPlayerController.initialize().then((_) {
       // Automatically play the video when the controller is initialized
       _videoPlayerController.play();
+      _videoPlayerController.setLooping(true);
       setState(() {});  // Trigger a rebuild after the video is initialized
     });
   }
