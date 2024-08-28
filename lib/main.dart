@@ -2,9 +2,11 @@ import 'package:basileia/Screen/SignInScreen.dart';
 import 'package:basileia/Style/audioPlayerWiget.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/videoPlayer.dart';
+import 'package:basileia/Style/videoplayer2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:video_player/video_player.dart';
 import 'dart:io';
 
 import 'RestAPI/RestClient.dart';
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: primary),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home:CustomVideoPlayer(url: 'https://www.w3schools.com/html/mov_bbb.mp4',)
 
     );
   }

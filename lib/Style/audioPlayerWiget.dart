@@ -23,7 +23,23 @@ class _AudioPlayerWithWaveformState extends State<AudioPlayerWithWaveform> {
   void initState() {
     super.initState();
     _audioPlayer = AudioPlayer();
+    wave();
+    _fetchAudioData(widget.audioUrl);
     _loadAndProcessAudio();
+  }
+
+  void wave() async {
+    await _waveformController.preparePlayer(
+        path: widget.audioUrl,
+        shouldExtractWaveform: true,
+        noOfSamples: 100,
+        volume: 1.0);
+    _waveformController.onPlayerStateChanged.listen((_) {
+      setState(() {});
+    });
+    _waveformController.onCurrentExtractedWaveformData.listen((_) {
+      setState(() {});
+    });
   }
 
   Future<void> _loadAndProcessAudio() async {
@@ -110,8 +126,7 @@ class _AudioPlayerWithWaveformState extends State<AudioPlayerWithWaveform> {
                     size: Size(MediaQuery.of(context).size.width, 100.0),
                     playerController: _waveformController,
                     enableSeekGesture: true,
-                    waveformType: WaveformType.long,
-                    waveformData: _waveformData ?? [],
+                    waveformData:_waveformData??[],
                     playerWaveStyle: const PlayerWaveStyle(
                       fixedWaveColor: Colors.white54,
                       liveWaveColor: Colors.blueAccent,
