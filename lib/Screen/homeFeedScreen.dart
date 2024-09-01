@@ -59,39 +59,37 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
               if (post.post_type < 2) {
                 if (!post.file_content.toString().contains(
                     "https://backend.mdtamiz.com/api/v1/uploads/users")) {
-                  if (post.file_content.toString().split(".").last == "mp3" ||
-                      post.file_content.toString().split(".").last == "wav") {
-                    AudioFeeds(
-                        userName: post.usrName,
-                        followers: post.followers.length.toString(),
-                        likes: post.likes.length.toString(),
-                        comments: post.comments.length.toString(),
-                        post: post,
-                        audioUrl: post.file_content.toString());
-                  } else if (post.file_content.toString().split(".").last ==
-                          "mp4" ||
-                      post.file_content.toString().split(".").last == "mkv") {
-                    videoPlayer(
-                        userName: post.usrName,
-                        followers: post.followers.length.toString(),
-                        likes: post.likes.length.toString(),
-                        comments: post.comments.length.toString(),
-                        VideoUrl: post.file_content.toString());
-                  } else {
-                    feeds.add(Feeds(context,
-                        userName: post.usrName,
-                        followers: post.followers.length.toString(),
-                        likes: post.likes.length.toString(),
-                        comments: post.comments.length.toString(),
-                        postType: post.post_type,
-                        content: post.file_content.toString(),
-                        postID: post.id.toString(),
-                        capt: post.caption,
-                        post: post));
-                  }
+                  feeds.add(Feeds(context,
+                      userName: post.usrName,
+                      followers: post.followers.length.toString(),
+                      likes: post.likes.length.toString(),
+                      comments: post.comments.length.toString(),
+                      postType: post.post_type,
+                      content: post.file_content.toString(),
+                      postID: post.id.toString(),
+                      capt: post.caption,
+                      post: post));
                 }
               } else {
-                // Audio and video feeds
+                if (post.file_content.toString().split(".").last == "mp3" ||
+                    post.file_content.toString().split(".").last == "wav") {
+                  AudioFeeds(
+                      userName: post.usrName,
+                      followers: post.followers.length.toString(),
+                      likes: post.likes.length.toString(),
+                      comments: post.comments.length.toString(),
+                      post: post,
+                      audioUrl: post.file_content.toString());
+                } else if (post.file_content.toString().split(".").last ==
+                        "mp4" ||
+                    post.file_content.toString().split(".").last == "mkv") {
+                  videoPlayer(
+                      userName: post.usrName,
+                      followers: post.followers.length.toString(),
+                      likes: post.likes.length.toString(),
+                      comments: post.comments.length.toString(),
+                      VideoUrl: post.file_content.toString());
+                }
               }
             }
             return Scaffold(
