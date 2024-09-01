@@ -26,7 +26,8 @@ class videoPlayer extends StatelessWidget {
       required this.followers,
       required this.likes,
       required this.comments,
-      required this.VideoUrl});
+      required this.VideoUrl,
+      required this.post});
   @override
   Widget build(BuildContext context) {
     return Padding(

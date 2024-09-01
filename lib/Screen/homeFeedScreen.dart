@@ -84,11 +84,13 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
                         "mp4" ||
                     post.file_content.toString().split(".").last == "mkv") {
                   feeds.add(videoPlayer(
-                      userName: post.usrName,
-                      followers: post.followers.length.toString(),
-                      likes: post.likes.length.toString(),
-                      comments: post.comments.length.toString(),
-                      VideoUrl: post.file_content.toString()));
+                    userName: post.usrName,
+                    followers: post.followers.length.toString(),
+                    likes: post.likes.length.toString(),
+                    comments: post.comments.length.toString(),
+                    VideoUrl: post.file_content.toString(),
+                    post: post,
+                  ));
                 }
               }
             }
