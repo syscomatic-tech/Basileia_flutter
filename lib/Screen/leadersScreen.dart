@@ -205,68 +205,93 @@ class LeadersScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height*0.92,
-              child: TabBarView(controller: leadersController.tabController, children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Comments();
-                  },
-                ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: 141,
-                      width: 89,
-                      decoration: BoxDecoration(
-                        color: progressBarBGColor,
-                        borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Row(
+              height: MediaQuery.of(context).size.height * 0.92,
+              child: TabBarView(
+                  controller: leadersController.tabController,
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Comments();
+                      },
+                    ),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          height: 141,
+                          width: 89,
+                          decoration: BoxDecoration(
+                              color: progressBarBGColor,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Image.asset(viewIcon,),
-                                const SizedBox(width: 3,),
-                                const Text('23.5K',style: TextStyle(color: primaryTxt,fontSize: 4,fontFamily: poppins_regular),)
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      viewIcon,
+                                    ),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    const Text(
+                                      '23.5K',
+                                      style: TextStyle(
+                                          color: primaryTxt,
+                                          fontSize: 4,
+                                          fontFamily: poppins_regular),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Image.asset(reactIcon),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    const Text(
+                                      '23.5K',
+                                      style: TextStyle(
+                                          color: primaryTxt,
+                                          fontSize: 4,
+                                          fontFamily: poppins_regular),
+                                    )
+                                  ],
+                                ),
                               ],
                             ),
-                            const SizedBox(width: 10,),
-                            Row(
-                              children: [
-                                Image.asset(reactIcon),
-                                const SizedBox(width: 3,),
-                                const Text('23.5K',style: TextStyle(color: primaryTxt,fontSize: 4,fontFamily: poppins_regular),)
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,mainAxisSpacing: 10,crossAxisSpacing: 10,childAspectRatio: 0.70),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AudioFeeds();
-                  },
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Comments();
-                  },
-                ),
-              ]),
+                          ),
+                        );
+                      },
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 0.70),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      itemBuilder: (BuildContext context, int index) {},
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Comments();
+                      },
+                    ),
+                  ]),
             )
           ],
         ),

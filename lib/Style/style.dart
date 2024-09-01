@@ -490,109 +490,6 @@ Widget Feeds(
   );
 }
 
-Widget AudioFeeds({
-  String? username,
-  String? followers,
-  content,
-  postType,
-  String? like,
-  String? comment,
-}) {
-  return Padding(
-    padding: const EdgeInsets.only(right: 10, left: 10),
-    child: SizedBox(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Profile(
-                      onPressed: () {},
-                      OutSidewidth: 47,
-                      OutSidehight: 47,
-                      InsideWidth: 38,
-                      InSideHight: 38),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'William Grace',
-                        style: TextStyle(
-                            fontSize: 16.3,
-                            fontFamily: poppins_regular,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        '1,5K Follwoers',
-                        style: TextStyle(
-                            fontSize: 10.87,
-                            color: textFi,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 58,
-            decoration: BoxDecoration(
-                color: ContainerBG, borderRadius: BorderRadius.circular(10)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 28,
-                  width: 28,
-                  decoration: BoxDecoration(
-                      color: primary, borderRadius: BorderRadius.circular(30)),
-                  child: const Icon(
-                    Icons.play_arrow,
-                    color: ContainerBG,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Image.asset(soundWave)
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              FeedIcButton(onTap: () {}, ic: Like_ic, text: '120' 'Likes'),
-              FeedIcButton(onTap: () {}, ic: Comment_ic, text: '6 ' 'Comments'),
-              FeedIcButton(onTap: () {}, ic: Share_ic, text: 'Share this post'),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Divider(
-            color: bordar,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
 Widget arrowButton() {
   return InkWell(
     onTap: () {
@@ -1488,7 +1385,9 @@ Widget menuItem({
           if (title == 'Group message') {
             cnt += 1;
             if (cnt < 2) {
-              var inboxscr = GroupMassage(userId: userId,);
+              var inboxscr = GroupMassage(
+                userId: userId,
+              );
               SuccessToast("Loading Please wait");
               Get.to(() => inboxscr);
             } else if (cnt < 5) {
@@ -1581,7 +1480,9 @@ Widget menuItem({
                       if (title == 'Group message') {
                         cnt += 1;
                         if (cnt < 2) {
-                          var inboxscr = GroupMassage(userId: userId,);
+                          var inboxscr = GroupMassage(
+                            userId: userId,
+                          );
                           SuccessToast("Loading Please wait");
                           Get.to(() => inboxscr);
                         } else if (cnt < 5) {
@@ -3802,7 +3703,6 @@ class profile_1 extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );

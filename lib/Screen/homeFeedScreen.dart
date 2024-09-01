@@ -8,11 +8,14 @@ import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
+import 'package:basileia/Style/videoPalyer.dart';
 import 'package:flutter/material.dart';
 import 'package:basileia/RestAPI/model.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:basileia/Screen/SignInScreen.dart';
+import 'package:basileia/Style/aduioFeeds.dart';
+import 'package:video_player/video_player.dart';
 
 class HomeFeedController extends GetxController {
   List<Post>? posts = [];
@@ -55,17 +58,37 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
             for (var post in posts!) {
               if (post.post_type < 2) {
                 if (!post.file_content.toString().contains(
-                    "https://api.zahedhasan.com/api/v1/uploads/users")) {
-                  feeds.add(Feeds(context,
-                      userName: post.usrName,
-                      followers: post.followers.length.toString(),
-                      likes: post.likes.length.toString(),
-                      comments: post.comments.length.toString(),
-                      postType: post.post_type,
-                      content: post.file_content.toString(),
-                      postID: post.id.toString(),
-                      capt: post.caption,
-                      post: post));
+                    "https://backend.mdtamiz.com/api/v1/uploads/users")) {
+                  if (post.file_content.toString().split(".").last == "mp3" ||
+                      post.file_content.toString().split(".").last == "wav") {
+                    AudioFeeds(
+                        userName: post.usrName,
+                        followers: post.followers.length.toString(),
+                        likes: post.likes.length.toString(),
+                        comments: post.comments.length.toString(),
+                        post: post,
+                        audioUrl: post.file_content.toString());
+                  } else if (post.file_content.toString().split(".").last ==
+                          "mp4" ||
+                      post.file_content.toString().split(".").last == "mkv") {
+                    videoPlayer(
+                        userName: post.usrName,
+                        followers: post.followers.length.toString(),
+                        likes: post.likes.length.toString(),
+                        comments: post.comments.length.toString(),
+                        VideoUrl: post.file_content.toString());
+                  } else {
+                    feeds.add(Feeds(context,
+                        userName: post.usrName,
+                        followers: post.followers.length.toString(),
+                        likes: post.likes.length.toString(),
+                        comments: post.comments.length.toString(),
+                        postType: post.post_type,
+                        content: post.file_content.toString(),
+                        postID: post.id.toString(),
+                        capt: post.caption,
+                        post: post));
+                  }
                 }
               } else {
                 // Audio and video feeds
