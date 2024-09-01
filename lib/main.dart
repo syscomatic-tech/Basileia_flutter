@@ -1,7 +1,8 @@
+import 'package:basileia/RestAPI/model.dart';
 import 'package:basileia/Screen/SignInScreen.dart';
+import 'package:basileia/Style/aduioFeeds.dart';
 import 'package:basileia/Style/audioPlayerWiget.dart';
 import 'package:basileia/Style/colors.dart';
-import 'package:basileia/Style/videoPlayer.dart';
 import 'package:basileia/Style/videoplayer2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,12 +27,11 @@ void main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp( const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: primary),
         useMaterial3: true,
       ),
-      home:CustomVideoPlayer(url: 'https://www.w3schools.com/html/mov_bbb.mp4',)
+      home:SplashScreen()
 
     );
   }

@@ -1,8 +1,8 @@
-import 'package:basileia/Style/audioPlayerWiget.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
+import 'package:basileia/Style/videoplayer2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,24 +11,22 @@ import '../Screen/commentScreen.dart';
 import '../Screen/profileScreen.dart';
 import 'likeiconwidget.dart';
 
-class AudioFeeds extends StatelessWidget {
+class videoPlayer extends StatelessWidget {
   final String userName;
   final String followers;
   final String likes;
   final String comments;
   final String postID = "";
   final String capt = "";
-  final String audioUrl;
+  final String VideoUrl;
   var post;
-  AudioFeeds({
-    super.key,
-    required this.userName,
-    required this.followers,
-    required this.likes,
-    required this.comments,
-    required this.post,
-    required this.audioUrl,
-  });
+  videoPlayer(
+      {super.key,
+      required this.userName,
+      required this.followers,
+      required this.likes,
+      required this.comments,
+      required this.VideoUrl});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -104,8 +102,10 @@ class AudioFeeds extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(capt),
-                  const SizedBox(height:5,),
-                  AudioPlayerWithWaveform(audioUrl: audioUrl),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  CustomVideoPlayer(url: VideoUrl),
                 ],
               )),
           const SizedBox(

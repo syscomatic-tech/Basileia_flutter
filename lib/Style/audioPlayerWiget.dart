@@ -1,7 +1,7 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AudioPlayerWithWaveform extends StatefulWidget {
   final String audioUrl;
@@ -14,79 +14,54 @@ class AudioPlayerWithWaveform extends StatefulWidget {
 }
 
 class _AudioPlayerWithWaveformState extends State<AudioPlayerWithWaveform> {
-  late final AudioPlayer _audioPlayer;
   final PlayerController _waveformController = PlayerController();
   bool _isPlaying = false;
-  List<double>? _waveformData;
+  String? _localFilePath;
 
   @override
   void initState() {
     super.initState();
-    _audioPlayer = AudioPlayer();
-    wave();
-    _fetchAudioData(widget.audioUrl);
     _loadAndProcessAudio();
-  }
-
-  void wave() async {
-    await _waveformController.preparePlayer(
-        path: widget.audioUrl,
-        shouldExtractWaveform: true,
-        noOfSamples: 100,
-        volume: 1.0);
-    _waveformController.onPlayerStateChanged.listen((_) {
-      setState(() {});
-    });
-    _waveformController.onCurrentExtractedWaveformData.listen((_) {
-      setState(() {});
-    });
   }
 
   Future<void> _loadAndProcessAudio() async {
     try {
-      // Load the audio file into the player
-      await _audioPlayer.setUrl(widget.audioUrl);
+      // Get the temporary directory of the device
+      final tempDir = await getTemporaryDirectory();
+      final localFilePath = '${tempDir.path}/downloaded_audio.mp3';
 
-      // Fetch audio data (example using HTTP client or similar)
-      Uint8List audioData = await _fetchAudioData(widget.audioUrl);
+      // Download the audio file
+      await Dio().download(
+        widget.audioUrl,
+        localFilePath,
+        onReceiveProgress: (received, total) {
+          if (total != -1) {
+            print(
+                "Downloading: ${(received / total * 100).toStringAsFixed(0)}%");
+          }
+        },
+      );
 
-      // Process audio data to generate waveform (this is simplified)
+      // Save the local path
       setState(() {
-        _waveformData = _generateWaveformData(audioData);
+        _localFilePath = localFilePath;
       });
 
-      // Listen to audio player state
-      _audioPlayer.playerStateStream.listen((state) {
-        if (state.processingState == ProcessingState.completed) {
-          setState(() {
-            _isPlaying = false;
-          });
-        }
-      });
+      // Prepare the player with the downloaded file
+      await _waveformController.preparePlayer(
+        path: _localFilePath!,
+        shouldExtractWaveform: true,
+      );
     } catch (e) {
       print('Error loading audio: $e');
     }
   }
 
-  // Placeholder for fetching audio data
-  Future<Uint8List> _fetchAudioData(String url) async {
-    // Implement your audio data fetching logic here
-    // For example, use HttpClient to download the audio file as bytes
-    return Uint8List(0); // Placeholder
-  }
-
-  // Placeholder for generating waveform data from audio bytes
-  List<double> _generateWaveformData(Uint8List audioData) {
-    // Implement actual waveform generation logic here
-    // This is just a simple placeholder
-    return List.generate(100, (index) => (index % 10 + 1) * 0.1);
-  }
-
   void _togglePlayPause() {
     if (_isPlaying) {
-      _audioPlayer.pause();
+      _waveformController.pausePlayer();
     } else {
-      _audioPlayer.play();
+      _waveformController.startPlayer();
     }
     setState(() {
       _isPlaying = !_isPlaying;
@@ -95,14 +70,12 @@ class _AudioPlayerWithWaveformState extends State<AudioPlayerWithWaveform> {
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
     _waveformController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_waveformData);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -126,7 +99,6 @@ class _AudioPlayerWithWaveformState extends State<AudioPlayerWithWaveform> {
                     size: Size(MediaQuery.of(context).size.width, 100.0),
                     playerController: _waveformController,
                     enableSeekGesture: true,
-                    waveformData:_waveformData??[],
                     playerWaveStyle: const PlayerWaveStyle(
                       fixedWaveColor: Colors.white54,
                       liveWaveColor: Colors.blueAccent,
