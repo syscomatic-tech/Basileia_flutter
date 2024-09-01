@@ -73,22 +73,22 @@ class HomeFeedScreen extends GetView<HomeFeedController> {
               } else {
                 if (post.file_content.toString().split(".").last == "mp3" ||
                     post.file_content.toString().split(".").last == "wav") {
-                  AudioFeeds(
+                  feeds.add(AudioFeeds(
                       userName: post.usrName,
                       followers: post.followers.length.toString(),
                       likes: post.likes.length.toString(),
                       comments: post.comments.length.toString(),
                       post: post,
-                      audioUrl: post.file_content.toString());
+                      audioUrl: post.file_content.toString()));
                 } else if (post.file_content.toString().split(".").last ==
                         "mp4" ||
                     post.file_content.toString().split(".").last == "mkv") {
-                  videoPlayer(
+                  feeds.add(videoPlayer(
                       userName: post.usrName,
                       followers: post.followers.length.toString(),
                       likes: post.likes.length.toString(),
                       comments: post.comments.length.toString(),
-                      VideoUrl: post.file_content.toString());
+                      VideoUrl: post.file_content.toString()));
                 }
               }
             }
