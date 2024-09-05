@@ -625,21 +625,20 @@ Future<List<Question>> getForumPosts() async {
       //       time: cmnt["createdAt"],
       //       replies: []));
       // }
-      if (forum["userId"] == null) {
-        forum["userId"] = {
-          "_id": "0",
-          "firstName": "Deleted",
-          "lastName": "User"
-        };
-      }
+      // if (forum["user"]["id"] == null) {
+      //   forum["userId"] = {
+      //     "_id": "0",
+      //     "firstName": "Deleted",
+      //     "lastName": "User"
+      //   };
+      // }
       Forums.add(Question(
         type: forum["categories"],
         id: forum["_id"],
         content: forum["question"],
         upvotes: forum["upvotes"],
-        userID: forum["userId"]["_id"],
-        usrName:
-            forum["userId"]["firstName"] + " " + forum["userId"]["lastName"],
+        userID: forum["user"]["_id"],
+        usrName: forum["user"]["firstName"] + " " + forum["user"]["lastName"],
       ));
       // comments: cmments));
     }
