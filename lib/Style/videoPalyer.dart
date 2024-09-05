@@ -106,7 +106,9 @@ class videoPlayer extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  CustomVideoPlayer(url: VideoUrl),
+                  Container(
+                    height: MediaQuery.of(context).size.height,
+                      child: CustomVideoPlayer(url: VideoUrl)),
                 ],
               )),
           const SizedBox(

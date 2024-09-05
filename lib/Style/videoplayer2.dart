@@ -18,6 +18,8 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   void initState() {
     super.initState();
     flickManager = FlickManager(
+      autoInitialize: true,
+      autoPlay: false,
       videoPlayerController: VideoPlayerController.network(widget.url),
     );
   }
@@ -30,9 +32,6 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 16 / 9,
-      child: FlickVideoPlayer(flickManager: flickManager),
-    );
+    return FlickVideoPlayer(flickManager: flickManager);
   }
 }
