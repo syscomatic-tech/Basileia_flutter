@@ -659,7 +659,7 @@ Future<bool> uploadForumPost(post, category, tags) async {
   var request = http.Request(
       'POST', Uri.parse('https://backend.mdtamiz.com/api/v1/question/create'));
   request.body = json.encode(
-      {"user": userId, "question": post, "categories": category, "tags": tags});
+      {"user": userId, "question": post, "category": category, "tags": tags});
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();
