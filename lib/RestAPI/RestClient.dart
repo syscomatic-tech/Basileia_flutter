@@ -607,7 +607,7 @@ Future<List<Question>> getForumPosts() async {
   if (response.statusCode < 300) {
     List<Question> Forums = [];
     var ForumPosts = jsonDecode(await response.stream.bytesToString());
-    for (var forum in ForumPosts["latestQuestions"]) {
+    for (var forum in ForumPosts["data"]) {
       List<Comment> cmments = [];
       for (var cmnt in forum["comments"]) {
         SocialClient socialClient = SocialClient();
