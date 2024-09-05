@@ -609,22 +609,22 @@ Future<List<Question>> getForumPosts() async {
     var ForumPosts = jsonDecode(await response.stream.bytesToString());
     for (var forum in ForumPosts["data"]) {
       List<Comment> cmments = [];
-      for (var cmnt in forum["comments"]) {
-        SocialClient socialClient = SocialClient();
-        var userinf = (await socialClient.getUserInfo(cmnt["userId"]))["user"];
-        if (userinf == null) {
-          userinf["firstName"] = "Deleted";
-          userinf["lastName"] = "User";
-        }
-        // cmments.add(Comment(
-        //     profilePic: "",
-        //     userId: cmnt["userId"],
-        //     id: cmnt["_id"],
-        //     content: cmnt["comment"],
-        //     usrname: userinf["firstName"] + " " + userinf["lastName"],
-        //     time: cmnt["createdAt"],
-        //     replies: []));
-      }
+      // for (var cmnt in forum["comments"]) {
+      //   SocialClient socialClient = SocialClient();
+      //   var userinf = (await socialClient.getUserInfo(cmnt["userId"]))["user"];
+      //   if (userinf == null) {
+      //     userinf["firstName"] = "Deleted";
+      //     userinf["lastName"] = "User";
+      //   }
+      //   cmments.add(Comment(
+      //       profilePic: "",
+      //       userId: cmnt["userId"],
+      //       id: cmnt["_id"],
+      //       content: cmnt["comment"],
+      //       usrname: userinf["firstName"] + " " + userinf["lastName"],
+      //       time: cmnt["createdAt"],
+      //       replies: []));
+      // }
       if (forum["userId"] == null) {
         forum["userId"] = {
           "_id": "0",
