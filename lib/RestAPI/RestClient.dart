@@ -658,12 +658,8 @@ Future<bool> uploadForumPost(post, category, tags) async {
   };
   var request = http.Request(
       'POST', Uri.parse('https://backend.mdtamiz.com/api/v1/question/create'));
-  request.body = json.encode({
-    "userId": userId,
-    "question": post,
-    "categories": category,
-    "tags": tags
-  });
+  request.body = json.encode(
+      {"user": userId, "question": post, "categories": category, "tags": tags});
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();
@@ -674,7 +670,7 @@ Future<bool> uploadForumPost(post, category, tags) async {
     return true;
   } else {
     var outp = jsonDecode(await response.stream.bytesToString());
-    ErrorToast(outp["message"]);
+    ErrorToast(await response.stream.bytesToString());
     print(response.reasonPhrase);
     return false;
   }
