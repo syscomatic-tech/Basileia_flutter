@@ -43,10 +43,10 @@ class ForumsUpload extends StatelessWidget {
                       onTap: () async {
                         if (_controller.text.isNotEmpty) {
                           SocialClient scl_cl = SocialClient();
-                          await uploadForumPost(_controller.text, "GN", "");
+                          await uploadForumPost(_controller.text, "GN");
                         } else {
                           SocialClient scl_cl = SocialClient();
-                          await uploadForumPost("", "GN", "");
+                          await uploadForumPost("", "GN");
                         }
                         SuccessToast("post uploaded");
                         Get.to(() => ForumsScreen());
