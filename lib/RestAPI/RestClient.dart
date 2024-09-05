@@ -633,7 +633,7 @@ Future<List<Question>> getForumPosts() async {
       //   };
       // }
       Forums.add(Question(
-        type: forum["categories"],
+        type: forum["category"],
         id: forum["_id"],
         content: forum["question"],
         upvotes: forum["upvotes"],
