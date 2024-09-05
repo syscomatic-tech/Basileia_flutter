@@ -37,6 +37,7 @@ Future<Uint8List?> fetchAudioData(String audioUrl) async {
     return null;
   }
 }
+
 Future<File?> pickFile() async {
   // Use the FilePicker to select a single file
   FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -56,7 +57,6 @@ Future<File?> pickFile() async {
 class AuthClient {
   var BaseURL = "https://backend.mdtamiz.com/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
-
 
   // Saving JWT Token, User ID, and User Name
   Future<void> saveUserSession() async {
@@ -595,8 +595,10 @@ Future<List<Question>> getForumPosts() async {
   var headers = {
     'Authorization': 'Bearer $jwt_token',
   };
-  var request = http.Request('GET',
-      Uri.parse('https://backend.mdtamiz.com/api/v1/question/latestQuestion'));
+  var request = http.Request(
+      'GET',
+      Uri.parse(
+          'https://backend.mdtamiz.com/api/v1/question/all?page=1&limit=20'));
 
   request.headers.addAll(headers);
 
@@ -649,15 +651,19 @@ Future<List<Question>> getForumPosts() async {
   }
 }
 
-Future<bool> uploadForumPost(post, category) async {
+Future<bool> uploadForumPost(post, category, tags) async {
   var headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer $jwt_token',
   };
-  var request = http.Request('POST',
-      Uri.parse('https://backend.mdtamiz.com/api/v1/question/questionAdd'));
-  request.body =
-      json.encode({"userId": userId, "question": post, "categories": category});
+  var request = http.Request(
+      'POST', Uri.parse('https://backend.mdtamiz.com/api/v1/question/create'));
+  request.body = json.encode({
+    "userId": userId,
+    "question": post,
+    "categories": category,
+    "tags": tags
+  });
   request.headers.addAll(headers);
 
   http.StreamedResponse response = await request.send();
