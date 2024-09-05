@@ -67,7 +67,6 @@ class Question {
   List<dynamic> upvotes = [];
   var userID = "";
   var usrName = "";
-  List<Comment> comments = [];
   Question({
     required this.type,
     required this.id,
@@ -75,7 +74,6 @@ class Question {
     required this.upvotes,
     required this.userID,
     required this.usrName,
-    required this.comments,
   });
 }
 

@@ -616,14 +616,14 @@ Future<List<Question>> getForumPosts() async {
           userinf["firstName"] = "Deleted";
           userinf["lastName"] = "User";
         }
-        cmments.add(Comment(
-            profilePic: "",
-            userId: cmnt["userId"],
-            id: cmnt["_id"],
-            content: cmnt["comment"],
-            usrname: userinf["firstName"] + " " + userinf["lastName"],
-            time: cmnt["createdAt"],
-            replies: []));
+        // cmments.add(Comment(
+        //     profilePic: "",
+        //     userId: cmnt["userId"],
+        //     id: cmnt["_id"],
+        //     content: cmnt["comment"],
+        //     usrname: userinf["firstName"] + " " + userinf["lastName"],
+        //     time: cmnt["createdAt"],
+        //     replies: []));
       }
       if (forum["userId"] == null) {
         forum["userId"] = {
@@ -633,14 +633,15 @@ Future<List<Question>> getForumPosts() async {
         };
       }
       Forums.add(Question(
-          type: forum["categories"],
-          id: forum["_id"],
-          content: forum["question"],
-          upvotes: forum["upvotes"],
-          userID: forum["userId"]["_id"],
-          usrName:
-              forum["userId"]["firstName"] + " " + forum["userId"]["lastName"],
-          comments: cmments));
+        type: forum["categories"],
+        id: forum["_id"],
+        content: forum["question"],
+        upvotes: forum["upvotes"],
+        userID: forum["userId"]["_id"],
+        usrName:
+            forum["userId"]["firstName"] + " " + forum["userId"]["lastName"],
+      ));
+      // comments: cmments));
     }
     return Forums;
   } else {
