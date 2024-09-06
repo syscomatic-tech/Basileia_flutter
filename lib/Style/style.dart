@@ -3639,16 +3639,16 @@ class dropdownItem extends StatelessWidget {
             },
             items: [
               DropdownMenuItem<String>(
-                value: 'Option 1',
-                child: Text('Option 1'),
+                value: 'genral',
+                child: Text('genral'),
               ),
               DropdownMenuItem<String>(
-                value: 'Option 2',
-                child: Text('Option 2'),
+                value: 'Bible',
+                child: Text('Bible'),
               ),
               DropdownMenuItem<String>(
-                value: 'Option 3',
-                child: Text('Option 3'),
+                value: 'Motivation',
+                child: Text('Motivation'),
               ),
             ],
           ),
