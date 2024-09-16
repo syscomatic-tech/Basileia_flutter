@@ -672,6 +672,27 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
   }
 }
 
+Future<String> answerQuestion(quesid, answer) async {
+  var headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $jwt_token',
+  };
+  var request = http.Request(
+      'POST', Uri.parse('https://backend.mdtamiz.com/api/v1/question/ans'));
+  request.body =
+      json.encode({"user": userId, "question": quesid, "answer": answer});
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 200) {
+    print(await response.stream.bytesToString());
+    return "Nicely done";
+  } else {
+    return "Madar choder error. bainchud";
+  }
+}
+
 Future<bool> uploadForumPost(
     String post, String category, List<String> tags) async {
   var headers = {
