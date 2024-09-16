@@ -652,11 +652,18 @@ class SocialClient {
 // }
 
 Future<List<Question>> getForumPosts({int page = 1}) async {
-  final response = await http.get(Uri.parse(
-      'https://backend.mdtamiz.com/api/v1/question/all?page=$page&limit=20'));
+  var headers = {'Authorization': 'Bearer $jwt_token'};
+  var request = http.Request(
+      'GET',
+      Uri.parse(
+          'https://backend.mdtamiz.com/api/v1/question/all?page=$page&limit=20'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
 
   if (response.statusCode == 200) {
-    List<dynamic> data = json.decode(response.body);
+    List<dynamic> data = json.decode(await response.stream.bytesToString());
     print(data);
     List<Question> questions = data.map((e) => Question.fromJson(e)).toList();
     return questions;
