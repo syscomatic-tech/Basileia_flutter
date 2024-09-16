@@ -16,7 +16,6 @@ import 'package:basileia/Screen/profileScreen.dart';
 import 'package:basileia/Screen/questionDetailsScreen.dart';
 import 'package:basileia/Screen/religionsScreen.dart';
 import 'package:basileia/Style/likeiconwidget.dart';
-import 'package:basileia/base64Image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -2655,12 +2654,14 @@ Widget seeAllButton({onTap}) {
 }
 
 class question extends StatelessWidget {
+  final Question quest;
   final String username;
   final String content;
   final String contentType;
 
   const question(
       {super.key,
+      required this.quest,
       required this.username,
       required this.content,
       required this.contentType});
@@ -2668,7 +2669,7 @@ class question extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(() => const QuestionDetailScreen());
+        Get.to(() => QuestionDetailScreen(quest: quest));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 15),
@@ -3649,7 +3650,8 @@ class dropdownItem extends StatelessWidget {
               DropdownMenuItem<String>(
                 value: 'Question',
                 child: Text('Question'),
-              ),DropdownMenuItem<String>(
+              ),
+              DropdownMenuItem<String>(
                 value: 'Motivation',
                 child: Text('Motivation'),
               ),

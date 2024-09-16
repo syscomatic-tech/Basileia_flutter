@@ -591,63 +591,76 @@ class SocialClient {
   }
 }
 
-Future<List<Question>> getForumPosts() async {
-  var headers = {
-    'Authorization': 'Bearer $jwt_token',
-  };
-  var request = http.Request(
-      'GET',
-      Uri.parse(
-          'https://backend.mdtamiz.com/api/v1/question/all?page=1&limit=20'));
+// Future<List<Question>> getForumPosts() async {
+//   var headers = {
+//     'Authorization': 'Bearer $jwt_token',
+//   };
+//   var request = http.Request(
+//       'GET',
+//       Uri.parse(
+//           'https://backend.mdtamiz.com/api/v1/question/all?page=1&limit=20'));
 
-  request.headers.addAll(headers);
+//   request.headers.addAll(headers);
 
-  http.StreamedResponse response = await request.send();
+//   http.StreamedResponse response = await request.send();
 
-  if (response.statusCode < 300) {
-    List<Question> Forums = [];
-    var ForumPosts = jsonDecode(await response.stream.bytesToString());
-    for (var forum in ForumPosts["data"]) {
-      List<Comment> cmments = [];
-      // for (var cmnt in forum["comments"]) {
-      //   SocialClient socialClient = SocialClient();
-      //   var userinf = (await socialClient.getUserInfo(cmnt["userId"]))["user"];
-      //   if (userinf == null) {
-      //     userinf["firstName"] = "Deleted";
-      //     userinf["lastName"] = "User";
-      //   }
-      //   cmments.add(Comment(
-      //       profilePic: "",
-      //       userId: cmnt["userId"],
-      //       id: cmnt["_id"],
-      //       content: cmnt["comment"],
-      //       usrname: userinf["firstName"] + " " + userinf["lastName"],
-      //       time: cmnt["createdAt"],
-      //       replies: []));
-      // }
-      // if (forum["user"]["id"] == null) {
-      //   forum["userId"] = {
-      //     "_id": "0",
-      //     "firstName": "Deleted",
-      //     "lastName": "User"
-      //   };
-      // }
-      Forums.add(Question(
-        type: forum["category"],
-        id: forum["_id"],
-        content: forum["question"],
-        upvotes: forum["upvotes"],
-        userID: forum["user"]["_id"],
-        usrName: forum["user"]["firstName"] + " " + forum["user"]["lastName"],
-      ));
-      // comments: cmments));
-    }
-    return Forums;
+//   if (response.statusCode < 300) {
+//     List<Question> Forums = [];
+//     var ForumPosts = jsonDecode(await response.stream.bytesToString());
+//     for (var forum in ForumPosts["data"]) {
+//       List<Comment> cmments = [];
+//       // for (var cmnt in forum["comments"]) {
+//       //   SocialClient socialClient = SocialClient();
+//       //   var userinf = (await socialClient.getUserInfo(cmnt["userId"]))["user"];
+//       //   if (userinf == null) {
+//       //     userinf["firstName"] = "Deleted";
+//       //     userinf["lastName"] = "User";
+//       //   }
+//       //   cmments.add(Comment(
+//       //       profilePic: "",
+//       //       userId: cmnt["userId"],
+//       //       id: cmnt["_id"],
+//       //       content: cmnt["comment"],
+//       //       usrname: userinf["firstName"] + " " + userinf["lastName"],
+//       //       time: cmnt["createdAt"],
+//       //       replies: []));
+//       // }
+//       // if (forum["user"]["id"] == null) {
+//       //   forum["userId"] = {
+//       //     "_id": "0",
+//       //     "firstName": "Deleted",
+//       //     "lastName": "User"
+//       //   };
+//       // }
+//       Forums.add(Question(
+//         type: forum["category"],
+//         id: forum["_id"],
+//         content: forum["question"],
+//         upvotes: forum["upvotes"],
+//         userID: forum["user"]["_id"],
+//         usrName: forum["user"]["firstName"] + " " + forum["user"]["lastName"],
+//       ));
+//       // comments: cmments));
+//     }
+//     return Forums;
+//   } else {
+//     print(response.reasonPhrase);
+//     var outp = jsonDecode(await response.stream.bytesToString());
+//     ErrorToast(outp["message"]);
+//     return [];
+//   }
+// }
+
+Future<List<Question>> getForumPosts({int page = 1}) async {
+  final response = await http.get(Uri.parse(
+      'https://backend.mdtamiz.com/api/v1/question/all?page=$page&limit=20'));
+
+  if (response.statusCode == 200) {
+    List<dynamic> data = json.decode(response.body);
+    List<Question> questions = data.map((e) => Question.fromJson(e)).toList();
+    return questions;
   } else {
-    print(response.reasonPhrase);
-    var outp = jsonDecode(await response.stream.bytesToString());
-    ErrorToast(outp["message"]);
-    return [];
+    throw Exception('Failed to load forum posts');
   }
 }
 

@@ -4,9 +4,13 @@ import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:basileia/RestAPI/model.dart';
 
 class QuestionDetailScreen extends StatelessWidget {
-  const QuestionDetailScreen({super.key});
+  final Question quest;
+
+  const QuestionDetailScreen({super.key, required this.quest});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +25,9 @@ class QuestionDetailScreen extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        Get.back();
+                        Navigator.pop(context);
                       },
-                      child: Image.asset(backArrow)),
+                      child: Icon(Icons.arrow_back, color: Colors.white)),
                   const SizedBox(
                     width: 90,
                   ),
@@ -45,7 +49,12 @@ class QuestionDetailScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                question(username: '',content: '',contentType: '',),
+                question(
+                  quest: quest,
+                  username: '${quest.user.firstName} ${quest.user.lastName}',
+                  content: quest.questionText,
+                  contentType: quest.category,
+                ),
                 const SizedBox(
                   height: 25,
                 ),
@@ -70,10 +79,16 @@ class QuestionDetailScreen extends StatelessWidget {
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(26)),
                     child: ListView.builder(
-                      itemCount: 5,
+                      itemCount: quest.answers.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
-                        return answer(username: '',content: '',vote: '',);
+                        Answer ans = quest.answers[index];
+                        return answer(
+                          username: ans
+                              .userId, // Replace with actual user data if available
+                          content: ans.answer,
+                          vote: ans.upvotes.length.toString(),
+                        );
                       },
                     ),
                   ),
@@ -85,27 +100,28 @@ class QuestionDetailScreen extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Container(
               height: 110,
-              decoration: const BoxDecoration(
-                color: Colors.white
-              ),
+              decoration: const BoxDecoration(color: Colors.white),
               child: Center(
                 child: Container(
                   height: 52,
-                  width: MediaQuery.of(context).size.width*0.90,
+                  width: MediaQuery.of(context).size.width * 0.90,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: bordar),
-                    borderRadius: BorderRadius.circular(30)
-                  ),
+                      color: Colors.white,
+                      border: Border.all(color: bordar),
+                      borderRadius: BorderRadius.circular(30)),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 15,right: 10),
+                    padding: const EdgeInsets.only(left: 15, right: 10),
                     child: TextField(
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Write comment...',
-                        hintStyle: const TextStyle(fontSize: 14,color: bordar),
-                        suffixIcon: InkWell(onTap: (){Get.to(()=>ForumsProfile());},child: Image.asset(send))
-                      ),
+                          border: InputBorder.none,
+                          hintText: 'Write comment...',
+                          hintStyle:
+                              const TextStyle(fontSize: 14, color: bordar),
+                          suffixIcon: InkWell(
+                              onTap: () {
+                                // Implement your send action
+                              },
+                              child: Icon(Icons.send))),
                     ),
                   ),
                 ),

@@ -14,7 +14,6 @@ class ForumsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool showFAB = MediaQuery.of(context).viewInsets.bottom != 0;
-    List<Question> questions = [];
     return FutureBuilder(
         future: getForumPosts(),
         builder: (context, AsyncSnapshot<List<Question>> snapshot) {
@@ -26,19 +25,13 @@ class ForumsScreen extends StatelessWidget {
                         width: 50,
                         child: CircularProgressIndicator())));
           } else {
-            if (snapshot.hasData) {
-              questions = snapshot.data!;
-            } else {
-              print(snapshot);
-              questions = [];
-            }
+            List<Question> questions = snapshot.data ?? [];
             return Scaffold(
               floatingActionButton: Visibility(
                 visible: !showFAB,
                 child: FloatingActionButton(
                   onPressed: () {
-                    Get.to(() => ForumsUpload());
-                    // Get.to(() => const QuestionDetailScreen());
+                    // Implement your navigation to upload screen
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
@@ -55,7 +48,7 @@ class ForumsScreen extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [gradient_1, gradient],
+                    colors: [Colors.white, Colors.white],
                     stops: [0.0, 1.0],
                   ),
                 ),
@@ -91,7 +84,7 @@ class ForumsScreen extends StatelessWidget {
                               ),
                               InkWell(
                                   onTap: () {},
-                                  child: Image.asset(notification))
+                                  child: Icon(Icons.notifications))
                             ],
                           ),
                         ),
@@ -120,7 +113,7 @@ class ForumsScreen extends StatelessWidget {
                           children: [
                             categories(onTap: () {}, text: 'General'),
                             categories(onTap: () {}, text: 'Bible'),
-                            categories(onTap: () {Get.to(()=>QuestionDetailScreen());}, text: 'Question'),
+                            categories(onTap: () {}, text: 'Question'),
                             categories(onTap: () {}, text: 'Motivation'),
                           ],
                         ),
@@ -145,10 +138,18 @@ class ForumsScreen extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: questions.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return question(
-                              username: questions[index].usrName,
-                              contentType: questions[index].type,
-                              content: questions[index].content,
+                            return GestureDetector(
+                              onTap: () {
+                                Get.to(() => QuestionDetailScreen(
+                                    quest: questions[index]));
+                              },
+                              child: question(
+                                quest: questions[index],
+                                username:
+                                    '${questions[index].user.firstName} ${questions[index].user.lastName}',
+                                content: questions[index].questionText,
+                                contentType: questions[index].category,
+                              ),
                             );
                           },
                         )

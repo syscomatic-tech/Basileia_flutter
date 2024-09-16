@@ -60,21 +60,119 @@ class Post {
       required this.caption});
 }
 
-class Question {
-  var type = ""; //it can be BL=Bible, GEN=general, QS=questions
-  var id = "";
-  var content = "";
-  List<dynamic> upvotes = [];
-  var userID = "";
-  var usrName = "";
-  Question({
-    required this.type,
+// class Question {
+//   var type = ""; //it can be BL=Bible, GEN=general, QS=questions
+//   var id = "";
+//   var content = "";
+//   List<dynamic> upvotes = [];
+//   var userID = "";
+//   var usrName = "";
+//   Question({
+//     required this.type,
+//     required this.id,
+//     required this.content,
+//     required this.upvotes,
+//     required this.userID,
+//     required this.usrName,
+//   });
+// }
+// models.dart
+
+class User {
+  String id;
+  String firstName;
+  String lastName;
+
+  User({required this.id, required this.firstName, required this.lastName});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['_id'] ?? '',
+      firstName: json['firstName'] ?? '',
+      lastName: json['lastName'] ?? '',
+    );
+  }
+}
+
+class Answer {
+  String id;
+  String userId; // User ID as a string
+  String questionId;
+  String answer;
+  List<dynamic> upvotes;
+  String createdAt;
+  String updatedAt;
+  int v;
+
+  Answer({
     required this.id,
-    required this.content,
+    required this.userId,
+    required this.questionId,
+    required this.answer,
     required this.upvotes,
-    required this.userID,
-    required this.usrName,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.v,
   });
+
+  factory Answer.fromJson(Map<String, dynamic> json) {
+    return Answer(
+      id: json['_id'] ?? '',
+      userId: json['user'] ?? '',
+      questionId: json['question'] ?? '',
+      answer: json['answer'] ?? '',
+      upvotes: json['upvotes'] ?? [],
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
+      v: json['__v'] ?? 0,
+    );
+  }
+}
+
+class Question {
+  String id;
+  User user;
+  String questionText;
+  String category;
+  List<dynamic> tags;
+  List<dynamic> upvotes;
+  String createdAt;
+  String updatedAt;
+  int v;
+  List<Answer> answers;
+
+  Question({
+    required this.id,
+    required this.user,
+    required this.questionText,
+    required this.category,
+    required this.tags,
+    required this.upvotes,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.v,
+    required this.answers,
+  });
+
+  factory Question.fromJson(Map<String, dynamic> json) {
+    var answerList = json['answers'] as List<dynamic>?;
+    List<Answer> answers = [];
+    if (answerList != null) {
+      answers = answerList.map((e) => Answer.fromJson(e)).toList();
+    }
+    return Question(
+      id: json['_id'] ?? '',
+      user: User.fromJson(json['user']),
+      questionText: json['question'] ?? '',
+      category: json['category'] ?? '',
+      tags: json['tags'] ?? [],
+      upvotes: json['upvotes'] ?? [],
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
+      v: json['__v'] ?? 0,
+      answers: answers,
+    );
+  }
 }
 
 class UsrProfile {
