@@ -668,6 +668,7 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
     List<Question> questions = data.map((e) => Question.fromJson(e)).toList();
     return questions;
   } else {
+    print("error occured madarchod");
     throw Exception('Failed to load forum posts');
   }
 }
