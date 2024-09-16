@@ -659,7 +659,7 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
           'https://backend.mdtamiz.com/api/v1/question/all?page=$page&limit=20'));
 
   request.headers.addAll(headers);
-
+  print("Request jacche madarchod");
   http.StreamedResponse response = await request.send();
 
   if (response.statusCode == 200) {
@@ -668,7 +668,6 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
     List<Question> questions = data.map((e) => Question.fromJson(e)).toList();
     return questions;
   } else {
-    print("error occured madarchod");
     throw Exception('Failed to load forum posts');
   }
 }
