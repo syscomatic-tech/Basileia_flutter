@@ -17,6 +17,7 @@ import '../Style/style.dart';
 class ForumsUpload extends StatelessWidget {
   final TabsController controller_1 = Get.put(TabsController());
   final _controller = TextEditingController();
+  final Baracontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +103,7 @@ class ForumsUpload extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    textField(lebelText: 'bara chuda',width: MediaQuery.of(context).size.width*0.90,textfieldBg: Colors.white,controller: Baracontroller),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -118,6 +120,7 @@ class ForumsUpload extends StatelessWidget {
                         ),
                       ],
                     ),
+
                     dropdownItem()
                   ],
                 ),
