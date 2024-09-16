@@ -18,7 +18,7 @@ class ForumsUpload extends StatelessWidget {
   final TabsController controller_1 = Get.put(TabsController());
   final _controller = TextEditingController();
   final Baracontroller = TextEditingController();
-
+  final drop_item = dropdownItem();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,12 +44,15 @@ class ForumsUpload extends StatelessWidget {
                       onTap: () async {
                         if (_controller.text.isNotEmpty) {
                           SocialClient scl_cl = SocialClient();
-                          await uploadForumPost(_controller.text, "GN", []);
+                          await uploadForumPost(
+                              _controller.text,
+                              drop_item.controller.selectedItem.value,
+                              Baracontroller.text.toString().split(","));
+                          SuccessToast("post uploaded");
                         } else {
-                          SocialClient scl_cl = SocialClient();
-                          await uploadForumPost("", "GN", []);
+                          SuccessToast("please enter something");
                         }
-                        SuccessToast("post uploaded");
+
                         Get.to(() => ForumsScreen());
                       },
                       text: 'Post'),
@@ -103,7 +106,12 @@ class ForumsUpload extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    textField(lebelText: 'bara chuda',width: MediaQuery.of(context).size.width*0.90,textfieldBg: Colors.white,controller: Baracontroller),
+                    textField(
+                        lebelText:
+                            'Enter some post tags comma seperated, like this pizza,burger,chick',
+                        width: MediaQuery.of(context).size.width * 0.90,
+                        textfieldBg: Colors.white,
+                        controller: Baracontroller),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -120,8 +128,7 @@ class ForumsUpload extends StatelessWidget {
                         ),
                       ],
                     ),
-
-                    dropdownItem()
+                    drop_item
                   ],
                 ),
               ),

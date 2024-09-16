@@ -651,7 +651,8 @@ Future<List<Question>> getForumPosts() async {
   }
 }
 
-Future<bool> uploadForumPost(post, category, tags) async {
+Future<bool> uploadForumPost(
+    String post, String category, List<String> tags) async {
   var headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer $jwt_token',
