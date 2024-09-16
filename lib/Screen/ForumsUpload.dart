@@ -107,8 +107,7 @@ class ForumsUpload extends StatelessWidget {
                       height: 20,
                     ),
                     textField(
-                        lebelText:
-                            'Enter some post tags comma seperated, like this pizza,burger,chick',
+                        lebelText: 'Some Tags like this pizza,burger,chick',
                         width: MediaQuery.of(context).size.width * 0.90,
                         textfieldBg: Colors.white,
                         controller: Baracontroller),
