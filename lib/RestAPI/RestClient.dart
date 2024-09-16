@@ -672,7 +672,7 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
   }
 }
 
-Future<String> answerQuestion(quesid, answer) async {
+Future<String> answerQuestion(String quesid, String answer) async {
   var headers = {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer $jwt_token',

@@ -5,11 +5,12 @@ import 'package:basileia/Style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:basileia/RestAPI/model.dart';
+import 'package:basileia/RestAPI/RestClient.dart';
 
 class QuestionDetailScreen extends StatelessWidget {
   final Question quest;
-
-  const QuestionDetailScreen({super.key, required this.quest});
+  final controller = TextEditingController();
+  QuestionDetailScreen({super.key, required this.quest});
 
   @override
   Widget build(BuildContext context) {
@@ -118,8 +119,15 @@ class QuestionDetailScreen extends StatelessWidget {
                           hintStyle:
                               const TextStyle(fontSize: 14, color: bordar),
                           suffixIcon: InkWell(
-                              onTap: () {
-                                // Implement your send action
+                              onTap: () async {
+                                if (controller.text.isNotEmpty) {
+                                  SuccessToast(await answerQuestion(
+                                      quest.id, controller.text));
+                                  controller.clear();
+                                } else {
+                                  ErrorToast(
+                                      "Answer da bainchud. tarpor enter mar");
+                                }
                               },
                               child: Icon(Icons.send))),
                     ),
