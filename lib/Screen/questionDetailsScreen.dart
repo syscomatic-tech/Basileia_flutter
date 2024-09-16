@@ -1,4 +1,5 @@
 import 'package:basileia/Screen/forumProfile.dart';
+import 'package:basileia/Screen/forumsScreen.dart';
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/images.dart';
 import 'package:basileia/Style/style.dart';
@@ -127,6 +128,7 @@ class QuestionDetailScreen extends StatelessWidget {
                                   SuccessToast(await answerQuestion(
                                       quest.id, controller.text));
                                   controller.clear();
+                                  Get.to(()=>ForumsScreen());
                                 } else {
                                   ErrorToast(
                                       "Answer da bainchud. tarpor enter mar");
