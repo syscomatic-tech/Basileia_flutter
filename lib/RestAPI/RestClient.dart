@@ -685,11 +685,32 @@ Future<String> answerQuestion(String quesid, String answer) async {
 
   http.StreamedResponse response = await request.send();
 
-  if (response.statusCode == 201) {
+  if (response.statusCode == 200) {
     print(await response.stream.bytesToString());
     return "Nicely done";
   } else {
     return "Madar choder error. bainchud";
+  }
+}
+
+Future<String> upVoteAnswer(id) async {
+  var headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $jwt_token'
+  };
+  var request = http.Request('POST',
+      Uri.parse('https://backend.mdtamiz.com/api/v1/question/vote-ans'));
+  request.body = json.encode({"user": userId, "answer": id});
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  if (response.statusCode == 201) {
+    print(await response.stream.bytesToString());
+    return "Nicely done";
+  } else {
+    print(response.reasonPhrase);
+    return "Ahh shit here we go again";
   }
 }
 

@@ -7,8 +7,6 @@ import 'package:get/get.dart';
 import 'package:basileia/RestAPI/model.dart';
 import 'package:basileia/RestAPI/RestClient.dart';
 
-import 'forumsScreen.dart';
-
 class QuestionDetailScreen extends StatelessWidget {
   final Question quest;
   final controller = TextEditingController();
@@ -87,6 +85,8 @@ class QuestionDetailScreen extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         Answer ans = quest.answers[index];
                         return answer(
+                          id: ans.id,
+                          Liked: ans.upvotes.contains(userId),
                           username: ans
                               .userId, // Replace with actual user data if available
                           content: ans.answer,
@@ -127,7 +127,6 @@ class QuestionDetailScreen extends StatelessWidget {
                                   SuccessToast(await answerQuestion(
                                       quest.id, controller.text));
                                   controller.clear();
-                                  Get.to(()=>ForumsScreen());
                                 } else {
                                   ErrorToast(
                                       "Answer da bainchud. tarpor enter mar");
