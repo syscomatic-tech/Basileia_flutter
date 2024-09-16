@@ -659,9 +659,9 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
           'https://backend.mdtamiz.com/api/v1/question/all?page=$page&limit=20'));
 
   request.headers.addAll(headers);
-  print("Request jacche madarchod");
-  http.StreamedResponse response = await request.send();
 
+  http.StreamedResponse response = await request.send();
+  print(await response.stream.bytesToString());
   if (response.statusCode == 200) {
     List<dynamic> data = json.decode(await response.stream.bytesToString());
     print(data);
