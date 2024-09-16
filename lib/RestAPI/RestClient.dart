@@ -663,7 +663,8 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
   http.StreamedResponse response = await request.send();
   print(await response.stream.bytesToString());
   if (response.statusCode == 200) {
-    List<dynamic> data = json.decode(await response.stream.bytesToString());
+    List<dynamic> data =
+        json.decode(await response.stream.bytesToString())["data"];
     print(data);
     List<Question> questions = data.map((e) => Question.fromJson(e)).toList();
     return questions;
