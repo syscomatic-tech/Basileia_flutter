@@ -2822,7 +2822,7 @@ class answer extends StatelessWidget {
                     SuccessToast(await upVoteAnswer(id));
                   },
                   child: Image.asset(
-                    like,
+                    Liked ? Liked_ic : Like_ic,
                     height: 10,
                   )),
               const SizedBox(
