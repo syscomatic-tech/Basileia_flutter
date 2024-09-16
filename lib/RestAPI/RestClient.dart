@@ -657,6 +657,7 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
 
   if (response.statusCode == 200) {
     List<dynamic> data = json.decode(response.body);
+    print(data);
     List<Question> questions = data.map((e) => Question.fromJson(e)).toList();
     return questions;
   } else {
