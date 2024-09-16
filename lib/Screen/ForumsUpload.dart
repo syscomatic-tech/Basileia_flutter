@@ -111,6 +111,7 @@ class ForumsUpload extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.90,
                         textfieldBg: Colors.white,
                         controller: Baracontroller),
+                    const SizedBox(height: 20,),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
