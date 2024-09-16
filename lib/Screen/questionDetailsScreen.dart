@@ -113,6 +113,7 @@ class QuestionDetailScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15, right: 10),
                     child: TextField(
+                      controller: controller,
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Write comment...',
