@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:basileia/RestAPI/model.dart';
 import 'package:basileia/RestAPI/RestClient.dart';
 
+import 'forumsScreen.dart';
+
 class QuestionDetailScreen extends StatelessWidget {
   final Question quest;
   final controller = TextEditingController();
@@ -125,6 +127,7 @@ class QuestionDetailScreen extends StatelessWidget {
                                   SuccessToast(await answerQuestion(
                                       quest.id, controller.text));
                                   controller.clear();
+                                  Get.to(()=>ForumsScreen());
                                 } else {
                                   ErrorToast(
                                       "Answer da bainchud. tarpor enter mar");
