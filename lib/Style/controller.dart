@@ -180,7 +180,7 @@ class CommentRepliesController extends GetxController {
 }
 
 class DropdownController extends GetxController {
-  var selectedItem = 'Option 1'.obs;
+  var selectedItem = 'genral'.obs;
   void setSelectedItem(String value) {
     selectedItem.value = value;
   }
