@@ -685,7 +685,7 @@ Future<String> answerQuestion(String quesid, String answer) async {
 
   http.StreamedResponse response = await request.send();
 
-  if (response.statusCode == 201) {
+  if (response.statusCode < 300) {
     print(await response.stream.bytesToString());
     return "Nicely done";
   } else {
@@ -705,7 +705,7 @@ Future<String> upVoteAnswer(id) async {
 
   http.StreamedResponse response = await request.send();
 
-  if (response.statusCode == 201) {
+  if (response.statusCode < 300) {
     print(await response.stream.bytesToString());
     return "Nicely done";
   } else {
