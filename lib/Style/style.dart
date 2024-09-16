@@ -2753,8 +2753,12 @@ class answer extends StatelessWidget {
   final String username;
   final String content;
   final String vote;
+  final String id;
+  final bool Liked;
   const answer(
       {super.key,
+      required this.Liked,
+      required this.id,
       required this.username,
       required this.content,
       required this.vote});
@@ -2814,7 +2818,9 @@ class answer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    SuccessToast(await upVoteAnswer(id));
+                  },
                   child: Image.asset(
                     like,
                     height: 10,
@@ -2823,7 +2829,9 @@ class answer extends StatelessWidget {
                 width: 5,
               ),
               InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    SuccessToast("Comment er reply kaj korena");
+                  },
                   child: const Text(
                     'Reply',
                     style: TextStyle(

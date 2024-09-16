@@ -85,6 +85,8 @@ class QuestionDetailScreen extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         Answer ans = quest.answers[index];
                         return answer(
+                          id: ans.id,
+                          Liked: ans.upvotes.contains(userId),
                           username: ans
                               .userId, // Replace with actual user data if available
                           content: ans.answer,
