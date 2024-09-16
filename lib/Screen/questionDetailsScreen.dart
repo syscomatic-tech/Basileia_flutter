@@ -131,7 +131,7 @@ class QuestionDetailScreen extends StatelessWidget {
                                   Get.to(()=>ForumsScreen());
                                 } else {
                                   ErrorToast(
-                                      "Answer da bainchud. tarpor enter mar");
+                                      "comment is null");
                                 }
                               },
                               child: Icon(Icons.send))),
