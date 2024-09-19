@@ -2851,109 +2851,135 @@ class answer extends StatelessWidget {
   }
 }
 
-Widget avatar({double? height, double? width}) {
+Widget avatar({
+  double? height,
+  double? width,
+  String? imageUrl,
+  Color borderColor = Colors.grey,
+}) {
   return Container(
     height: height,
     width: width,
-    decoration:
-        BoxDecoration(color: bordar, borderRadius: BorderRadius.circular(30)),
+    decoration: BoxDecoration(
+      color: borderColor,
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: imageUrl == null || imageUrl.isEmpty
+          ? Icon(Icons.person, size: height != null ? height / 2 : 30)
+          : Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => Icon(
+          Icons.person,
+          size: height != null ? height / 2 : 30,
+        ),
+      ),
+    ),
   );
 }
 
-Widget forumPost() {
+
+Widget forumPost({
+  required String userName,
+  required String userRole,
+  required String content,
+  required List<String> tags,
+  required int voteCount,
+  required int commentCount,
+  String imageUrl = '',
+}) {
   return Container(
     height: 201,
     decoration: BoxDecoration(boxShadow: [
       BoxShadow(
-          color: Colors.grey.withOpacity(0.2),
-          blurRadius: 10,
-          offset: const Offset(0, 0)),
+        color: Colors.grey.withOpacity(0.2),
+        blurRadius: 10,
+        offset: const Offset(0, 0),
+      ),
     ], color: Colors.white, borderRadius: BorderRadius.circular(15)),
     child: Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
+          // User info section (avatar, name, role)
           Row(
             children: [
-              avatar(height: 33, width: 33),
-              const SizedBox(
-                width: 7,
-              ),
-              const Column(
+              avatar(height: 33, width: 33, imageUrl: imageUrl),
+              const SizedBox(width: 7),
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Tiana Rosser',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
+                    userName,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   Text(
-                    'Song Writer ',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400),
+                    userRole,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ],
               )
             ],
           ),
-          const SizedBox(
-            height: 10,
+          const SizedBox(height: 10),
+
+          // Post content
+          Text(
+            content,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 10,
+              fontWeight: FontWeight.w400,
+            ),
           ),
-          const Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo nisl ac eros euismod, a lobortis purus egestas. Sed facilisis laoreet tristique. Donec elementum auctor aliquam.',
-            style: TextStyle(
-                color: Colors.black, fontSize: 10, fontWeight: FontWeight.w400),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
+
+          // Tags section
           Row(
-            children: [
-              Padding(
+            children: tags.map((tag) {
+              return Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: Container(
                   height: 22,
                   decoration: BoxDecoration(
-                      color: bordar, borderRadius: BorderRadius.circular(8)),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    color: bordar,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Center(
-                        child: Text(
-                      'Music',
-                      style: TextStyle(fontSize: 8, color: primaryTxt),
-                    )),
+                      child: Text(
+                        tag,
+                        style: const TextStyle(fontSize: 8, color: primaryTxt),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                height: 22,
-                decoration: BoxDecoration(
-                    color: bordar, borderRadius: BorderRadius.circular(8)),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Center(
-                      child: Text(
-                    'Entertainment',
-                    style: TextStyle(fontSize: 8, color: primaryTxt),
-                  )),
-                ),
-              )
-            ],
+              );
+            }).toList(),
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          const Divider(
-            color: bordar,
-          ),
+          const SizedBox(height: 5),
+
+          // Divider
+          const Divider(color: bordar),
+
+          // Votes and Comments section
           Row(
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  // Handle vote logic here
+                },
                 child: Row(
                   children: [
                     Image.asset(
@@ -2961,34 +2987,30 @@ Widget forumPost() {
                       color: Colors.black,
                       height: 10,
                     ),
-                    const SizedBox(
-                      width: 5,
+                    const SizedBox(width: 5),
+                    Text(
+                      '$voteCount Votes',
+                      style: const TextStyle(fontSize: 10, color: Colors.black),
                     ),
-                    const Text(
-                      '120 Votes',
-                      style: TextStyle(fontSize: 10, color: Colors.black),
-                    )
                   ],
                 ),
               ),
-              const SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  // Handle comment logic here
+                },
                 child: Row(
                   children: [
                     Image.asset(
                       comment,
                       color: Colors.black,
                     ),
-                    const SizedBox(
-                      width: 5,
+                    const SizedBox(width: 5),
+                    Text(
+                      '$commentCount Replies',
+                      style: const TextStyle(fontSize: 10, color: Colors.black),
                     ),
-                    const Text(
-                      '13 Replies',
-                      style: TextStyle(fontSize: 10, color: Colors.black),
-                    )
                   ],
                 ),
               ),
@@ -2999,6 +3021,7 @@ Widget forumPost() {
     ),
   );
 }
+
 
 Widget myGroups({context}) {
   return Container(
