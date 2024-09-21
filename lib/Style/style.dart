@@ -2772,9 +2772,11 @@ class answer extends StatelessWidget {
   final String vote;
   final String id;
   final bool Liked;
+  final String userid;
   int clicked = 0;
   answer(
       {super.key,
+      required this.userid,
       required this.Liked,
       required this.id,
       required this.username,
@@ -2795,7 +2797,7 @@ class answer extends StatelessWidget {
                     onTap: () async {
                       if (clicked == 0) {
                         var posts =
-                            await getForumPostsByUserID(userid: this.id);
+                            await getForumPostsByUserID(userid: this.userid);
                         Get.to(() => ForumsProfile(
                               randomPosts: posts,
                             ));
