@@ -2661,7 +2661,7 @@ class question extends StatelessWidget {
   final String contentType;
   var clicked = 0;
 
-  const question(
+   question(
       {super.key,
       required this.quest,
       required this.username,
