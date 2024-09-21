@@ -89,7 +89,7 @@ class QuestionDetailScreen extends StatelessWidget {
                           id: ans.id,
                           Liked: ans.upvotes.contains(userId),
                           username: ans
-                              .userId, // Replace with actual user data if available
+                              .name, // Replace with actual user data if available
                           content: ans.answer,
                           vote: ans.upvotes.length.toString(),
                         );
@@ -128,10 +128,9 @@ class QuestionDetailScreen extends StatelessWidget {
                                   SuccessToast(await answerQuestion(
                                       quest.id, controller.text));
                                   controller.clear();
-                                  Get.to(()=>ForumsScreen());
+                                  Get.to(() => ForumsScreen());
                                 } else {
-                                  ErrorToast(
-                                      "comment is null");
+                                  ErrorToast("comment is null");
                                 }
                               },
                               child: Icon(Icons.send))),
