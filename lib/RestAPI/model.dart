@@ -120,8 +120,9 @@ class Answer {
   factory Answer.fromJson(Map<String, dynamic> json) {
     return Answer(
       id: json['_id'] ?? '',
-      name:
-          (json['user']["firstName"] ?? "") + (json['user']["lastName"] ?? ""),
+      name: (json['user']["firstName"] ?? "") +
+          " " +
+          (json['user']["lastName"] ?? ""),
       userId: json['user']["_id"] ?? '',
       questionId: json['question'] ?? '',
       answer: json['answer'] ?? '',
