@@ -2661,7 +2661,7 @@ class question extends StatelessWidget {
   final String contentType;
   var clicked = 0;
 
-   question(
+  question(
       {super.key,
       required this.quest,
       required this.username,
@@ -2772,7 +2772,8 @@ class answer extends StatelessWidget {
   final String vote;
   final String id;
   final bool Liked;
-  const answer(
+  int clicked = 0;
+  answer(
       {super.key,
       required this.Liked,
       required this.id,
@@ -2790,12 +2791,27 @@ class answer extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                        color: primaryTxt,
-                        borderRadius: BorderRadius.circular(10)),
+                  InkWell(
+                    onTap: () async {
+                      if (clicked == 0) {
+                        var posts =
+                            await getForumPostsByUserID(userid: this.id);
+                        Get.to(() => ForumsProfile(
+                              randomPosts: posts,
+                            ));
+                        SuccessToast("Success");
+                      } else {
+                        SuccessToast(
+                            "Wait kor banchod. bar bar click koris ken");
+                      }
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                          color: primaryTxt,
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
                   ),
                   const SizedBox(
                     width: 10,
