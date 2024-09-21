@@ -2702,6 +2702,7 @@ class question extends StatelessWidget {
                               SuccessToast(
                                   "Wait kor banchod. bar bar click koris ken");
                             }
+                            clicked++;
                           },
                           child: Container(
                             height: 30,
@@ -2806,6 +2807,7 @@ class answer extends StatelessWidget {
                         SuccessToast(
                             "Wait kor banchod. bar bar click koris ken");
                       }
+                      clicked++;
                     },
                     child: Container(
                       height: 30,
