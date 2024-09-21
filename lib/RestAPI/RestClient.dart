@@ -672,6 +672,26 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
   }
 }
 
+Future<List<Question>> getForumPostsByUserID(
+    {String userid = "", int page = 1}) async {
+  var headers = {'Authorization': 'Bearer $jwt_token'};
+  var request = http.Request('GET',
+      Uri.parse('https://backend.mdtamiz.com/api/v1/question/user/$userid'));
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+  if (response.statusCode == 200) {
+    List<dynamic> data =
+        json.decode(await response.stream.bytesToString())["data"];
+    print(data);
+    List<Question> questions = data.map((e) => Question.fromJson(e)).toList();
+    return questions;
+  } else {
+    throw Exception('Failed to load forum posts');
+  }
+}
+
 Future<String> answerQuestion(String quesid, String answer) async {
   var headers = {
     'Content-Type': 'application/json',

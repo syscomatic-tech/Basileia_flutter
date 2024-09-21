@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:basileia/RestAPI/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../Style/colors.dart';
@@ -65,10 +66,8 @@ List<PostData> generateRandomPosts(int count) {
 }
 
 class ForumsProfile extends StatelessWidget {
-  ForumsProfile({super.key});
-
-  final List<PostData> randomPosts =
-      generateRandomPosts(10);
+  final List<Question> randomPosts;
+  ForumsProfile({super.key, required this.randomPosts});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +84,7 @@ class ForumsProfile extends StatelessWidget {
                 Padding(
                   padding:
                       const EdgeInsets.only(top: 70, left: 150, right: 150),
-                  child: randomPosts[0].imageUrl.isEmpty
+                  child: "".isEmpty
                       ? Container(
                           height: 104,
                           width: 104,
@@ -100,7 +99,7 @@ class ForumsProfile extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(50)),
                           child: Image.network(
-                            randomPosts[0].imageUrl,
+                            "",
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -113,7 +112,9 @@ class ForumsProfile extends StatelessWidget {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    randomPosts[0].userName,
+                    randomPosts[0].user.firstName +
+                        " " +
+                        randomPosts[0].user.lastName,
                     style: const TextStyle(
                         fontSize: 18,
                         color: Colors.black,
@@ -121,7 +122,7 @@ class ForumsProfile extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    randomPosts[0].userRole,
+                    "",
                     style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black,
@@ -155,15 +156,13 @@ class ForumsProfile extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: forumPost(
-                          userName: randomPosts[index].userName,
-                          userRole: randomPosts[index].userRole,
-                          content: randomPosts[index].content,
-                          tags: randomPosts[index].tags,
-                          voteCount: randomPosts[index].voteCount,
-                          commentCount: randomPosts[index].commentCount,
-                          imageUrl: randomPosts[index].imageUrl,
-                        ),
+                        child: question(
+                            quest: randomPosts[index],
+                            content: randomPosts[index].questionText,
+                            username: randomPosts[index].user.firstName +
+                                " " +
+                                randomPosts[index].user.lastName,
+                            contentType: randomPosts[index].category),
                       );
                     },
                   ),
@@ -187,25 +186,6 @@ class ForumsProfile extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   // Reusing ListView.builder for saved posts
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: forumPost(
-                          userName: randomPosts[index].userName,
-                          userRole: randomPosts[index].userRole,
-                          content: randomPosts[index].content,
-                          tags: randomPosts[index].tags,
-                          voteCount: randomPosts[index].voteCount,
-                          commentCount: randomPosts[index].commentCount,
-                          imageUrl: randomPosts[index].imageUrl,
-                        ),
-                      );
-                    },
-                  ),
                 ],
               ),
             ),

@@ -8,6 +8,7 @@ import 'package:basileia/Screen/commentScreen.dart';
 import 'package:basileia/RestAPI/model.dart';
 import 'package:basileia/Screen/donateHome.dart';
 import 'package:basileia/Screen/donateScreen.dart';
+import 'package:basileia/Screen/forumProfile.dart';
 import 'package:basileia/Screen/forumsScreen.dart';
 import 'package:basileia/Screen/groupChatScreen.dart';
 import 'package:basileia/Screen/groupsScreen.dart';
@@ -2658,6 +2659,7 @@ class question extends StatelessWidget {
   final String username;
   final String content;
   final String contentType;
+  var clicked = 0;
 
   const question(
       {super.key,
@@ -2687,12 +2689,27 @@ class question extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                              color: primaryTxt,
-                              borderRadius: BorderRadius.circular(10)),
+                        InkWell(
+                          onTap: () async {
+                            if (clicked == 0) {
+                              var posts = await getForumPostsByUserID(
+                                  userid: this.quest.user.id);
+                              Get.to(() => ForumsProfile(
+                                    randomPosts: posts,
+                                  ));
+                              SuccessToast("Success");
+                            } else {
+                              SuccessToast(
+                                  "Wait kor banchod. bar bar click koris ken");
+                            }
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                                color: primaryTxt,
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
@@ -2869,17 +2886,16 @@ Widget avatar({
       child: imageUrl == null || imageUrl.isEmpty
           ? Icon(Icons.person, size: height != null ? height / 2 : 30)
           : Image.network(
-        imageUrl,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => Icon(
-          Icons.person,
-          size: height != null ? height / 2 : 30,
-        ),
-      ),
+              imageUrl,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Icon(
+                Icons.person,
+                size: height != null ? height / 2 : 30,
+              ),
+            ),
     ),
   );
 }
-
 
 Widget forumPost({
   required String userName,
@@ -3021,7 +3037,6 @@ Widget forumPost({
     ),
   );
 }
-
 
 Widget myGroups({context}) {
   return Container(
