@@ -99,6 +99,7 @@ class Answer {
   String userId; // User ID as a string
   String questionId;
   String answer;
+  String name;
   List<dynamic> upvotes;
   String createdAt;
   String updatedAt;
@@ -107,6 +108,7 @@ class Answer {
   Answer({
     required this.id,
     required this.userId,
+    required this.name,
     required this.questionId,
     required this.answer,
     required this.upvotes,
@@ -118,7 +120,9 @@ class Answer {
   factory Answer.fromJson(Map<String, dynamic> json) {
     return Answer(
       id: json['_id'] ?? '',
-      userId: json['user'] ?? '',
+      name:
+          (json['user']["firstName"] ?? "") + (json['user']["lastName"] ?? ""),
+      userId: json['user']["_id"] ?? '',
       questionId: json['question'] ?? '',
       answer: json['answer'] ?? '',
       upvotes: json['upvotes'] ?? [],
