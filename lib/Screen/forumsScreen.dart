@@ -32,6 +32,7 @@ class ForumsScreen extends StatelessWidget {
                 child: FloatingActionButton(
                   onPressed: () {
                     // Implement your navigation to upload screen
+                    Get.to(ForumsUpload());
                   },
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),

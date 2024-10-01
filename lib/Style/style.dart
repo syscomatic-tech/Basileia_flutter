@@ -2807,7 +2807,7 @@ class answer extends StatelessWidget {
                         SuccessToast(
                             "Wait kor banchod. bar bar click koris ken");
                       }
-                      clicked++;
+                      clicked+=1;
                     },
                     child: Container(
                       height: 30,
