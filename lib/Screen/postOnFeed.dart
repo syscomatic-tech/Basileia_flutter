@@ -12,7 +12,6 @@ import 'package:basileia/Style/fonts.dart';
 import 'package:basileia/Style/style.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path_provider/path_provider.dart';
 import '../Style/controller.dart';
 import 'dart:io';

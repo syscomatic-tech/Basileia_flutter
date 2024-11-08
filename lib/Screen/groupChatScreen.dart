@@ -4,7 +4,6 @@ import 'package:basileia/firebase/groupChat.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grouped_list/grouped_list.dart';
 import '../Style/colors.dart';
 import '../Style/fonts.dart';
 import '../Style/images.dart';
