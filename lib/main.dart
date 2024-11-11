@@ -1,5 +1,6 @@
 import 'package:basileia/RestAPI/model.dart';
 import 'package:basileia/Screen/SignInScreen.dart';
+import 'package:basileia/Screen/bibleScreen.dart';
 import 'package:basileia/Screen/forumProfile.dart';
 import 'package:basileia/Style/aduioFeeds.dart';
 import 'package:basileia/Style/audioPlayerWiget.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: primary),
         useMaterial3: true,
       ),
-      home:SplashScreen()
+      home:BibleReadingScreen()
 
     );
   }
