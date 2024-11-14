@@ -55,7 +55,7 @@ Future<File?> pickFile() async {
 }
 
 class AuthClient {
-  var BaseURL = "https://backend.mdtamiz.com/api/v1";
+  var BaseURL = "https://basillia.genzit.xyz/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
 
   // Saving JWT Token, User ID, and User Name
@@ -93,7 +93,7 @@ class AuthClient {
   Future<Map<String, dynamic>> getUserInfo(String usrid) async {
     var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.Request(
-        'GET', Uri.parse('https://backend.mdtamiz.com/api/v1/auth/$usrid'));
+        'GET', Uri.parse('https://basillia.genzit.xyz/api/v1/auth/$usrid'));
 
     request.headers.addAll(headers);
 
@@ -190,7 +190,7 @@ class AuthClient {
   Future<bool> VerifyOTPRequest(String Email, String OTP) async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request('POST',
-        Uri.parse('https://backend.mdtamiz.com/api/v1/auth/otp/verify'));
+        Uri.parse('https://basillia.genzit.xyz/api/v1/auth/otp/verify'));
     request.body = json.encode({"email": Email, "otp": OTP});
     request.headers.addAll(headers);
 
@@ -231,7 +231,7 @@ class AuthClient {
       'Content-Type': 'application/json',
     };
     var request = http.Request('POST',
-        Uri.parse('https://backend.mdtamiz.com/api/v1/auth/reset-password'));
+        Uri.parse('https://basillia.genzit.xyz/api/v1/auth/reset-password'));
     request.body = json
         .encode({"email": userEmail, "otp": otp, "newPassword": newpassword});
     request.headers.addAll(headers);
@@ -266,7 +266,7 @@ class AuthClient {
 }
 
 class SocialClient {
-  final BaseUrl = "https://backend.mdtamiz.com/api/v1";
+  final BaseUrl = "https://basillia.genzit.xyz/api/v1";
   var RequestHeader = {"Content-Type": "application/json"};
 
   Future<bool> update_profile(String Fname, String Lname, String path) async {
@@ -275,7 +275,7 @@ class SocialClient {
       'Authorization': 'Bearer $jwt_token'
     };
     var request = http.MultipartRequest(
-        'PATCH', Uri.parse('https://backend.mdtamiz.com/api/v1/auth/$userId'));
+        'PATCH', Uri.parse('https://basillia.genzit.xyz/api/v1/auth/$userId'));
     final bytes = await File(path).readAsBytes();
     request.fields.addAll({
       "firstName": Fname,
@@ -302,7 +302,7 @@ class SocialClient {
     if (true) {
       var headers = {'Authorization': 'Bearer $jwt_token'};
       var request = http.Request(
-          'GET', Uri.parse('https://backend.mdtamiz.com/api/v1/auth/$usrid'));
+          'GET', Uri.parse('https://basillia.genzit.xyz/api/v1/auth/$usrid'));
 
       request.headers.addAll(headers);
 
@@ -360,7 +360,7 @@ class SocialClient {
       'Authorization': 'Bearer $jwt_token'
     };
     var request = http.Request('POST',
-        Uri.parse('https://backend.mdtamiz.com/api/v1/upload/addVerse'));
+        Uri.parse('https://basillia.genzit.xyz/api/v1/upload/addVerse'));
     ;
     request.body = json.encode({'userId': userId, "verse": text});
     request.headers.addAll(headers);
@@ -377,7 +377,7 @@ class SocialClient {
   Future<bool> upload_post(String filepath, caption) async {
     var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.MultipartRequest('POST',
-        Uri.parse('https://backend.mdtamiz.com/api/v1/upload/fileSystem'));
+        Uri.parse('https://basillia.genzit.xyz/api/v1/upload/fileSystem'));
     request.fields.addAll({'userId': userId, 'caption': caption});
     request.files.add(await http.MultipartFile.fromPath('files', filepath));
     request.headers.addAll(headers);
@@ -397,7 +397,7 @@ class SocialClient {
   Future<List<Post>> get_all_posts() async {
     var headers = {'Authorization': 'Bearer $jwt_token'};
     var request = http.Request('GET',
-        Uri.parse('https://backend.mdtamiz.com/api/v1/upload/postGetAll'));
+        Uri.parse('https://basillia.genzit.xyz/api/v1/upload/postGetAll'));
 
     request.headers.addAll(headers);
 
@@ -551,7 +551,7 @@ class SocialClient {
       'Authorization': 'Bearer $jwt_token'
     };
     var request = http.Request('POST',
-        Uri.parse('https://backend.mdtamiz.com/api/v1/upload/likePost/$id'));
+        Uri.parse('https://basillia.genzit.xyz/api/v1/upload/likePost/$id'));
     request.body = json.encode({"userId": userId});
     request.headers.addAll(headers);
 
@@ -575,7 +575,7 @@ class SocialClient {
     var request = http.Request(
         'POST',
         Uri.parse(
-            'https://backend.mdtamiz.com/api/v1/upload/comment/$post_id'));
+            'https://basillia.genzit.xyz/api/v1/upload/comment/$post_id'));
     request.body = json.encode({"userId": userId, "comment": com});
     request.headers.addAll(headers);
 
@@ -598,7 +598,7 @@ class SocialClient {
 //   var request = http.Request(
 //       'GET',
 //       Uri.parse(
-//           'https://backend.mdtamiz.com/api/v1/question/all?page=1&limit=20'));
+//           'https://basillia.genzit.xyz/api/v1/question/all?page=1&limit=20'));
 
 //   request.headers.addAll(headers);
 
@@ -656,7 +656,7 @@ Future<List<Question>> getForumPosts({int page = 1}) async {
   var request = http.Request(
       'GET',
       Uri.parse(
-          'https://backend.mdtamiz.com/api/v1/question/all?page=$page&limit=20'));
+          'https://basillia.genzit.xyz/api/v1/question/all?page=$page&limit=20'));
 
   request.headers.addAll(headers);
 
@@ -676,7 +676,7 @@ Future<List<Question>> getForumPostsByUserID(
     {String userid = "", int page = 1}) async {
   var headers = {'Authorization': 'Bearer $jwt_token'};
   var request = http.Request('GET',
-      Uri.parse('https://backend.mdtamiz.com/api/v1/question/user/$userid'));
+      Uri.parse('https://basillia.genzit.xyz/api/v1/question/user/$userid'));
 
   request.headers.addAll(headers);
 
@@ -698,7 +698,7 @@ Future<String> answerQuestion(String quesid, String answer) async {
     'Authorization': 'Bearer $jwt_token',
   };
   var request = http.Request(
-      'POST', Uri.parse('https://backend.mdtamiz.com/api/v1/question/ans'));
+      'POST', Uri.parse('https://basillia.genzit.xyz/api/v1/question/ans'));
   request.body =
       json.encode({"user": userId, "question": quesid, "answer": answer});
   request.headers.addAll(headers);
@@ -719,7 +719,7 @@ Future<String> upVoteAnswer(id) async {
     'Authorization': 'Bearer $jwt_token'
   };
   var request = http.Request('POST',
-      Uri.parse('https://backend.mdtamiz.com/api/v1/question/vote-ans'));
+      Uri.parse('https://basillia.genzit.xyz/api/v1/question/vote-ans'));
   request.body = json.encode({"user": userId, "answer": id});
   request.headers.addAll(headers);
 
@@ -741,7 +741,7 @@ Future<bool> uploadForumPost(
     'Authorization': 'Bearer $jwt_token',
   };
   var request = http.Request(
-      'POST', Uri.parse('https://backend.mdtamiz.com/api/v1/question/create'));
+      'POST', Uri.parse('https://basillia.genzit.xyz/api/v1/question/create'));
   request.body = json.encode(
       {"user": userId, "question": post, "category": category, "tags": tags});
   request.headers.addAll(headers);
@@ -766,7 +766,7 @@ Future<String> Follow_user(String id) async {
     'Authorization': 'Bearer $jwt_token'
   };
   var request = http.Request(
-      'POST', Uri.parse('https://backend.mdtamiz.com/api/v1/upload/follow'));
+      'POST', Uri.parse('https://basillia.genzit.xyz/api/v1/upload/follow'));
   request.body = json.encode({"followerId": userId, "followingId": id});
   request.headers.addAll(headers);
 
@@ -791,7 +791,7 @@ Future<String> reply_comment(
   var request = http.Request(
       'POST',
       Uri.parse(
-          'https://backend.mdtamiz.com/api/v1/upload/reply/$postId/$commentId'));
+          'https://basillia.genzit.xyz/api/v1/upload/reply/$postId/$commentId'));
   request.body = json.encode({"userId": userId, "reply": content});
   request.headers.addAll(headers);
 
@@ -814,7 +814,7 @@ Future<String> Share_post(String postId) async {
     'Authorization': 'Bearer $jwt_token'
   };
   var request = http.Request('POST',
-      Uri.parse('https://backend.mdtamiz.com/api/v1/upload/share/$postId'));
+      Uri.parse('https://basillia.genzit.xyz/api/v1/upload/share/$postId'));
   request.body = json.encode({"userId": userId});
   request.headers.addAll(headers);
 
@@ -832,7 +832,7 @@ Future<String> Share_post(String postId) async {
 Future<UsrProfile> GetUserProfile(String usId) async {
   var headers = {'Authorization': 'Bearer $jwt_token'};
   var request = http.Request(
-      'GET', Uri.parse('https://backend.mdtamiz.com/api/v1/upload/$usId'));
+      'GET', Uri.parse('https://basillia.genzit.xyz/api/v1/upload/$usId'));
 
   request.headers.addAll(headers);
 
@@ -984,7 +984,7 @@ Future<UsrProfile> GetUserProfile(String usId) async {
 Future<int> totalPost(String usId) async {
   var headers = {'Authorization': 'Bearer $jwt_token'};
   var request = http.Request('GET',
-      Uri.parse('https://backend.mdtamiz.com/api/v1/upload/$usId/totalPost'));
+      Uri.parse('https://basillia.genzit.xyz/api/v1/upload/$usId/totalPost'));
 
   request.headers.addAll(headers);
 
@@ -1001,7 +1001,7 @@ Future<int> totalPost(String usId) async {
 Future<int> totalFollowers(String usid) async {
   var headers = {'Authorization': 'Bearer $jwt_token'};
   var request = http.Request('GET',
-      Uri.parse('https://backend.mdtamiz.com/api/v1/upload/$usid/followers'));
+      Uri.parse('https://basillia.genzit.xyz/api/v1/upload/$usid/followers'));
 
   request.headers.addAll(headers);
 
