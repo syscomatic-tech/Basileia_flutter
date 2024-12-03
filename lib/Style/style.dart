@@ -3411,72 +3411,82 @@ Widget pageButton(
   );
 }
 
-Widget books() {
+Widget Books({String? name, int? chapters,onTap}) {
   return Column(
     children: [
       Container(
         height: 85,
         decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [
-                lightPrimary_2,
-                readBookColorGradient,
-              ],
-            ),
-            borderRadius: BorderRadius.circular(5)),
+          gradient: const LinearGradient(
+            colors: [
+              lightPrimary_2,
+              readBookColorGradient,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(5),
+        ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Column(
+              // Book Name and Chapter Info
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Genesis',
-                    style: TextStyle(
-                        fontFamily: poppins_regular,
-                        fontSize: 17.73,
-                        fontWeight: FontWeight.w600),
+                    name ?? "Unknown Title", // Handle null name gracefully
+                    style: const TextStyle(
+                      fontFamily: poppins_regular,
+                      fontSize: 17.73,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   Text(
-                    '50 Chapters',
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: poppins_regular,
-                        color: primaryTxt),
+                    '${chapters ?? 0} Chapters', // Handle null chapters gracefully
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontFamily: poppins_regular,
+                      color: primaryTxt,
+                    ),
                   ),
                 ],
               ),
+              // Explore Button
               InkWell(
-                onTap: () {},
-                child: Container(
-                  height: 34.09,
-                  width: 104.84,
-                  decoration: BoxDecoration(
+                onTap: () {
+                  // Action to explore the book goes here
+                  debugPrint('Explore tapped for $name');
+                },
+                child: InkWell(
+                  onTap: onTap,
+                  child: Container(
+                    height: 34.09,
+                    width: 104.84,
+                    decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: const Center(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Center(
                       child: Text(
-                    'Explore',
-                    style: TextStyle(
-                        fontSize: 11.93,
-                        color: TxtColor,
-                        fontFamily: poppins_bold),
-                  )),
+                        'Explore',
+                        style: TextStyle(
+                          fontSize: 11.93,
+                          color: TxtColor,
+                          fontFamily: poppins_bold,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
-      const SizedBox(
-        height: 15,
-      ),
+      const SizedBox(height: 15),
     ],
   );
 }

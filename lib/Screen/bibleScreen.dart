@@ -1,17 +1,125 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../RestAPI/RestClient.dart';
+
+class BibleVerse {
+  final String id;
+  final String name; // Book name
+  final String abbrev; // Abbreviation for the book
+  final int chapter; // Chapter number
+  final String lang; // Language code
+  final String verse; // Actual verse text
+
+  BibleVerse({
+    required this.id,
+    required this.name,
+    required this.abbrev,
+    required this.chapter,
+    required this.lang,
+    required this.verse,
+  });
+
+  // From JSON
+  factory BibleVerse.fromJson(Map<String, dynamic> json) {
+    return BibleVerse(
+      id: json['_id'],
+      name: json['name'],
+      abbrev: json['abbrev'],
+      chapter: json['chapter'],
+      lang: json['lang'],
+      verse: json['verse'], // Verse text
+    );
+  }
+
+  // To JSON
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'name': name,
+      'abbrev': abbrev,
+      'chapter': chapter,
+      'lang': lang,
+      'verse': verse,
+    };
+  }
+}
+
+// Fetch Bible verses for a specific chapter
+Future<List<BibleVerse>> fetchBibleVerses(
+    String chapter, String language, String abbrev) async {
+  final url =
+      'https://basillia.genzit.xyz/api/v1/books/bible/verses?language=$language&abbrev=$abbrev&chapter=$chapter';
+
+  try {
+    print('Fetching verses from: $url');
+    final response = await http.get(Uri.parse(url), headers: {
+      'Authorization': 'Bearer $jwt_token',
+      'Content-Type': 'application/json',
+    });
+
+    print('Response status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      final List<dynamic> data = jsonResponse['data'];
+
+      return data.map((verse) => BibleVerse.fromJson(verse)).toList();
+    } else {
+      print('Error fetching verses. Status: ${response.statusCode}');
+      print('Response: ${response.body}');
+      throw Exception('Failed to load verses.');
+    }
+  } catch (e) {
+    print('Exception occurred: $e');
+    throw Exception('Error fetching Bible verses: $e');
+  }
+}
+
 
 class BibleReadingScreen extends StatefulWidget {
+  final String abbrev; // Abbreviation for the book (e.g., GEN for Genesis)
+  final String lang; // Language code (e.g., "en")
+  final int chapter;
+  final String ChapterName;
+
+  const BibleReadingScreen({
+    required this.abbrev,
+    required this.lang,
+    required this.chapter,
+    required this.ChapterName,
+
+  });
+
   @override
   _BibleReadingScreenState createState() => _BibleReadingScreenState();
 }
 
-class _BibleReadingScreenState extends State<BibleReadingScreen> with SingleTickerProviderStateMixin {
+class _BibleReadingScreenState extends State<BibleReadingScreen>
+    with SingleTickerProviderStateMixin {
   TabController? _tabController;
+  int totalChapters = 0;
+  String bookName = '';
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 7, vsync: this);
+    fetchBookDetails(); // Fetch total chapters and book name
+  }
+
+  Future<void> fetchBookDetails() async {
+    try {
+      setState(() {
+        totalChapters = widget.chapter;
+        bookName =
+            widget.ChapterName; // Replace with actual book name if fetched from API
+        _tabController = TabController(length: totalChapters, vsync: this);
+      });
+    } catch (e) {
+      print('Error fetching book details: $e');
+    }
   }
 
   @override
@@ -22,25 +130,26 @@ class _BibleReadingScreenState extends State<BibleReadingScreen> with SingleTick
 
   @override
   Widget build(BuildContext context) {
+    if (totalChapters == 0 || _tabController == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Loading...'),
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        title: const Text(
-          'Bible › Genesis',
-          style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+        title: Text(
+          'Bible › $bookName',
+          style: const TextStyle(
+              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: false,
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              'Hide Options',
-              style: TextStyle(color: Colors.blue),
-            ),
-          ),
-        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40.0),
           child: TabBar(
@@ -50,19 +159,20 @@ class _BibleReadingScreenState extends State<BibleReadingScreen> with SingleTick
             indicatorWeight: 3,
             labelPadding: const EdgeInsets.symmetric(horizontal: 16.0),
             tabs: List.generate(
-              7,
-                  (index) => Column(
+              totalChapters,
+              (index) => Column(
                 children: [
-                  Text(
+                  const Text(
                     'Chap',
                     style: TextStyle(fontSize: 12, color: Colors.black54),
                   ),
                   Tab(
                     child: Column(
                       children: [
-                        Text('${index + 1}', style: TextStyle(color: Colors.black)),
+                        Text('${index + 1}',
+                            style: const TextStyle(color: Colors.black)),
                         if (_tabController?.index == index)
-                          Icon(Icons.circle, size: 5, color: Colors.blue), // Indicator dot for selected tab
+                          const Icon(Icons.circle, size: 5, color: Colors.blue),
                       ],
                     ),
                   ),
@@ -75,142 +185,91 @@ class _BibleReadingScreenState extends State<BibleReadingScreen> with SingleTick
       body: TabBarView(
         controller: _tabController,
         children: List.generate(
-          7,
-              (index) => BibleChapterContent(),
+          totalChapters,
+          (index) => BibleChapterContent(
+            chapter: '${index + 1}',
+            abbrev: widget.abbrev,
+            lang: widget.lang,
+          ),
         ),
       ),
-      bottomNavigationBar: BottomNavigation(),
     );
   }
 }
 
 class BibleChapterContent extends StatelessWidget {
+  final String chapter;
+  final String abbrev;
+  final String lang;
+
+  const BibleChapterContent({
+    required this.chapter,
+    required this.abbrev,
+    required this.lang,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Chapter 1\nBroken Ribs',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            SelectableText.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text:
-                    "That summer, while her boy is on vacation with their father, she goes to visit her lover in Berlin.\n\n",
-                  ),
-                  WidgetSpan(
-                    child: CustomSelectableOverlay(
-                      child: const Text(
-                        "A meters tall and built like a heavyweight...",
-                        style: TextStyle(color: Colors.black),
+    return FutureBuilder<List<BibleVerse>>(
+      future: fetchBibleVerses(chapter, lang, abbrev),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          final verses = snapshot.data!;
+          return ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: verses.length + 1, // +1 for the chapter title
+            itemBuilder: (context, index) {
+              // Add chapter header at the top
+              if (index == 0) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Text(
+                      'Chapter $chapter',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
                     ),
                   ),
-                ],
-              ),
-              toolbarOptions: ToolbarOptions(copy: true, selectAll: true),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+                );
+              }
 
-
-class CustomSelectableOverlay extends StatelessWidget {
-  final Widget child;
-  const CustomSelectableOverlay({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onLongPress: () {
-        // Show overlay menu for Copy and Highlight
-        showMenu(
-          context: context,
-          position: RelativeRect.fromLTRB(100, 300, 100, 100), // Adjust position as needed
-          items: [
-            PopupMenuItem(
-              value: 'copy',
-              child: Row(
-                children: const [
-                  Icon(Icons.copy, color: Colors.black),
-                  SizedBox(width: 8),
-                  Text('Copy'),
-                ],
-              ),
-            ),
-            PopupMenuItem(
-              value: 'highlight',
-              child: Row(
-                children: const [
-                  Icon(Icons.highlight, color: Colors.black),
-                  SizedBox(width: 8),
-                  Text('Highlight'),
-                ],
-              ),
-            ),
-          ],
-        );
+              // Display verses with "Verse" prefix
+              final verse = verses[index - 1]; // Adjust index for the header
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '$index', // Use index (1-based) for numbering
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    SelectableText(
+                      verse.verse,
+                      toolbarOptions:
+                      const ToolbarOptions(copy: true, selectAll: true),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        } else {
+          return const Center(child: Text('No verses found.'));
+        }
       },
-      child: child,
     );
   }
 }
 
-class BottomNavigation extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BottomAppBar(
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0,),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Icon(Icons.bookmark_border, color: Colors.black54),
-                SizedBox(height: 4),
-                Text('Chapter 1', style: TextStyle(color: Colors.black54)),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Icon(Icons.brightness_3, color: Colors.black54),
-                SizedBox(height: 4),
-                Text('Night Mode', style: TextStyle(color: Colors.black54)),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Icon(Icons.text_fields, color: Colors.black54),
-                SizedBox(height: 4),
-                Text('Font', style: TextStyle(color: Colors.black54)),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Icon(Icons.more_horiz, color: Colors.black54),
-                SizedBox(height: 4),
-                Text('More', style: TextStyle(color: Colors.black54)),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

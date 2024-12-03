@@ -205,3 +205,56 @@ class UsrProfile {
     this.posts = posts;
   }
 }
+
+class Book {
+  final String id;
+  final String name;
+  final String abbrev;
+  final String language;
+  final List<Chapter> chapters;
+
+  Book({
+    required this.id,
+    required this.name,
+    required this.abbrev,
+    required this.language,
+    required this.chapters,
+  });
+
+  factory Book.fromJson(Map<String, dynamic> json) {
+    return Book(
+      id: json['_id'] as String,
+      name: json['name'] as String,
+      abbrev: json['abbrev'] as String,
+      language: json['language'] as String,
+      chapters: (json['chapters'] as List)
+          .map((chapter) => Chapter.fromJson(chapter))
+          .toList(),
+    );
+  }
+}
+
+class Chapter {
+  final String abbrev;
+  final String name;
+  final int? chapters; // Make this field nullable
+  final String id;
+
+  Chapter({
+    required this.abbrev,
+    required this.name,
+    this.chapters, // Nullable to handle missing values
+    required this.id,
+  });
+
+  factory Chapter.fromJson(Map<String, dynamic> json) {
+    return Chapter(
+      abbrev: json['abbrev'] as String,
+      name: json['name'] as String,
+      chapters: json['chapters'] as int?, // Cast as nullable
+      id: json['_id'] as String,
+    );
+  }
+}
+
+

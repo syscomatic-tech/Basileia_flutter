@@ -1,139 +1,199 @@
+import 'dart:convert';
+import 'package:basileia/RestAPI/RestClient.dart';
+import 'package:basileia/Screen/readHolyBookScreen.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+// Import your styles and fonts
 import 'package:basileia/Style/colors.dart';
 import 'package:basileia/Style/fonts.dart';
-import 'package:basileia/Style/style.dart';
-import 'package:flutter/material.dart';
 
-class HolyBookScreen extends StatelessWidget {
+import '../RestAPI/model.dart';
+import '../Style/style.dart';
+
+class HolyBookScreen extends StatefulWidget {
+  const HolyBookScreen({Key? key}) : super(key: key);
+
+  @override
+  _HolyBookScreenState createState() => _HolyBookScreenState();
+}
+
+class _HolyBookScreenState extends State<HolyBookScreen> {
+  late Future<List<Book>> booksFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    booksFuture = fetchBooks();
+  }
+
+  Future<List<Book>> fetchBooks() async {
+    final url = Uri.parse('https://basillia.genzit.xyz/api/v1/books/all');
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $jwt_token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data is List) {
+          return data.map((book) => Book.fromJson(book)).toList();
+        } else {
+          throw Exception('Unexpected JSON structure.');
+        }
+      } else {
+        throw Exception(
+            'Failed to load books. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      throw Exception('Error fetching books: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // Greeting Section
             Stack(
               children: [
                 Container(
                   height: 214,
-                  width: double.maxFinite,
+                  width: double.infinity,
                   decoration: const BoxDecoration(
                     color: bookPageColor,
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 50),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 50),
                     child: Column(
                       children: [
                         Text(
-                          'Hello, Derno👋',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: poppins_semibold,
-                              color: primary),
+                          'Hello, $userFullname 👋', // Replace with actual user name
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: poppins_semibold,
+                            color: primary,
+                          ),
                         ),
-                        Text(
-                          'what do you want to',
+                        const SizedBox(height: 8),
+                        const Text(
+                          'What do you want to',
                           style: TextStyle(
-                              fontFamily: poppins_regular,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: chatTxtColor),
+                            fontFamily: poppins_regular,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: chatTxtColor,
+                          ),
                         ),
-                        Text(
+                        const Text(
                           'read today?',
                           style: TextStyle(
-                              fontFamily: poppins_regular,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: chatTxtColor),
-                        )
+                            fontFamily: poppins_regular,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: chatTxtColor,
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
+                // Exercise Card Section
                 Padding(
                   padding: const EdgeInsets.only(top: 165, left: 40, right: 40),
                   child: Container(
                     height: 91,
                     width: 327,
                     decoration: BoxDecoration(
-                        color: primary, borderRadius: BorderRadius.circular(5)),
+                      color: primary,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                     child: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'More serious exercise',
                           style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: poppins_regular,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white),
+                            fontSize: 16,
+                            fontFamily: poppins_regular,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
                         ),
                         Text(
-                          'get more features and',
+                          'Get more features and',
                           style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: poppins_regular,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white),
-                        )
+                            fontSize: 14,
+                            fontFamily: poppins_regular,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 30, left: 24, right: 24),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Continue Reading',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontFamily: poppins_regular),
-                      ),
-                      seeAllButton(onTap: () {})
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 184,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              blurRadius: 10,
-                              offset: const Offset(0, 0)),
-                        ],
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Row(
-                      children: [
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          height: 160,
-                          width: 104,
-                          decoration: BoxDecoration(
-                            color: lightPrimary_2,
-                            borderRadius: BorderRadius.circular(4),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                  child: Text('Read Holy Books',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),)),
+            ),
+            // Book List Section
+            FutureBuilder<List<Book>>(
+              future: booksFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(
+                    child: Text('No books available'),
+                  );
+                } else {
+                  final books = snapshot.data!;
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: books.length,
+                    itemBuilder: (context, index) {
+                      final book = books[index];
+                      print(
+                          'Parsed books: ${books.map((book) => book.name).toList()}');
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(children: [
+                          Container(
+                            height: 114,
+                            width: 93,
+                            decoration: BoxDecoration(
+                              color: lightPrimary_2,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Bible',
-                                style: TextStyle(
+                               Text(
+                                book.name,
+                                style: const TextStyle(
                                     fontFamily: poppins_regular,
                                     color: Colors.black,
                                     fontSize: 14,
@@ -142,135 +202,35 @@ class HolyBookScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 5,
                               ),
-                              const Text(
-                                'Chapter 4 of 8',
-                                style: TextStyle(
+                               Text(
+                                book.language,
+                                style: const TextStyle(
                                     fontFamily: poppins_regular,
                                     color: primaryTxt,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400),
                               ),
                               const SizedBox(
-                                height: 5,
+                                height: 10,
                               ),
                               Row(
                                 children: [
-                                  SizedBox(
-                                    width: 150,
-                                    child: LinearProgressIndicator(
-                                      value: 0.5,
-                                      backgroundColor: progressBarBGColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                      valueColor:
-                                          const AlwaysStoppedAnimation(primary),
-                                      minHeight: 4,
-                                    ),
+                                  Primary_Button(
+                                    onTap: () {Get.to(ReadHolyBookScreen(),arguments: {'bookId':book.id});},
+                                    text: 'Read Now',
                                   ),
-                                  const SizedBox(
-                                    width: 7,
-                                  ),
-                                  const Text(
-                                    '50%',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: primaryTxt,
-                                        fontFamily: poppins_regular,
-                                        fontWeight: FontWeight.w400),
-                                  ),
+                                  
                                 ],
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Primary_Button(
-                                  onTap: () {}, text: 'Explore', Width: 186)
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Read Holy Books',
-                        style: TextStyle(
-                            fontFamily: poppins_regular,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black),
-                      ),
-                      seeAllButton(onTap: () {})
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 114,
-                        width: 93,
-                        decoration: BoxDecoration(
-                          color: lightPrimary_2,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Bible',
-                            style: TextStyle(
-                                fontFamily: poppins_regular,
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          const Text(
-                            'English',
-                            style: TextStyle(
-                                fontFamily: poppins_regular,
-                                color: primaryTxt,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Primary_Button(
-                                onTap: () {},
-                                text: 'Read Now',
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Primary_Button(
-                                  onTap: () {},
-                                  text: 'Read Later',
-                                  backgroundColor: Colors.white,
-                                  textColor: TxtColor),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
+                        ]),
+                      );
+                    },
+                  );
+                }
+              },
+            ),
           ],
         ),
       ),

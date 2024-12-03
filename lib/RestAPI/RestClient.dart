@@ -62,6 +62,7 @@ class AuthClient {
   Future<void> saveUserSession() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('jwt_token', jwt_token);
+    print(jwt_token);
     await prefs.setString('user_id', userId);
     await prefs.setString('user_name', userFullname);
     await prefs.setString('userEmail', userEmail);

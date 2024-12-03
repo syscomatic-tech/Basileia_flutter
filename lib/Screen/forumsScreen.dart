@@ -1,3 +1,6 @@
+
+import 'package:basileia/Screen/HolyBookScreen.dart';
+import 'package:basileia/Screen/bibleScreen.dart';
 import 'package:basileia/Screen/questionDetailsScreen.dart';
 import 'package:basileia/Screen/ForumsUpload.dart';
 import 'package:basileia/Style/colors.dart';
@@ -113,7 +116,7 @@ class ForumsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             categories(onTap: () {}, text: 'General'),
-                            categories(onTap: () {}, text: 'Bible'),
+                            categories(onTap: () async{await Get.to(()=> HolyBookScreen());}, text: 'Bible'),
                             categories(onTap: () {}, text: 'Question'),
                             categories(onTap: () {}, text: 'Motivation'),
                           ],
