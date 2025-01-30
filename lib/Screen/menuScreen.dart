@@ -17,6 +17,7 @@ class MenuScreen extends StatelessWidget {
     'Forums',
     'Groups',
     'Donation History',
+    'Bible'
   ];
   final menuSubTitle = [
     'Message your friends',
@@ -25,6 +26,7 @@ class MenuScreen extends StatelessWidget {
     'See your recent activity',
     'Message your friends',
     'Checkout your previous donation history',
+    'Bible',
   ];
   final menuCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   var followers = [''];

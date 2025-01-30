@@ -116,7 +116,7 @@ class ForumsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             categories(onTap: () {}, text: 'General'),
-                            categories(onTap: () async{await Get.to(()=> HolyBookScreen());}, text: 'Bible'),
+                            categories(onTap: (){}),
                             categories(onTap: () {}, text: 'Question'),
                             categories(onTap: () {}, text: 'Motivation'),
                           ],

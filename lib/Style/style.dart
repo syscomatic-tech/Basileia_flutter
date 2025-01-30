@@ -28,6 +28,7 @@ import 'package:pinput/pinput.dart';
 import 'package:readmore/readmore.dart';
 import 'package:basileia/Screen/inboxScreen.dart';
 import '../RestAPI/RestClient.dart';
+import '../Screen/HolyBookScreen.dart';
 import '../Screen/chatScreen.dart';
 import '../Screen/inboxScreen.dart';
 import 'colors.dart';
@@ -1409,6 +1410,9 @@ Widget menuItem({
           }
           if (title == 'Groups') {
             Get.to(() => GroupsScreen());
+          }
+          if(title== 'Bible'){
+            await Get.to(()=> HolyBookScreen());
           }
         },
         child: SizedBox(
