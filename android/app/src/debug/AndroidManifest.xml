@@ -10,7 +10,7 @@
     <application
         android:icon="@mipmap/launcher_icon"
         android:label="basileia"
-        tools:replace="android:icon, android:label">
+        tools:replace="android:icon,android:label">
 
         <!-- Other application settings can go here -->
 
